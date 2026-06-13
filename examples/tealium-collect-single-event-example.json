@@ -1,0 +1,26 @@
+{
+  "title": "Send a Single Page View Event",
+  "description": "Example POST request to send a page_view event to the Tealium Collect HTTP API.",
+  "request": {
+    "method": "POST",
+    "url": "https://us-east-1-platform.tealiumapis.com/v3/collect/event",
+    "headers": {
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "tealium_account": "my-company",
+      "tealium_profile": "main",
+      "tealium_event": "page_view",
+      "tealium_visitor_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "tealium_datasource": "abc123",
+      "page_name": "Homepage",
+      "page_type": "home",
+      "page_url": "https://www.example.com/"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {}
+  }
+}

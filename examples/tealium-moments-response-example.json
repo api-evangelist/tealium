@@ -1,0 +1,50 @@
+{
+  "title": "Moments API Response — Personalization Engine",
+  "description": "Example response from the Tealium Moments API for a visitor identified by anonymous ID. Shows targeted context slice configured in a personalization engine.",
+  "request": {
+    "method": "GET",
+    "url": "https://personalization-api.us-east-1.prod.tealiumapis.com/personalization/accounts/my-company/profiles/main/engines/homepage-personalization/visitors/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "headers": {
+      "Referer": "https://www.example.com/",
+      "Origin": "https://www.example.com"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "https://www.example.com"
+    },
+    "body": {
+      "audiences": {
+        "high_value_customer": true,
+        "cart_abandoner": false,
+        "loyalty_member": true,
+        "first_time_visitor": false
+      },
+      "badges": {
+        "loyalty_gold": true,
+        "email_verified": true
+      },
+      "metrics": {
+        "lifetime_value": 1250.50,
+        "visit_count": 42,
+        "days_since_last_purchase": 12
+      },
+      "properties": {
+        "preferred_category": "electronics",
+        "customer_segment": "power_user",
+        "preferred_channel": "web"
+      },
+      "flags": {
+        "email_subscriber": true,
+        "sms_opted_in": false,
+        "push_notifications_enabled": true
+      },
+      "dates": {
+        "last_purchase_date": "2026-06-01T14:23:00Z",
+        "account_created_date": "2023-03-15T09:00:00Z"
+      }
+    }
+  }
+}

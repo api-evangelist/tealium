@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: Tealium Moments API
+  description: >-
+    A high-performance, configurable endpoint that retrieves a targeted slice
+    of live visitor context for real-time personalization, AI systems, and
+    cross-channel experiences. Operates through customizable "engines" that
+    select specific audiences, badges, and attributes. Rate limit is 200
+    requests per second per profile across all engines. No authentication
+    required; governed by domain allowlists via HTTP Referer header validation.
+    Average response time is 60ms for payloads under 1 kB.
+  version: "1.0"
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/server-side/moments-api/about/
+
+servers:
+  - url: https://personalization-api.{region}.prod.tealiumapis.com
+    description: Region-specific Moments API host
+    variables:
+      region:
+        default: us-east-1
+        description: AWS region identifier for the Tealium deployment
+        enum:
+          - us-east-1
+          - us-west-2
+          - eu-central-1
+          - ap-southeast-2
+
+paths:
+  /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}/visitors/{visitorId}:
+    get:
+      operationId: getMomentsByVisitorId
+      summary: Get visitor moments by anonymous visitor ID
+      description: >-
+        Retrieves a targeted slice of live visitor context for the specified
+        visitor, as configured in the engine definition. Returns audiences,
+        badges, metrics, properties, flags, and date attributes included in
+        the engine configuration. Does not require authentication; domain
+        allowlist controls access via Referer header.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: engineId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the configured Moments engine
+        - name: visitorId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium anonymous visitor ID (GUID format)
+        - name: suppressNotFound
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: >-
+            When true, returns HTTP 200 with empty body if visitor not found.
+            When false (default), returns HTTP 404 if visitor not found.
+      responses:
+        "200":
+          description: Visitor moments returned successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              description: CORS header
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MomentsResponse"
+              example:
+                audiences:
+                  high_value_customer: true
+                  cart_abandoner: false
+                badges:
+                  loyalty_gold: true
+                metrics:
+                  lifetime_value: 1250.50
+                  visit_count: 42
+                properties:
+                  preferred_category: electronics
+                  last_purchase_date: "2026-05-15"
+                flags:
+                  email_subscriber: true
+                  sms_opted_in: false
+        "404":
+          description: Visitor not found (when suppressNotFound is false)
+        "429":
+          description: Too many requests — rate limit exceeded (200 req/s per profile)
+
+  /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}:
+    get:
+      operationId: getMomentsByAttributeValue
+      summary: Get visitor moments by Visitor ID attribute
+      description: >-
+        Retrieves a targeted slice of live visitor context identified by
+        a Visitor ID attribute value rather than the anonymous Tealium visitor
+        ID. Useful for server-side lookups using known identifiers such as
+        email address or customer ID. No authentication required; domain
+        allowlist controls access via Referer header.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: engineId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the configured Moments engine
+        - name: attributeId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Numeric UID of the Visitor ID attribute
+        - name: attributeValue
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Value to look up (URL-encode special characters)
+        - name: suppressNotFound
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: >-
+            When true, returns HTTP 200 with empty body if visitor not found.
+            When false, returns HTTP 404.
+      responses:
+        "200":
+          description: Visitor moments returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MomentsResponse"
+        "404":
+          description: Visitor not found (when suppressNotFound is false)
+        "429":
+          description: Too many requests — rate limit exceeded
+
+components:
+  schemas:
+    MomentsResponse:
+      type: object
+      description: >-
+        Targeted slice of visitor context as configured in the Moments engine.
+        Only the audiences, badges, and attributes included in the engine
+        definition are returned. Maximum payload size is 1 kB per engine.
+      properties:
+        audiences:
+          type: object
+          description: Audience memberships configured in the engine
+          additionalProperties:
+            type: boolean
+        badges:
+          type: object
+          description: Badge memberships configured in the engine
+          additionalProperties:
+            type: boolean
+        metrics:
+          type: object
+          description: Numeric metric attribute values configured in the engine
+          additionalProperties:
+            type: number
+        properties:
+          type: object
+          description: String property attribute values configured in the engine
+          additionalProperties:
+            type: string
+        flags:
+          type: object
+          description: Boolean flag attribute values configured in the engine
+          additionalProperties:
+            type: boolean
+        dates:
+          type: object
+          description: Date attribute values configured in the engine
+          additionalProperties:
+            type: string
+            format: date-time

@@ -1,0 +1,228 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "tealium": "https://tealium.com/vocab/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "version": "schema:version",
+
+    "TealiumAccount": {
+      "@id": "tealium:Account",
+      "@type": "@id"
+    },
+    "TealiumProfile": {
+      "@id": "tealium:Profile",
+      "@type": "@id"
+    },
+    "TealiumVisitor": {
+      "@id": "tealium:Visitor",
+      "@type": "@id"
+    },
+    "TealiumEvent": {
+      "@id": "tealium:Event",
+      "@type": "@id"
+    },
+    "TealiumAudience": {
+      "@id": "tealium:Audience",
+      "@type": "@id"
+    },
+    "TealiumBadge": {
+      "@id": "tealium:Badge",
+      "@type": "@id"
+    },
+    "TealiumAttribute": {
+      "@id": "tealium:Attribute",
+      "@type": "@id"
+    },
+    "TealiumEngine": {
+      "@id": "tealium:Engine",
+      "@type": "@id"
+    },
+    "TealiumTag": {
+      "@id": "tealium:Tag",
+      "@type": "@id"
+    },
+    "TealiumLoadRule": {
+      "@id": "tealium:LoadRule",
+      "@type": "@id"
+    },
+    "TealiumExtension": {
+      "@id": "tealium:Extension",
+      "@type": "@id"
+    },
+    "TealiumDataSource": {
+      "@id": "tealium:DataSource",
+      "@type": "@id"
+    },
+    "TealiumTransaction": {
+      "@id": "tealium:Transaction",
+      "@type": "@id"
+    },
+
+    "account": {
+      "@id": "tealium:account",
+      "@type": "xsd:string"
+    },
+    "profile": {
+      "@id": "tealium:profile",
+      "@type": "xsd:string"
+    },
+    "visitorId": {
+      "@id": "tealium:visitorId",
+      "@type": "xsd:string"
+    },
+    "attributeId": {
+      "@id": "tealium:attributeId",
+      "@type": "xsd:integer"
+    },
+    "attributeValue": {
+      "@id": "tealium:attributeValue",
+      "@type": "xsd:string"
+    },
+    "eventType": {
+      "@id": "tealium:eventType",
+      "@type": "xsd:string"
+    },
+    "datasourceKey": {
+      "@id": "tealium:datasourceKey",
+      "@type": "xsd:string"
+    },
+    "engineId": {
+      "@id": "tealium:engineId",
+      "@type": "xsd:string"
+    },
+    "transactionId": {
+      "@id": "tealium:transactionId",
+      "@type": "xsd:string"
+    },
+    "transactionStatus": {
+      "@id": "tealium:transactionStatus",
+      "@type": "xsd:string"
+    },
+    "bearerToken": {
+      "@id": "tealium:bearerToken",
+      "@type": "xsd:string"
+    },
+    "regionHost": {
+      "@id": "tealium:regionHost",
+      "@type": "xsd:string"
+    },
+    "tokenExpiry": {
+      "@id": "tealium:tokenExpiry",
+      "@type": "xsd:duration"
+    },
+    "region": {
+      "@id": "tealium:region",
+      "@type": "xsd:string"
+    },
+    "audiences": {
+      "@id": "tealium:audiences",
+      "@container": "@index"
+    },
+    "badges": {
+      "@id": "tealium:badges",
+      "@container": "@index"
+    },
+    "metrics": {
+      "@id": "tealium:metrics",
+      "@container": "@index"
+    },
+    "properties": {
+      "@id": "tealium:properties",
+      "@container": "@index"
+    },
+    "flags": {
+      "@id": "tealium:flags",
+      "@container": "@index"
+    },
+    "events": {
+      "@id": "tealium:events",
+      "@type": "@id",
+      "@container": "@set"
+    },
+    "shared": {
+      "@id": "tealium:sharedEventData",
+      "@type": "@id"
+    },
+    "prettyName": {
+      "@id": "tealium:prettyName",
+      "@type": "xsd:boolean"
+    },
+    "suppressNotFound": {
+      "@id": "tealium:suppressNotFound",
+      "@type": "xsd:boolean"
+    },
+    "searchPriority": {
+      "@id": "tealium:searchPriority",
+      "@type": "@json"
+    },
+    "responseFilters": {
+      "@id": "tealium:responseFilters",
+      "@type": "@json"
+    },
+    "rateLimit": {
+      "@id": "tealium:rateLimit",
+      "@type": "xsd:string"
+    },
+    "maxPayloadSize": {
+      "@id": "tealium:maxPayloadSize",
+      "@type": "xsd:string"
+    },
+    "avgResponseTime": {
+      "@id": "tealium:avgResponseTime",
+      "@type": "xsd:string"
+    },
+    "gdprCompliant": {
+      "@id": "tealium:gdprCompliant",
+      "@type": "xsd:boolean"
+    },
+    "ccpaCompliant": {
+      "@id": "tealium:ccpaCompliant",
+      "@type": "xsd:boolean"
+    },
+    "deletionWindow": {
+      "@id": "tealium:deletionWindow",
+      "@type": "xsd:string"
+    },
+    "CollectAPI": {
+      "@id": "tealium:CollectAPI",
+      "@type": "@id"
+    },
+    "VisitorProfileAPI": {
+      "@id": "tealium:VisitorProfileAPI",
+      "@type": "@id"
+    },
+    "VisitorPrivacyAPI": {
+      "@id": "tealium:VisitorPrivacyAPI",
+      "@type": "@id"
+    },
+    "MomentsAPI": {
+      "@id": "tealium:MomentsAPI",
+      "@type": "@id"
+    },
+    "iQProfilesAPI": {
+      "@id": "tealium:iQProfilesAPI",
+      "@type": "@id"
+    },
+    "AuthenticationAPI": {
+      "@id": "tealium:AuthenticationAPI",
+      "@type": "@id"
+    },
+    "CustomerDataHub": {
+      "@id": "tealium:CustomerDataHub",
+      "@type": "@id"
+    },
+    "AudienceStream": {
+      "@id": "tealium:AudienceStream",
+      "@type": "@id"
+    },
+    "iQTagManagement": {
+      "@id": "tealium:iQTagManagement",
+      "@type": "@id"
+    }
+  }
+}

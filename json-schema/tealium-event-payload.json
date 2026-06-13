@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tealium/main/json-schema/tealium-event-payload.json",
+  "title": "Tealium Event Payload",
+  "description": "Schema for a single event sent to the Tealium Collect HTTP API.",
+  "type": "object",
+  "required": ["tealium_account", "tealium_profile", "tealium_event"],
+  "properties": {
+    "tealium_account": {
+      "type": "string",
+      "description": "Tealium account name"
+    },
+    "tealium_profile": {
+      "type": "string",
+      "description": "Tealium profile name within the account"
+    },
+    "tealium_event": {
+      "type": "string",
+      "description": "Event type identifier (e.g., page_view, user_login, purchase)"
+    },
+    "tealium_visitor_id": {
+      "type": "string",
+      "description": "Visitor identifier — GUID format for anonymous visitors or __ACCOUNT_PROFILE__ATTR-ID_ATTR-VALUE__ for known visitors"
+    },
+    "tealium_datasource": {
+      "type": "string",
+      "description": "Data source key configured in Tealium iQ"
+    },
+    "tealium_environment": {
+      "type": "string",
+      "enum": ["dev", "qa", "prod"],
+      "description": "Deployment environment"
+    }
+  },
+  "additionalProperties": {
+    "type": ["string", "number", "boolean"],
+    "description": "Custom event attributes as additional key-value pairs"
+  }
+}

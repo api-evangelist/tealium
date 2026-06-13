@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tealium/main/json-schema/tealium-visitor-profile.json",
+  "title": "Tealium Visitor Profile",
+  "description": "Schema for a visitor profile record returned by the Tealium Visitor Profile API or Visitor Privacy API.",
+  "type": "object",
+  "properties": {
+    "audiences": {
+      "type": "object",
+      "description": "Audience memberships — key is audience ID or name, value is boolean membership",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "badges": {
+      "type": "object",
+      "description": "Badge memberships — key is badge ID or name, value is boolean",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Numeric metric attribute values keyed by attribute ID or name",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "properties": {
+      "type": "object",
+      "description": "String property attribute values keyed by attribute ID or name",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "flags": {
+      "type": "object",
+      "description": "Boolean flag attribute values keyed by attribute ID or name",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "dates": {
+      "type": "object",
+      "description": "Date attribute values keyed by attribute ID or name",
+      "additionalProperties": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    "currentVisit": {
+      "type": "object",
+      "description": "Visit-scoped attribute values for the current session",
+      "additionalProperties": {}
+    }
+  },
+  "additionalProperties": {}
+}

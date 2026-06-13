@@ -1,0 +1,225 @@
+vocabulary:
+  provider: tealium
+  description: >-
+    Domain vocabulary for Tealium Customer Data Platform (CDP), covering
+    concepts from iQ Tag Management, AudienceStream, data collection,
+    visitor profiling, privacy compliance, and real-time personalization.
+  terms:
+
+    - term: account
+      definition: >-
+        The top-level organizational unit in Tealium, representing a company
+        or business entity. Used as a path parameter in all v3 API endpoints.
+      domain: platform
+
+    - term: profile
+      definition: >-
+        A sub-unit of a Tealium account, typically representing a website,
+        app, or data stream configuration. Used with account in all v3 API
+        endpoints to scope operations.
+      domain: platform
+
+    - term: bearer_token
+      definition: >-
+        A JWT (JSON Web Token) used to authenticate all Tealium v3 API calls.
+        Obtained by exchanging username and API key via the Authentication API.
+        Valid for 30 minutes. Should be reused across calls rather than
+        regenerated for each request.
+      domain: authentication
+
+    - term: api_key
+      definition: >-
+        A credential issued in Tealium iQ Tag Management used only to obtain
+        a bearer token. Not passed directly in API calls.
+      domain: authentication
+
+    - term: visitor_id
+      definition: >-
+        A unique identifier for an anonymous or known visitor tracked in the
+        Tealium Customer Data Hub. Can be a GUID-based anonymous ID or a
+        formatted known-visitor ID of the form __ACCOUNT_PROFILE__ATTRIBUTE-ID_ATTRIBUTE-VALUE__.
+      domain: visitor
+
+    - term: tealium_visitor_id
+      definition: >-
+        The primary anonymous visitor identifier field name used in event
+        payloads. A GUID-based string or formatted known-visitor ID that
+        links events to a specific visitor record in AudienceStream.
+      domain: events
+
+    - term: tealium_event
+      definition: >-
+        Required field in all event payloads identifying the type of event
+        being sent (e.g., page_view, user_login, purchase). Used to trigger
+        load rules and connectors in Tealium iQ and AudienceStream.
+      domain: events
+
+    - term: tealium_account
+      definition: >-
+        Field in event payloads specifying the Tealium account name.
+        Required for event collection endpoints that use query parameters
+        or JSON bodies rather than path parameters.
+      domain: events
+
+    - term: tealium_profile
+      definition: >-
+        Field in event payloads specifying the Tealium profile name within
+        the account.
+      domain: events
+
+    - term: tealium_datasource
+      definition: >-
+        Optional field identifying a specific data source key configured
+        in Tealium iQ. Used to route events to the correct data source
+        connector.
+      domain: events
+
+    - term: audience
+      definition: >-
+        A segment of visitors defined in AudienceStream based on behavioral
+        rules, attribute values, and event patterns. Audience memberships
+        are returned as boolean maps in Visitor Profile and Moments API
+        responses.
+      domain: audiencestream
+
+    - term: badge
+      definition: >-
+        A boolean flag assigned to visitors in AudienceStream based on
+        specific qualifying criteria. Badges represent persistent visitor
+        traits or achievements and are returned as boolean maps in visitor
+        profile responses.
+      domain: audiencestream
+
+    - term: attribute
+      definition: >-
+        A named data field that stores information about a visitor or
+        visit in AudienceStream. Can be of types: metric (number), property
+        (string), flag (boolean), date, or set. Attributes are identified
+        by numeric IDs or friendly names in API responses.
+      domain: audiencestream
+
+    - term: attribute_id
+      definition: >-
+        The numeric identifier for a visitor attribute in AudienceStream.
+        Used in API parameters (attributeId) to specify which attribute
+        to use for visitor lookup or filtering.
+      domain: audiencestream
+
+    - term: visitor_profile
+      definition: >-
+        The complete data record for a visitor stored in the AudienceStream
+        Customer Data Hub, including all audience memberships, badge assignments,
+        attribute values, and visit data.
+      domain: audiencestream
+
+    - term: engine
+      definition: >-
+        A configurable Moments API definition that specifies which audiences,
+        badges, and attributes to include in a real-time personalization
+        response. Each engine generates a unique endpoint URL.
+      domain: moments
+
+    - term: moments
+      definition: >-
+        The targeted slice of real-time visitor context returned by a
+        configured Moments API engine, optimized for low-latency (60ms avg)
+        personalization and AI use cases.
+      domain: moments
+
+    - term: transaction_id
+      definition: >-
+        A unique identifier returned when a visitor deletion request is
+        submitted via the Visitor Privacy API. Used to query the status
+        of the asynchronous deletion operation.
+      domain: privacy
+
+    - term: data_layer
+      definition: >-
+        A JavaScript object or server-side structure containing event and
+        visitor data passed to Tealium iQ for tag management and data
+        collection. The foundation of Tealium's data collection model.
+      domain: iq
+
+    - term: tag
+      definition: >-
+        A third-party marketing, analytics, or advertising pixel or script
+        configured in Tealium iQ Tag Management. Tags are fired based on
+        load rules and can be managed via the iQ Profiles API.
+      domain: iq
+
+    - term: load_rule
+      definition: >-
+        A conditional logic definition in Tealium iQ that determines when
+        tags should fire based on data layer values, visitor attributes, or
+        event conditions.
+      domain: iq
+
+    - term: extension
+      definition: >-
+        A JavaScript code block in Tealium iQ that transforms, enriches, or
+        validates data layer values before tags are fired. Extensions can be
+        managed via the iQ JavaScript Extension API.
+      domain: iq
+
+    - term: collect_http_api
+      definition: >-
+        The Tealium v3 API for sending event data from server-side applications,
+        mobile apps, or any HTTP client into the Tealium Customer Data Hub.
+        Supports single events and bulk batches of up to 10 events.
+      domain: collect
+
+    - term: bulk_event
+      definition: >-
+        A batch of up to 10 events sent in a single Collect HTTP API request.
+        Uses a shared object for common fields and an events array for
+        individual event data.
+      domain: collect
+
+    - term: datasource
+      definition: >-
+        A configured data ingestion channel in Tealium that accepts event
+        data from specific sources. Datasource keys are used in integration
+        event endpoints.
+      domain: collect
+
+    - term: customer_data_hub
+      definition: >-
+        The central Tealium data processing infrastructure that ingests events,
+        builds visitor profiles, evaluates audience rules, and routes data
+        to connected systems via connectors.
+      domain: platform
+
+    - term: gdpr
+      definition: >-
+        General Data Protection Regulation. The Visitor Privacy API supports
+        GDPR compliance by providing endpoints to retrieve and delete visitor
+        data upon request.
+      domain: privacy
+
+    - term: ccpa
+      definition: >-
+        California Consumer Privacy Act. The Visitor Privacy API also supports
+        CCPA compliance alongside GDPR, enabling deletion and access rights.
+      domain: privacy
+
+    - term: search_priority
+      definition: >-
+        A Visitor Profile API parameter controlling whether visitor lookup
+        searches live data, historical data, or both. Accepts a JSON array
+        with values "live" and/or "historical".
+      domain: visitor
+
+    - term: pretty_name
+      definition: >-
+        A boolean API parameter that controls whether responses use
+        human-readable attribute names (true) or numeric IDs (false).
+        Defaults to false.
+      domain: visitor
+
+    - term: region
+      definition: >-
+        The geographic deployment zone for Tealium services. The Authentication
+        API returns a region-specific host that must be used for subsequent
+        API calls. Also used in regional collect endpoints and Moments API
+        hostnames.
+      domain: platform

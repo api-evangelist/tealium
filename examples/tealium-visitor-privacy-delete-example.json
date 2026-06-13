@@ -1,0 +1,87 @@
+{
+  "title": "GDPR Visitor Deletion Request",
+  "description": "Example workflow for GDPR/CCPA erasure: look up visitor by email, submit deletion, then check status.",
+  "steps": [
+    {
+      "step": 1,
+      "title": "Discover visitor ID attributes",
+      "request": {
+        "method": "GET",
+        "url": "https://us-east-1-platform.tealiumapis.com/v3/privacy/visitor/accounts/my-company/profiles/main/ids",
+        "headers": {
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "101": "email_address",
+          "102": "customer_id",
+          "103": "phone_number"
+        }
+      }
+    },
+    {
+      "step": 2,
+      "title": "Look up visitor data (right of access)",
+      "request": {
+        "method": "GET",
+        "url": "https://us-east-1-platform.tealiumapis.com/v3/privacy/visitor/accounts/my-company/profiles/main?attributeId=101&attributeValue=user%40example.com&prettyName=true",
+        "headers": {
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "audiences": {
+            "high_value_customer": true
+          },
+          "properties": {
+            "email_address": "user@example.com",
+            "preferred_category": "electronics"
+          },
+          "metrics": {
+            "lifetime_value": 1250.50
+          }
+        }
+      }
+    },
+    {
+      "step": 3,
+      "title": "Submit deletion request (right to erasure)",
+      "request": {
+        "method": "DELETE",
+        "url": "https://us-east-1-platform.tealiumapis.com/v3/privacy/visitor/accounts/my-company/profiles/main",
+        "headers": {
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "body": "attributeId=101&attributeValue=user%40example.com"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "transactionId": "txn_gdpr_abc123xyz"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "title": "Check deletion status",
+      "request": {
+        "method": "GET",
+        "url": "https://us-east-1-platform.tealiumapis.com/v3/privacy/visitor/accounts/my-company/profiles/main/transactions/txn_gdpr_abc123xyz",
+        "headers": {
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "txn_gdpr_abc123xyz": "PENDING"
+        }
+      }
+    }
+  ]
+}

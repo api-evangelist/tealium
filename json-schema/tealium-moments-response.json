@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tealium/main/json-schema/tealium-moments-response.json",
+  "title": "Tealium Moments API Response",
+  "description": "Schema for the response from the Tealium Moments API. Contains a targeted slice of visitor context as configured in the engine definition. Maximum payload size is 1 kB per engine.",
+  "type": "object",
+  "properties": {
+    "audiences": {
+      "type": "object",
+      "description": "Audience memberships configured in the engine — key is audience name, value is boolean",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "badges": {
+      "type": "object",
+      "description": "Badge memberships configured in the engine — key is badge name, value is boolean",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Numeric metric attribute values configured in the engine",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "properties": {
+      "type": "object",
+      "description": "String property attribute values configured in the engine",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "flags": {
+      "type": "object",
+      "description": "Boolean flag attribute values configured in the engine",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "dates": {
+      "type": "object",
+      "description": "Date attribute values configured in the engine",
+      "additionalProperties": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  }
+}

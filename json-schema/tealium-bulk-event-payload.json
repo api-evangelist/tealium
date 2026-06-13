@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tealium/main/json-schema/tealium-bulk-event-payload.json",
+  "title": "Tealium Bulk Event Payload",
+  "description": "Schema for a bulk event request (up to 10 events) sent to the Tealium Collect HTTP API.",
+  "type": "object",
+  "required": ["shared", "events"],
+  "properties": {
+    "shared": {
+      "type": "object",
+      "description": "Common fields applied to all events in this batch",
+      "properties": {
+        "tealium_account": {
+          "type": "string",
+          "description": "Tealium account name"
+        },
+        "tealium_profile": {
+          "type": "string",
+          "description": "Tealium profile name"
+        },
+        "tealium_environment": {
+          "type": "string",
+          "enum": ["dev", "qa", "prod"],
+          "description": "Deployment environment"
+        },
+        "tealium_datasource": {
+          "type": "string",
+          "description": "Data source key"
+        },
+        "tealium_visitor_id": {
+          "type": "string",
+          "description": "Visitor identifier shared across all events in batch"
+        }
+      },
+      "additionalProperties": {
+        "type": ["string", "number", "boolean"]
+      }
+    },
+    "events": {
+      "type": "array",
+      "description": "Array of individual event objects (max 10 per request)",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["tealium_event"],
+        "properties": {
+          "tealium_event": {
+            "type": "string",
+            "description": "Event type identifier for this specific event"
+          },
+          "tealium_visitor_id": {
+            "type": "string",
+            "description": "Override visitor ID for this specific event"
+          }
+        },
+        "additionalProperties": {
+          "type": ["string", "number", "boolean"],
+          "description": "Custom event-specific attributes"
+        }
+      }
+    }
+  }
+}

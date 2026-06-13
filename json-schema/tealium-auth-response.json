@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tealium/main/json-schema/tealium-auth-response.json",
+  "title": "Tealium Authentication Response",
+  "description": "Schema for the response from the Tealium Authentication API. Contains a JWT bearer token valid for 30 minutes and a region-specific host for subsequent API calls.",
+  "type": "object",
+  "required": ["token", "host"],
+  "properties": {
+    "token": {
+      "type": "string",
+      "description": "JWT bearer token valid for 30 minutes. Include in Authorization header as 'Bearer {token}' for all subsequent API calls."
+    },
+    "host": {
+      "type": "string",
+      "description": "Region-specific host for subsequent API calls (e.g., us-east-1-platform.tealiumapis.com). Use this host rather than the generic platform.tealiumapis.com."
+    }
+  }
+}

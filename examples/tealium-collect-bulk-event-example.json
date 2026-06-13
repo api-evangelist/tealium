@@ -1,0 +1,45 @@
+{
+  "title": "Send Bulk Events",
+  "description": "Example POST request to send multiple events in a single batch to the Tealium Collect HTTP API. Shared fields apply to all events; individual event objects override or extend them.",
+  "request": {
+    "method": "POST",
+    "url": "https://us-east-1-platform.tealiumapis.com/v3/collect/bulk-event",
+    "headers": {
+      "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "shared": {
+        "tealium_account": "my-company",
+        "tealium_profile": "main",
+        "tealium_environment": "prod",
+        "tealium_datasource": "abc123",
+        "tealium_visitor_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "user_id": "cust_98765"
+      },
+      "events": [
+        {
+          "tealium_event": "page_view",
+          "page_name": "Homepage",
+          "page_type": "home"
+        },
+        {
+          "tealium_event": "product_view",
+          "product_id": "SKU-001",
+          "product_name": "Wireless Headphones",
+          "product_category": "Electronics",
+          "product_price": "149.99"
+        },
+        {
+          "tealium_event": "add_to_cart",
+          "product_id": "SKU-001",
+          "cart_quantity": "1"
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {}
+  }
+}

@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Tealium Authentication API
+  description: >-
+    Provides JWT bearer token generation for Tealium v3 APIs. Exchange a
+    username (email address) and API key for a time-limited JWT bearer token
+    used to authenticate all other Tealium v3 API calls. Tokens are valid for
+    30 minutes. The response also includes a region-specific host for
+    subsequent API calls. API keys are obtained from Tealium iQ Tag Management
+    and are not used directly in API calls — only for token generation.
+  version: "3.0"
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+
+servers:
+  - url: https://platform.tealiumapis.com/v3
+    description: Tealium platform API base URL
+
+paths:
+  /auth/accounts/{account}/profiles/{profile}:
+    post:
+      operationId: generateBearerToken
+      summary: Generate bearer token
+      description: >-
+        Exchanges a username (email address) and API key for a JWT bearer token
+        and a region-specific host. The returned token is valid for 30 minutes
+        and should be reused across API calls rather than regenerated on each
+        request. Use the returned host value for all subsequent API calls to
+        ensure regional routing.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - username
+                - key
+              properties:
+                username:
+                  type: string
+                  format: email
+                  description: User email address associated with the Tealium account
+                key:
+                  type: string
+                  description: API key from Tealium iQ Tag Management
+            example:
+              username: user@example.com
+              key: abc123apikey
+      responses:
+        "200":
+          description: Bearer token generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+              example:
+                token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0.kqkpj8vE"
+                host: "us-east-1-platform.tealiumapis.com"
+        "400":
+          description: Bad request — missing username or key
+        "401":
+          description: Unauthorized — invalid credentials
+
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      required:
+        - token
+        - host
+      properties:
+        token:
+          type: string
+          description: JWT bearer token valid for 30 minutes. Use in Authorization header as "Bearer {token}"
+        host:
+          type: string
+          description: >-
+            Region-specific host for subsequent API calls
+            (e.g., us-east-1-platform.tealiumapis.com). Always use this host
+            rather than the generic platform.tealiumapis.com for regional routing.

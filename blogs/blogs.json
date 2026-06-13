@@ -1,0 +1,56 @@
+{
+  "provider": "tealium",
+  "blogUrl": "https://tealium.com/blog/",
+  "feedUrl": "https://tealium.com/blog/feed/",
+  "lastFetched": "2026-06-13",
+  "posts": [
+    {
+      "title": "Architect Arc Sydney and Melbourne: Turning AI ambition into real-time execution",
+      "url": "https://tealium.com/blog/events/turning-ai-ambition-into-real-time-execution-architect-arc/",
+      "date": "2026-06-12",
+      "description": "Event recap covering Tealium's Architect Arc conferences in Australia, focusing on moving AI from experimentation to production through real-time context infrastructure and practical AI patterns."
+    },
+    {
+      "title": "What Becomes Possible with the Right Context",
+      "url": "https://tealium.com/blog/artificial-intelligence/what-becomes-possible-with-the-right-contex/",
+      "date": "2026-06-10",
+      "description": "Final article in a series exploring how proper contextual infrastructure enables customer representations, simulation testing, and multi-agent coordination in enterprise AI."
+    },
+    {
+      "title": "Everyone Is Saying the Same Thing. A Recap of the 2026 Snowflake Summit",
+      "url": "https://tealium.com/blog/events/everyone-is-saying-the-same-thing-a-recap-of-the-2026-snowflake-summit/",
+      "date": "2026-06-09",
+      "description": "Conference summary highlighting how governed, contextual data addresses the primary barrier to scaling AI, and introducing Tealium Audience Discovery as a Snowflake Native App."
+    },
+    {
+      "title": "The Context Has to Keep Up",
+      "url": "https://tealium.com/blog/artificial-intelligence/the-context-has-to-keep-up/",
+      "date": "2026-06-04",
+      "description": "Third installment examining how AI agents require continuous, bidirectional context with living permission and closed-loop architecture rather than static profiles."
+    },
+    {
+      "title": "What is The AI Data Layer?",
+      "url": "https://tealium.com/blog/artificial-intelligence/what-is-the-ai-data-layer/",
+      "date": "2026-05-28",
+      "description": "Technical exploration of the next generation data infrastructure that composes governed context for AI systems, building on Universal and Customer Data Layers."
+    },
+    {
+      "title": "What Duchamp Figured Out About Your Context Window",
+      "url": "https://tealium.com/blog/artificial-intelligence/what-duchamp-figured-out-about-your-context-window/",
+      "date": "2026-05-11",
+      "description": "Conceptual essay drawing parallels between art history and AI context, arguing that 'the frame is the argument' in both domains."
+    },
+    {
+      "title": "The Behavioral Funnel Is Not Dead",
+      "url": "https://tealium.com/blog/artificial-intelligence/the-behavioural-funnel-is-not-dead/",
+      "date": "2026-05-07",
+      "description": "Analysis suggesting behavioral data evolves rather than disappears in agent-driven environments, with different signal patterns across transaction types."
+    },
+    {
+      "title": "Digital Velocity NYC: From Collection to Action in the Age of AI Agents",
+      "url": "https://tealium.com/blog/events/digital-velocity-nyc-from-collection-to-action-in-the-age-of-ai-agents/",
+      "date": "2026-05-04",
+      "description": "Event coverage presenting five actionable steps for making websites agent-ready, measuring AI referrals, closing ML loops, and piloting agentic front doors."
+    }
+  ]
+}
