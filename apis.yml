@@ -1,0 +1,187 @@
+aid: tealium
+name: Tealium
+description: >-
+  Tealium is a customer data platform (CDP) providing REST APIs for iQ Tag
+  Management and AudienceStream — enabling enterprises to manage tags, audiences,
+  attributes, connectors, and real-time event data collection across web, mobile,
+  and server-side channels. The Tealium Customer Data Hub unifies data collection
+  via the Collect HTTP API, real-time visitor profiling via the Visitor Profile and
+  Moments APIs, tag and load-rule management via the iQ Profiles API, and privacy
+  compliance via the Visitor Privacy API.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/tealium/refs/heads/main/apis.yml
+created: "2026-06-13"
+modified: "2026-06-13"
+specificationVersion: "0.19"
+tags:
+  - Customer Data Platform
+  - CDP
+  - Tag Management
+  - AudienceStream
+  - Real-Time Events
+  - Visitor Profiles
+  - Audience Segmentation
+  - Data Collection
+  - Privacy Compliance
+  - Personalization
+
+apis:
+
+  - name: Tealium Collect HTTP API
+    description: >-
+      Sends authenticated events from any application via HTTP requests into the
+      Tealium Customer Data Hub. Supports single-event and bulk-event endpoints
+      (up to 10 events per request) with regional routing. Rate limit is 100
+      events per second; exceeding this returns HTTP 429. Authenticates via
+      JWT bearer token obtained by exchanging a username and API key.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/api/v3/http-api/about/
+    baseURL: https://platform.tealiumapis.com/v3
+    tags:
+      - Events
+      - Data Collection
+      - HTTP API
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/api/v3/http-api/about/
+
+  - name: Tealium iQ Profiles API
+    description: >-
+      Provides programmatic access to iQ Tag Management configuration, allowing
+      retrieval and modification of tags, load rules, events, variables, JavaScript
+      extensions, and tag templates within an iQ profile. Supports GET to read
+      configuration components and PATCH to create, update, or delete a subset of
+      components. Authenticates via JWT bearer token.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/api/v3/iq-profiles/
+    baseURL: https://platform.tealiumapis.com/v3
+    tags:
+      - iQ Tag Management
+      - Tags
+      - Load Rules
+      - Extensions
+      - Variables
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/api/v3/iq-profiles/
+
+  - name: Tealium Visitor Profile API
+    description: >-
+      Queries full visitor profile records from the AudienceStream Customer Data
+      Hub, returning audience memberships, badges, and attribute values for a
+      given visitor. Used to retrieve the complete live profile of a known or
+      anonymous visitor identified by account, profile, and visitor ID.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
+    baseURL: https://platform.tealiumapis.com/v3
+    tags:
+      - Visitor Profiles
+      - AudienceStream
+      - Audiences
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
+
+  - name: Tealium Visitor Privacy API
+    description: >-
+      Supports GDPR and CCPA compliance by allowing retrieval and deletion of
+      visitor profile records from the Customer Data Hub. Provides endpoints to
+      look up all known data about a specific visitor and to submit deletion
+      requests (which complete within 30 days). Default rate limit is 50
+      requests per second; not designed for high-volume usage.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/api/v3/visitor-privacy/about/
+    baseURL: https://platform.tealiumapis.com/v3
+    tags:
+      - Privacy
+      - GDPR
+      - CCPA
+      - Visitor Data
+      - Compliance
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/api/v3/visitor-privacy/about/
+
+  - name: Tealium Moments API
+    description: >-
+      A high-performance, configurable endpoint that retrieves a targeted slice
+      of live visitor context for real-time personalization, AI systems, and
+      cross-channel experiences. Operates through customizable "engines" that
+      select specific audiences, badges, and attributes. Rate limit is 200
+      requests per second per profile across all engines. No authentication
+      required; governed by domain allowlists. Average response time is 60ms
+      for payloads under 1 kB.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/server-side/moments-api/about/
+    baseURL: https://personalization-api.{REGION}.prod.tealiumapis.com
+    tags:
+      - Personalization
+      - Real-Time
+      - Visitor Context
+      - AI
+      - Moments
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/server-side/moments-api/about/
+
+  - name: Tealium Data Connect API
+    description: >-
+      Enables bulk import and export of event and audience data between Tealium
+      and external systems. Supports the Tealium Events App for streaming event
+      records. Rate limits are 500 events per second and 500 records per second;
+      requests exceeding limits are throttled. Maximum request size is 2.5 MB;
+      large files are auto-batched at 500 records per batch.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.tealium.com/server-side/data-connect/rate-limits/
+    baseURL: https://platform.tealiumapis.com/v3
+    tags:
+      - Data Connect
+      - Bulk Import
+      - Bulk Export
+      - Events
+    properties:
+      - type: Documentation
+        url: https://docs.tealium.com/server-side/data-connect/rate-limits/
+
+common:
+
+  - type: Website
+    url: https://tealium.com/
+
+  - type: Documentation
+    url: https://docs.tealium.com/
+
+  - type: GitHubOrg
+    url: https://github.com/Tealium
+
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/tealium
+
+  - type: Blog
+    url: https://tealium.com/blog/
+
+  - type: Pricing
+    url: https://tealium.com/pricing/
+
+  - type: StatusPage
+    url: https://status.tealium.com/
+
+  - type: X
+    url: https://twitter.com/tealium
+
+  - type: ReleaseNotes
+    url: https://docs.tealium.com/release-notes/
+
+  - type: Plans
+    url: plans/tealium-plans-pricing.yml
+
+  - type: RateLimits
+    url: rate-limits/tealium-rate-limits.yml
+
+  - type: FinOps
+    url: finops/tealium-finops.yml
+
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

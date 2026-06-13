@@ -1,0 +1,148 @@
+name: Tealium FinOps Framework
+description: >-
+  FinOps guidance for managing Tealium Customer Data Hub costs using a
+  FOCUS-aligned framework. Tealium pricing is entirely custom-quoted and
+  volume-based — every event entering the Customer Data Hub counts toward
+  contracted volume and is billed equally regardless of downstream processing.
+  Effective FinOps practice requires tight control over event volume, function
+  invocations, and module usage to avoid overages and optimize contract value.
+specificationVersion: "1.0"
+url: https://tealium.com/pricing/
+focusVersion: "1.0"
+
+costDimensions:
+
+  - dimension: Event Volume
+    focusColumn: UsageQuantity
+    description: >-
+      Every inbound event processed by Tealium EventStream counts toward total
+      contracted volume. Events are billed equally at the point of entry regardless
+      of how many downstream systems (AudienceStream, Functions, Connectors) process
+      them. This is the primary cost driver for most deployments.
+    billingMetric: Total inbound events
+    optimizationTips:
+      - Filter low-value events at the source before they enter the Customer Data Hub
+      - Use server-side filtering in EventStream to drop noise events before billing
+      - Audit tag configurations in iQ to avoid duplicate event fires
+      - Consolidate client-side tags to reduce redundant event generation
+
+  - dimension: Monthly Unique Visitors (MUVs)
+    focusColumn: UsageQuantity
+    description: >-
+      iQ Tag Management is billed on Monthly Unique Visitors. Growth in web
+      traffic directly impacts contract costs for this module.
+    billingMetric: Monthly Unique Visitors
+    optimizationTips:
+      - Monitor MUV growth trends relative to contracted limits
+      - Negotiate MUV tier bands proactively before approaching limits
+      - Evaluate whether iQ tag management can be consolidated across domains
+
+  - dimension: AudienceStream Filtered Events
+    focusColumn: UsageQuantity
+    description: >-
+      AudienceStream bills on filtered events — events that pass configured
+      enrichment and audience-matching rules. Reducing unnecessary audience
+      evaluations lowers this cost driver.
+    billingMetric: Filtered events processed by AudienceStream
+    optimizationTips:
+      - Review and prune unused audience definitions
+      - Consolidate overlapping audience rules to reduce evaluation passes
+      - Use EventStream pre-filters to reduce events entering AudienceStream
+
+  - dimension: Function Invocations and Execution Time
+    focusColumn: UsageQuantity
+    description: >-
+      Functions are billed on invocations and execution time. Event/Visitor/Data
+      Record functions are limited to 180,000 invocations/minute with an 8-hour
+      execution budget. Data Transformation functions are limited to 250,000
+      invocations/minute with a 1-hour execution budget.
+    billingMetric: Function invocations and execution minutes
+    optimizationTips:
+      - Optimize function code to minimize execution time (keep under 10s/150ms limits)
+      - Limit function scope to high-value events only
+      - Avoid redundant logic that can be handled upstream in EventStream rules
+      - Monitor per-function log usage (5 MB/min limit) to identify runaway functions
+
+  - dimension: DataAccess Records Inserted
+    focusColumn: UsageQuantity
+    description: >-
+      DataAccess long-term storage is billed per record inserted. High-volume
+      event streams stored in DataAccess can substantially increase costs.
+    billingMetric: Records inserted into DataAccess storage
+    optimizationTips:
+      - Store only events required for analytics and compliance; filter the rest
+      - Define data retention windows to avoid indefinite storage accumulation
+      - Use EventStream feeds selectively — not all event types need DataAccess storage
+
+  - dimension: Data Connect Throughput
+    focusColumn: UsageQuantity
+    description: >-
+      Data Connect costs relate to Workato task usage and data throughput.
+      Batching data to the 500 events/second and 500 records/second limits
+      reduces the number of tasks consumed.
+    billingMetric: Workato tasks and data records transferred
+    optimizationTips:
+      - Maximize file batch size (up to 2.5 MB, 500 records/batch) to minimize task count
+      - Schedule bulk imports during off-peak hours to maintain throughput headroom
+      - Consolidate multiple small imports into single batched operations
+
+costAllocation:
+
+  - category: Contract Volume Tracking
+    description: >-
+      Monitor actual event volume, MUVs, and function invocations monthly
+      against contracted limits. Overage fees apply once contracted volumes
+      are exceeded.
+    recommendations:
+      - Set internal alert thresholds at 80% and 95% of contracted volumes
+      - Use Tealium Insights dashboards (Full Platform tier) to track usage trends
+      - Establish a quarterly review cadence with your Tealium account manager
+
+  - category: Module Rightsizing
+    description: >-
+      Tealium is modular — organizations pay only for enabled modules. Audit
+      active modules annually to identify unused capabilities that can be
+      removed at renewal.
+    recommendations:
+      - Decommission unused connectors that generate unnecessary event processing
+      - Evaluate whether Predict ML or Insights dashboards justify their cost
+      - Consider whether iQ Tag Management can be replaced by a lower-cost tag manager
+        for simple use cases
+
+  - category: Contract Negotiation Levers
+    description: >-
+      Tealium offers significant negotiation flexibility on custom contracts.
+      Key levers include timing, commitment length, and competitive positioning.
+    recommendations:
+      - Negotiate multi-year terms (2–3 years) for 15–30% discounts
+      - Leverage Q4 timing when Tealium sales teams have quota pressure
+      - Use competitor bids (Adobe, Segment, mParticle) as negotiation leverage
+      - Prepayment arrangements can yield an additional 10–20% discount
+      - Request volume tier bands with overage protection clauses
+
+  - category: Implementation Cost Control
+    description: >-
+      Professional services (implementation) typically add 50–100% to first-year
+      costs. Building internal expertise reduces long-term dependency on Tealium
+      professional services.
+    recommendations:
+      - Invest in Tealium Education certification for internal team members
+      - Negotiate implementation costs as part of the initial contract package
+      - Use the Tealium community and documentation to reduce reliance on paid services
+      - Define clear project scope before engaging professional services to avoid scope creep
+
+costVisibility:
+  tools:
+    - name: Tealium Insights
+      description: Dashboard for tracking event volume and audience metrics (Full Platform tier)
+      url: https://docs.tealium.com/
+    - name: Tealium Status Page
+      description: Monitor service availability to correlate incidents with unexpected usage spikes
+      url: https://status.tealium.com/
+
+notes: >-
+  Tealium does not offer a self-service free tier or public pay-as-you-go pricing.
+  All engagements require a direct contract with Tealium sales. Budget planning
+  should account for annual contract minimums, professional services, and potential
+  overage fees. Contracts typically require advance annual payment; multi-year
+  commitments provide the most significant cost reductions.

@@ -1,0 +1,140 @@
+name: Tealium API Rate Limits
+description: >-
+  Rate limits for Tealium Customer Data Hub APIs vary by product and endpoint.
+  Exceeding any limit returns HTTP 429 Too Many Requests. Higher limits can
+  be negotiated with your Tealium account manager. All V3 API calls require a
+  JWT bearer token obtained via API key exchange; the token expires after 30
+  minutes and should be reused until expiry to avoid throttling.
+specificationVersion: "0.1"
+url: https://docs.tealium.com/api/v3/getting-started/request-format/
+
+rateLimits:
+
+  - api: Tealium Collect HTTP API
+    url: https://docs.tealium.com/api/v3/http-api/about/
+    limits:
+      - scope: Account
+        metric: Events per second
+        limit: 100
+        period: second
+        notes: >-
+          Applies to both single-event calls and bulk-event calls. A bulk call
+          with 10 events counts as 10 toward the 100 events/second limit.
+          Exceeding the limit returns HTTP 429.
+    errorCode: 429
+    burstAllowed: false
+
+  - api: Tealium Visitor Privacy API
+    url: https://docs.tealium.com/api/v3/visitor-privacy/about/
+    limits:
+      - scope: Account
+        metric: Requests per second
+        limit: 50
+        period: second
+        notes: >-
+          The Visitor Privacy API is designed for compliance use cases (GDPR,
+          CCPA) and is not intended for high-volume programmatic access. Deletion
+          requests may take up to 30 days to complete.
+    errorCode: 429
+    burstAllowed: false
+
+  - api: Tealium Moments API
+    url: https://docs.tealium.com/server-side/moments-api/about/
+    limits:
+      - scope: Profile
+        metric: Requests per second
+        limit: 200
+        period: second
+        notes: >-
+          The 200 req/s limit is shared across all engines within a single
+          profile. Maximum of 10 engines per profile (contact account manager
+          to increase). Visitor data storage limit is 1 kB per visitor per
+          engine. Data retained for 30 days without new events.
+      - scope: Profile
+        metric: Enabled engines
+        limit: 10
+        period: N/A
+        notes: Contact your account manager to increase the engine limit.
+    errorCode: 429
+    burstAllowed: false
+    averageLatency: "60ms for payloads ≤1 kB"
+    authentication: No token required; governed by domain allowlists
+
+  - api: Tealium Data Connect
+    url: https://docs.tealium.com/server-side/data-connect/rate-limits/
+    limits:
+      - scope: Account
+        metric: Events per second
+        limit: 500
+        period: second
+        notes: Exceeding this limit throttles the connection.
+      - scope: Account
+        metric: Records per second
+        limit: 500
+        period: second
+        notes: Large files are auto-batched at 500 records per batch.
+    maxRequestSize: "2.5 MB"
+    errorBehavior: throttled
+    burstAllowed: false
+
+  - api: Tealium Functions
+    url: https://docs.tealium.com/server-side/functions/environment/
+    limits:
+      - scope: Account
+        metric: Event/Visitor/Data Record function invocations per minute
+        limit: 180000
+        period: minute
+        notes: >-
+          Each individual function invocation has a 10-second execution timeout.
+          Total execution budget is 8 hours per minute across all invocations.
+      - scope: Account
+        metric: Data Transformation function invocations per minute
+        limit: 250000
+        period: minute
+        notes: >-
+          Each invocation has a 150-millisecond execution timeout.
+          Total execution budget is 1 hour per minute.
+      - scope: Function
+        metric: Log messages per minute
+        limit: "5 MB"
+        period: minute
+        notes: >-
+          Per-function logging throttles for 1 minute when exceeded, suppressing
+          informational messages but preserving errors and warnings.
+      - scope: Account
+        metric: Log messages per minute (all functions)
+        limit: "50 MB"
+        period: minute
+        notes: Account-wide log budget across all functions combined.
+      - scope: Function
+        metric: Memory per function
+        limit: "32 MB"
+        period: N/A
+        notes: Exceeding memory limit triggers OutOfMemoryError.
+      - scope: Function
+        metric: Maximum function code size
+        limit: "64 KB"
+        period: N/A
+        notes: Approximately 1,500 lines of code maximum.
+      - scope: Trace Testing
+        metric: Function calls per minute
+        limit: 15
+        period: minute
+    runtime: GraalVM JavaScript (ECMAScript 2020)
+
+authentication:
+  method: JWT Bearer Token
+  tokenEndpoint: "POST https://platform.tealiumapis.com/v3/auth/accounts/{account}/profiles/{profile}"
+  tokenFormat: application/x-www-form-urlencoded (username + API key)
+  tokenExpiry: "30 minutes"
+  notes: >-
+    Do not generate a new bearer token for every API call. Reuse the token
+    until it expires to avoid throttling. The authentication response includes
+    a region-specific hostname (e.g., us-east-1-platform.tealiumapis.com) that
+    must be used for all subsequent API calls in that session.
+
+generalNotes: >-
+  Rate limits vary by API endpoint. If your business requirements exceed the
+  documented limits, contact your Tealium account manager to discuss higher
+  quotas. All V3 API requests use base URL https://platform.tealiumapis.com/v3
+  and require Content-Type: application/json.

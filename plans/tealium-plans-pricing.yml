@@ -1,0 +1,104 @@
+name: Tealium Plans and Pricing
+description: >-
+  Tealium does not publish fixed public pricing. All contracts are custom-quoted
+  based on data volume (events, monthly unique visitors, records), product module
+  selection, and contract length. Observed annual contract values range from
+  approximately $20,000 to $800,000+, with a reported median around $133,000.
+  Multi-year commitments of 2–3 years typically yield 15–30% discounts.
+specificationVersion: "0.1"
+url: https://tealium.com/pricing/
+
+plans:
+
+  - name: iQ Tag Management
+    description: >-
+      Entry-level plan focused on client-side tag management without full CDP
+      capabilities. Suitable for organizations primarily needing a universal tag
+      container with a large marketplace of vendor integrations.
+    url: https://tealium.com/products/tealium-iq-tag-management-system/
+    pricingModel: custom
+    billingCycle: annual
+    billingMetric: Monthly Unique Visitors (MUVs)
+    pricingRange:
+      low: "$30,000/year (1–3M MUVs)"
+      high: "$150,000+/year (10M+ MUVs)"
+    features:
+      - Universal tag container
+      - Tag marketplace (1,300+ vendor tags)
+      - Load rules and tag sequencing
+      - iQ Profiles API access
+      - Basic support
+      - eLearning and certification access
+
+  - name: EventStream and AudienceStream (Core CDP)
+    description: >-
+      Core customer data platform plan combining server-side event collection
+      via EventStream with real-time visitor profiling and audience segmentation
+      via AudienceStream. Suitable for mid-market and enterprise organizations
+      requiring unified customer data infrastructure.
+    url: https://tealium.com/products/
+    pricingModel: custom
+    billingCycle: annual
+    billingMetric: Total inbound events and filtered AudienceStream events
+    pricingRange:
+      low: "$75,000/year (1–5M MUVs)"
+      high: "$600,000+/year (10M+ MUVs)"
+    features:
+      - Server-side event collection (EventStream)
+      - Real-time visitor profiles (AudienceStream)
+      - Audience segmentation and activation
+      - 1,300+ connector integrations
+      - Collect HTTP API access
+      - Visitor Profile API access
+      - Visitor Privacy API access
+      - Moments API (requires account manager activation)
+      - Functions (event, visitor, data transformation)
+      - Standard support
+
+  - name: Full Platform (All Modules)
+    description: >-
+      Comprehensive enterprise plan including all Tealium Customer Data Hub
+      modules: iQ Tag Management, EventStream, AudienceStream, DataAccess,
+      Predict ML, Insights dashboards, and optional Private Cloud deployment.
+      Designed for large enterprises requiring complete data infrastructure.
+    url: https://tealium.com/products/
+    pricingModel: custom
+    billingCycle: annual
+    billingMetric: Events, MUVs, records inserted, function invocations
+    pricingRange:
+      low: "$300,000/year"
+      high: "$800,000+/year"
+    features:
+      - All Core CDP features
+      - DataAccess (long-term event and visitor data warehouse exports)
+      - Predict ML (machine learning enrichment)
+      - Insights dashboards
+      - Private Cloud deployment option
+      - Data Connect API access
+      - Advanced professional services and implementation support
+      - Dedicated customer success manager
+
+additionalCosts:
+  - category: Professional Services (Implementation)
+    description: Required for most enterprise deployments
+    range: "$50,000–$200,000+ first year"
+  - category: Multi-Year Discount
+    description: Available for 2–3 year commitments
+    range: "15–30% off annual rate"
+
+billingMetrics:
+  - product: iQ Tag Management
+    metric: Monthly Unique Visitors (MUVs)
+  - product: EventStream / EventDB
+    metric: Total inbound events
+  - product: AudienceStream
+    metric: Filtered events processed
+  - product: Functions
+    metric: Invocations and execution time per minute
+  - product: DataAccess
+    metric: Records inserted
+
+notes: >-
+  Contact your Tealium account manager to obtain a custom quote or to enable
+  premium features such as Moments API, Predict ML, or Private Cloud. Overage
+  fees apply when contracted event or visitor volumes are exceeded.
