@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/tealium-collect-http-openapi.yml, openapi/tealium-visitor-privacy-openapi.yml,
+  openapi/tealium-visitor-profile-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: JWT bearer token obtained from the Authentication API (/v3/auth/accounts/{account}/profiles/{profile}).
+    Tokens are valid for 30 minutes. Do not generate a new token for every call — reuse until
+    expiration.
+  sources:
+  - openapi/tealium-collect-http-openapi.yml
+  - openapi/tealium-visitor-privacy-openapi.yml
+  - openapi/tealium-visitor-profile-openapi.yml

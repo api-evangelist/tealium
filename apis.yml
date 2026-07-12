@@ -146,6 +146,12 @@ apis:
 
 common:
 
+  - type: TrustCenter
+    url: security/tealium-trust-center.yml
+  - type: DomainSecurity
+    url: security/tealium-domain-security.yml
+  - type: Authentication
+    url: authentication/tealium-authentication.yml
   - type: Website
     url: https://tealium.com/
 
