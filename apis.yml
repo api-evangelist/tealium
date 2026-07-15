@@ -146,6 +146,8 @@ apis:
 
 common:
 
+  - type: AgenticAccess
+    url: agentic-access/tealium-agentic-access.yml
   - type: TrustCenter
     url: security/tealium-trust-center.yml
   - type: DomainSecurity
