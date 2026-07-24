@@ -1,0 +1,177 @@
+openapi: 3.0.3
+info:
+  title: Tealium Authentication Auth Personalization API
+  description: Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.
+  version: '3.0'
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+servers:
+- url: https://platform.tealiumapis.com/v3
+  description: Tealium platform API base URL
+tags:
+- name: Personalization
+paths:
+  /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}/visitors/{visitorId}:
+    get:
+      operationId: getMomentsByVisitorId
+      summary: Get visitor moments by anonymous visitor ID
+      description: Retrieves a targeted slice of live visitor context for the specified visitor, as configured in the engine definition. Returns audiences, badges, metrics, properties, flags, and date attributes included in the engine configuration. Does not require authentication; domain allowlist controls access via Referer header.
+      parameters:
+      - name: account
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tealium account name
+      - name: profile
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tealium profile name
+      - name: engineId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique identifier for the configured Moments engine
+      - name: visitorId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tealium anonymous visitor ID (GUID format)
+      - name: suppressNotFound
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: When true, returns HTTP 200 with empty body if visitor not found. When false (default), returns HTTP 404 if visitor not found.
+      responses:
+        '200':
+          description: Visitor moments returned successfully
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              description: CORS header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MomentsResponse'
+              example:
+                audiences:
+                  high_value_customer: true
+                  cart_abandoner: false
+                badges:
+                  loyalty_gold: true
+                metrics:
+                  lifetime_value: 1250.5
+                  visit_count: 42
+                properties:
+                  preferred_category: electronics
+                  last_purchase_date: '2026-05-15'
+                flags:
+                  email_subscriber: true
+                  sms_opted_in: false
+        '404':
+          description: Visitor not found (when suppressNotFound is false)
+        '429':
+          description: Too many requests — rate limit exceeded (200 req/s per profile)
+      tags:
+      - Personalization
+  /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}:
+    get:
+      operationId: getMomentsByAttributeValue
+      summary: Get visitor moments by Visitor ID attribute
+      description: Retrieves a targeted slice of live visitor context identified by a Visitor ID attribute value rather than the anonymous Tealium visitor ID. Useful for server-side lookups using known identifiers such as email address or customer ID. No authentication required; domain allowlist controls access via Referer header.
+      parameters:
+      - name: account
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tealium account name
+      - name: profile
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Tealium profile name
+      - name: engineId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique identifier for the configured Moments engine
+      - name: attributeId
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Numeric UID of the Visitor ID attribute
+      - name: attributeValue
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Value to look up (URL-encode special characters)
+      - name: suppressNotFound
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+        description: When true, returns HTTP 200 with empty body if visitor not found. When false, returns HTTP 404.
+      responses:
+        '200':
+          description: Visitor moments returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MomentsResponse'
+        '404':
+          description: Visitor not found (when suppressNotFound is false)
+        '429':
+          description: Too many requests — rate limit exceeded
+      tags:
+      - Personalization
+components:
+  schemas:
+    MomentsResponse:
+      type: object
+      description: Targeted slice of visitor context as configured in the Moments engine. Only the audiences, badges, and attributes included in the engine definition are returned. Maximum payload size is 1 kB per engine.
+      properties:
+        audiences:
+          type: object
+          description: Audience memberships configured in the engine
+          additionalProperties:
+            type: boolean
+        badges:
+          type: object
+          description: Badge memberships configured in the engine
+          additionalProperties:
+            type: boolean
+        metrics:
+          type: object
+          description: Numeric metric attribute values configured in the engine
+          additionalProperties:
+            type: number
+        properties:
+          type: object
+          description: String property attribute values configured in the engine
+          additionalProperties:
+            type: string
+        flags:
+          type: object
+          description: Boolean flag attribute values configured in the engine
+          additionalProperties:
+            type: boolean
+        dates:
+          type: object
+          description: Date attribute values configured in the engine
+          additionalProperties:
+            type: string
+            format: date-time
