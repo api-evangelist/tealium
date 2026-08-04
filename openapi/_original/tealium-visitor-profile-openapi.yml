@@ -1,0 +1,219 @@
+openapi: 3.0.3
+info:
+  title: Tealium Visitor Profile API
+  description: >-
+    Queries full visitor profile records from the AudienceStream Customer Data
+    Hub, returning audience memberships, badges, and attribute values for a
+    given visitor. Used to retrieve the complete live or historical profile of
+    a known or anonymous visitor identified by account, profile, and visitor
+    ID attribute. Authenticates via JWT bearer token.
+  version: "3.0"
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
+
+servers:
+  - url: https://{host}/v3
+    description: Region-specific host returned by authentication API
+    variables:
+      host:
+        default: platform.tealiumapis.com
+        description: Region-specific host from auth response
+
+security:
+  - BearerAuth: []
+
+paths:
+  /customer/visitor/accounts/{account}/profiles/{profile}:
+    get:
+      operationId: getVisitorProfile
+      summary: Get visitor profile
+      description: >-
+        Retrieves the full visitor profile for a specific visitor identified
+        by a Visitor ID attribute value. Supports live data, historical data,
+        or both. Returns audience memberships, badges, and all configured
+        attribute values. Maximum of 150 attribute IDs can be filtered per
+        request.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: attributeId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of the Visitor ID attribute
+        - name: attributeValue
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Value to look up (URL-encode special characters)
+        - name: prettyName
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: >-
+            When true, returns user-friendly attribute names;
+            when false, returns numeric IDs
+        - name: searchPriority
+          in: query
+          required: false
+          schema:
+            type: string
+          description: >-
+            JSON array controlling search order. Defaults to ["live","historical"].
+            Options: ["live"], ["historical"], or ["live","historical"]
+          example: '["live","historical"]'
+        - name: responseFilters
+          in: query
+          required: false
+          schema:
+            type: string
+          description: >-
+            JSON array of up to 150 attribute IDs to include in response.
+            Omit to return all attributes.
+          example: "[101,102,103]"
+      responses:
+        "200":
+          description: Visitor profile returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisitorProfile"
+        "400":
+          description: Bad request — missing attributeId or attributeValue
+        "401":
+          description: Unauthorized — invalid or expired bearer token
+        "404":
+          description: Visitor not found or invalid searchPriority parameter
+
+  /customer/visitor/historical/accounts/{account}/profiles/{profile}:
+    get:
+      operationId: getHistoricalVisitorProfile
+      summary: Get historical visitor profile
+      description: >-
+        Retrieves the historical visitor profile for a specific visitor. Searches
+        historical data only (no live data). Historical data is available after
+        a 30-minute waiting period. Maximum of 150 attribute IDs can be filtered
+        per request. The searchPriority parameter is not available for this endpoint.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: attributeId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of the Visitor ID attribute
+        - name: attributeValue
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Value to look up (URL-encode special characters)
+        - name: prettyName
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: When true, returns user-friendly attribute names
+        - name: responseFilters
+          in: query
+          required: false
+          schema:
+            type: string
+          description: JSON array of up to 150 attribute IDs to include in response
+      responses:
+        "200":
+          description: Historical visitor profile returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisitorProfile"
+        "400":
+          description: Bad request — missing attributeId or attributeValue
+        "401":
+          description: Unauthorized
+        "404":
+          description: Visitor not found
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        JWT bearer token obtained from the Authentication API. Valid for
+        30 minutes. Reuse tokens rather than generating new ones per request.
+
+  schemas:
+    VisitorProfile:
+      type: object
+      description: Full visitor profile record from AudienceStream
+      properties:
+        audiences:
+          type: object
+          description: Audience memberships keyed by audience ID or name
+          additionalProperties:
+            type: boolean
+        badges:
+          type: object
+          description: Badge memberships keyed by badge ID or name
+          additionalProperties:
+            type: boolean
+        attributes:
+          type: object
+          description: >-
+            Visitor attribute values keyed by attribute ID (numeric) or
+            name (when prettyName=true)
+          additionalProperties: {}
+        currentVisit:
+          type: object
+          description: Visit-scoped attribute values for the current session
+          additionalProperties: {}
+        dates:
+          type: object
+          description: Date-type attribute values
+          additionalProperties:
+            type: string
+            format: date-time
+        metrics:
+          type: object
+          description: Metric-type attribute values
+          additionalProperties:
+            type: number
+        properties:
+          type: object
+          description: Property-type attribute values
+          additionalProperties:
+            type: string
+        flags:
+          type: object
+          description: Boolean flag attribute values
+          additionalProperties:
+            type: boolean

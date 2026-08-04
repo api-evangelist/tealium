@@ -1,0 +1,22 @@
+{
+  "provider": "tealium",
+  "sources": [
+    "tealium-auth-api-openapi.yml",
+    "tealium-collect-api-openapi.yml",
+    "tealium-customer-api-openapi.yml",
+    "tealium-personalization-api-openapi.yml",
+    "tealium-privacy-api-openapi.yml"
+  ],
+  "outputs": [
+    "tealium-auth-api-openapi.yml",
+    "tealium-collect-api-openapi.yml",
+    "tealium-customer-api-openapi.yml",
+    "tealium-personalization-api-openapi.yml",
+    "tealium-privacy-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

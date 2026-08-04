@@ -1,0 +1,330 @@
+openapi: 3.0.3
+info:
+  title: Tealium Collect HTTP API
+  description: >-
+    Sends authenticated events from any application via HTTP requests into the
+    Tealium Customer Data Hub. Supports single-event and bulk-event endpoints
+    (up to 10 events per request) with regional routing. Rate limit is 100
+    events per second; exceeding this returns HTTP 429. Authenticates via
+    JWT bearer token obtained by exchanging a username and API key.
+  version: "3.0"
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/api/v3/http-api/about/
+
+servers:
+  - url: https://{host}/v3
+    description: Region-specific host returned by authentication API
+    variables:
+      host:
+        default: platform.tealiumapis.com
+        description: Region-specific host from auth response (e.g., us-east-1-platform.tealiumapis.com)
+
+security:
+  - BearerAuth: []
+
+paths:
+  /collect/event:
+    get:
+      operationId: collectEventGet
+      summary: Send single event (GET)
+      description: >-
+        Sends a single event via HTTP GET. Returns a 1x1 transparent GIF
+        image. Useful for pixel-based tracking scenarios.
+      parameters:
+        - name: tealium_account
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: tealium_profile
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: tealium_event
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Event type identifier
+        - name: tealium_visitor_id
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Visitor identifier (GUID or formatted known-visitor ID)
+        - name: tealium_datasource
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Data source key
+      responses:
+        "200":
+          description: Event accepted; returns 1x1 transparent GIF
+          content:
+            image/gif:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad request — missing required parameters
+        "401":
+          description: Unauthorized — invalid or expired bearer token
+        "429":
+          description: Too many requests — rate limit exceeded (100 events/second)
+    post:
+      operationId: collectEventPost
+      summary: Send single event (POST)
+      description: >-
+        Sends a single event via HTTP POST with a JSON body. Returns an empty
+        JSON response with content-length 0.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventPayload"
+            example:
+              tealium_account: my-account
+              tealium_profile: main
+              tealium_event: page_view
+              tealium_datasource: abc123
+              page_type: "123"
+              page_name: testName
+      responses:
+        "200":
+          description: Event accepted
+        "400":
+          description: Bad request — missing required fields, invalid JSON keys, or empty body
+        "401":
+          description: Unauthorized — invalid or expired bearer token
+        "429":
+          description: Too many requests — rate limit exceeded
+
+  /collect/bulk-event:
+    post:
+      operationId: collectBulkEvent
+      summary: Send bulk events (up to 10)
+      description: >-
+        Sends up to 10 events in a single POST request. The shared object
+        provides common fields applied to all events; individual event objects
+        can override or extend them.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BulkEventPayload"
+            example:
+              shared:
+                tealium_account: my-account
+                tealium_profile: main
+                tealium_environment: prod
+                tealium_datasource: abc123
+                tealium_visitor_id: abc123_071222_1
+              events:
+                - page_name: home
+                  tealium_event: page_view
+                - page_name: checkout
+                  tealium_event: page_view
+      responses:
+        "200":
+          description: Bulk events accepted
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too many requests — rate limit exceeded
+
+  /collect/regional/event:
+    post:
+      operationId: collectRegionalEvent
+      summary: Send single event to regional endpoint
+      description: >-
+        Sends a single event to a region-specific endpoint. Use the regional
+        host returned from the authentication API.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventPayload"
+      responses:
+        "200":
+          description: Event accepted
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too many requests
+
+  /collect/regional/bulk-event:
+    post:
+      operationId: collectRegionalBulkEvent
+      summary: Send bulk events to regional endpoint
+      description: >-
+        Sends up to 10 events to a region-specific endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BulkEventPayload"
+      responses:
+        "200":
+          description: Bulk events accepted
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too many requests
+
+  /collect/integration/event/accounts/{account}/profiles/{profile}/datasources/{datasourceId}:
+    post:
+      operationId: collectIntegrationEvent
+      summary: Send event via webhook/integration datasource
+      description: >-
+        Sends a single event via a dedicated datasource integration endpoint.
+        Returns 204 No Content on success. Suitable for webhook and
+        connector-based integrations.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: datasourceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Data source key for the integration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/IntegrationEventPayload"
+            example:
+              tealium_event: page_view
+              tealium_datasource: abc123
+              page_type: "123"
+              page_name: homepage
+      responses:
+        "204":
+          description: Event accepted — no content returned
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too many requests
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        JWT bearer token obtained from the Authentication API
+        (/v3/auth/accounts/{account}/profiles/{profile}). Tokens are valid
+        for 30 minutes. Do not generate a new token for every call — reuse
+        until expiration.
+
+  schemas:
+    EventPayload:
+      type: object
+      required:
+        - tealium_account
+        - tealium_profile
+        - tealium_event
+      properties:
+        tealium_account:
+          type: string
+          description: Tealium account name
+        tealium_profile:
+          type: string
+          description: Tealium profile name
+        tealium_event:
+          type: string
+          description: Event type identifier
+        tealium_visitor_id:
+          type: string
+          description: Visitor identifier (GUID or formatted known-visitor ID)
+        tealium_datasource:
+          type: string
+          description: Data source key
+        tealium_environment:
+          type: string
+          enum: [dev, qa, prod]
+          description: Deployment environment
+      additionalProperties:
+        type: string
+        description: Custom event attributes as additional key-value pairs
+
+    BulkEventPayload:
+      type: object
+      required:
+        - shared
+        - events
+      properties:
+        shared:
+          type: object
+          description: Common fields applied to all events in this batch
+          properties:
+            tealium_account:
+              type: string
+            tealium_profile:
+              type: string
+            tealium_environment:
+              type: string
+              enum: [dev, qa, prod]
+            tealium_datasource:
+              type: string
+            tealium_visitor_id:
+              type: string
+          additionalProperties:
+            type: string
+        events:
+          type: array
+          description: Array of event objects (max 10 per request)
+          maxItems: 10
+          items:
+            type: object
+            required:
+              - tealium_event
+            properties:
+              tealium_event:
+                type: string
+            additionalProperties:
+              type: string
+
+    IntegrationEventPayload:
+      type: object
+      required:
+        - tealium_event
+      properties:
+        tealium_event:
+          type: string
+          description: Event type identifier
+        tealium_datasource:
+          type: string
+          description: Data source key
+      additionalProperties:
+        type: string
+        description: Custom event attributes

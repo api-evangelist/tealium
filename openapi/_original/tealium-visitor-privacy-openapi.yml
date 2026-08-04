@@ -1,0 +1,259 @@
+openapi: 3.0.3
+info:
+  title: Tealium Visitor Privacy API
+  description: >-
+    Supports GDPR and CCPA compliance by allowing retrieval and deletion of
+    visitor profile records from the Customer Data Hub. Provides endpoints to
+    look up all known data about a specific visitor and to submit deletion
+    requests (which complete within 30 days). Default rate limit is 50 requests
+    per second; not designed for high-volume usage. Recommended maximum of one
+    concurrent connection. Contact your account manager if usage exceeds 1,000
+    daily API calls.
+  version: "3.0"
+  contact:
+    name: Tealium Support
+    url: https://docs.tealium.com/api/v3/visitor-privacy/about/
+
+servers:
+  - url: https://{host}/v3
+    description: Region-specific host returned by authentication API
+    variables:
+      host:
+        default: platform.tealiumapis.com
+        description: Region-specific host from auth response
+
+security:
+  - BearerAuth: []
+
+paths:
+  /privacy/visitor/accounts/{account}/profiles/{profile}:
+    get:
+      operationId: getPrivacyVisitor
+      summary: Retrieve visitor data (GDPR/CCPA lookup)
+      description: >-
+        Retrieves all known data about a specific visitor for GDPR/CCPA
+        compliance purposes. Returns the full visitor profile record including
+        all attributes, audience memberships, and badges.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: attributeId
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: Numeric ID of a Visitor ID attribute
+        - name: attributeValue
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Value to look up (URL-encode special characters)
+        - name: prettyName
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+          description: When true, returns user-friendly attribute names; false returns numeric IDs
+      responses:
+        "200":
+          description: Visitor data returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisitorPrivacyProfile"
+        "400":
+          description: Bad request — missing attributeId or attributeValue
+        "401":
+          description: Unauthorized — invalid or expired bearer token
+        "404":
+          description: Visitor not found
+    delete:
+      operationId: deletePrivacyVisitor
+      summary: Delete visitor data (GDPR/CCPA erasure)
+      description: >-
+        Submits a deletion request for a visitor's profile data from the
+        Customer Data Hub. Deletion is asynchronous and completes within
+        30 days. Returns a transactionId for tracking request status.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - attributeId
+                - attributeValue
+              properties:
+                attributeId:
+                  type: integer
+                  description: Numeric ID of the Visitor ID attribute
+                attributeValue:
+                  type: string
+                  description: Value identifying the visitor to delete
+      responses:
+        "200":
+          description: Deletion request submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeletionResponse"
+              example:
+                transactionId: "txn_abc123xyz"
+        "400":
+          description: Bad request — missing attributeId or attributeValue
+        "401":
+          description: Unauthorized
+        "429":
+          description: Too many requests — rate limit exceeded (50 req/s)
+
+  /privacy/visitor/accounts/{account}/profiles/{profile}/transactions/{transaction_id}:
+    get:
+      operationId: getDeleteTransactionStatus
+      summary: Check deletion transaction status
+      description: >-
+        Retrieves the status of a previously submitted visitor deletion request.
+        Returns PENDING, SUCCESS, or FAILED for the given transaction ID.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+        - name: transaction_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Transaction ID returned from the DELETE visitor request
+      responses:
+        "200":
+          description: Transaction status returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionStatusResponse"
+              example:
+                txn_abc123xyz: "PENDING"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Transaction not found
+
+  /privacy/visitor/accounts/{account}/profiles/{profile}/ids:
+    get:
+      operationId: getVisitorIdAttributes
+      summary: List visitor ID attributes
+      description: >-
+        Returns all Visitor ID attributes configured for the specified
+        account and profile, mapping numeric attribute IDs to their names.
+        Used to discover valid attributeId values for privacy lookups.
+      parameters:
+        - name: account
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium account name
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Tealium profile name
+      responses:
+        "200":
+          description: Visitor ID attributes returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisitorIdAttributesResponse"
+              example:
+                "101": "email_address"
+                "102": "customer_id"
+                "103": "phone_number"
+        "401":
+          description: Unauthorized
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        JWT bearer token obtained from the Authentication API. Valid for
+        30 minutes. Reuse tokens rather than generating new ones per request.
+
+  schemas:
+    VisitorPrivacyProfile:
+      type: object
+      description: Full visitor profile returned for privacy compliance purposes
+      properties:
+        audiences:
+          type: object
+          additionalProperties:
+            type: boolean
+        badges:
+          type: object
+          additionalProperties:
+            type: boolean
+        attributes:
+          type: object
+          additionalProperties: {}
+
+    DeletionResponse:
+      type: object
+      description: Response from a successful visitor deletion request
+      required:
+        - transactionId
+      properties:
+        transactionId:
+          type: string
+          description: Unique identifier for tracking the deletion request
+
+    TransactionStatusResponse:
+      type: object
+      description: >-
+        Maps transaction ID to current status.
+        Key is the transactionId, value is PENDING, SUCCESS, or FAILED.
+      additionalProperties:
+        type: string
+        enum: [PENDING, SUCCESS, FAILED]
+
+    VisitorIdAttributesResponse:
+      type: object
+      description: Maps numeric attribute IDs to attribute names
+      additionalProperties:
+        type: string
