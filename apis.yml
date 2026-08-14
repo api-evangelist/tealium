@@ -25,7 +25,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tealium.png
 url: https://raw.githubusercontent.com/api-evangelist/tealium/refs/heads/main/apis.yml
 created: "2026-06-13"
-modified: "2026-06-13"
+modified: "2026-08-13"
 specificationVersion: "0.19"
 tags:
   - Customer Data Platform
@@ -146,53 +146,108 @@ apis:
 - aid: tealium:tealium-auth-api
   name: Tealium Auth API
   description: The Auth API from Tealium — 1 operation(s) for auth.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  humanURL: https://docs.tealium.com/api/v3/getting-started/authentication/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
   - Auth
   properties:
   - type: OpenAPI
     url: openapi/tealium-auth-api-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-auth-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.tealium.com/api/v3/getting-started/authentication/
 - aid: tealium:tealium-collect-api
   name: Tealium Collect API
-  description: The Collect API from Tealium — 5 operation(s) for collect.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  description: The Collect API from Tealium — 6 operation(s) for collect.
+  humanURL: https://docs.tealium.com/api/v3/http-api/endpoints/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
   - Collect
   properties:
   - type: OpenAPI
     url: openapi/tealium-collect-api-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-collect-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.tealium.com/api/v3/http-api/endpoints/
 - aid: tealium:tealium-customer-api
   name: Tealium Customer API
   description: The Customer API from Tealium — 2 operation(s) for customer.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  humanURL: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
   - Customer
   properties:
   - type: OpenAPI
     url: openapi/tealium-customer-api-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-customer-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
 - aid: tealium:tealium-personalization-api
   name: Tealium Personalization API
   description: The Personalization API from Tealium — 2 operation(s) for personalization.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  humanURL: https://docs.tealium.com/server-side/moments-api/endpoint/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
   - Personalization
   properties:
   - type: OpenAPI
     url: openapi/tealium-personalization-api-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-personalization-api-overlay.yaml
+  - type: MCPServer
+    url: mcp/tealium-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/tealium-tool-crosswalk.yml
+  - type: Documentation
+    url: https://docs.tealium.com/server-side/moments-api/endpoint/
 - aid: tealium:tealium-privacy-api
   name: Tealium Privacy API
   description: The Privacy API from Tealium — 3 operation(s) for privacy.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  humanURL: https://docs.tealium.com/api/v3/visitor-privacy/endpoints/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
   - Privacy
   properties:
   - type: OpenAPI
     url: openapi/tealium-privacy-api-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-privacy-api-overlay.yaml
+  - type: Documentation
+    url: https://docs.tealium.com/api/v3/visitor-privacy/endpoints/
+- aid: tealium:tealium-ai-read-api
+  name: Tealium AI Read API
+  description: >-
+    Tealium's own minimal, read-only API for AI agents, published as OpenAPI 3.0.3 at
+    https://tealium.com/.well-known/openapi.yaml and discovered from https://tealium.com/llms.txt.
+    Three unauthenticated GET operations — a status/heartbeat object, a global multilingual FAQ
+    (question/answer pairs), and a pointer to the canonical documentation portal. Responses are
+    cache-friendly and carry provenance headers (Cache-Control, X-Provenance). Governed by the
+    usage rules in Tealium's agent manifest: attribution required, model training without consent
+    disallowed.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://tealium.com/llms.txt
+  baseURL: https://tealium.com
+  tags:
+  - AI
+  - Agents
+  - FAQ
+  - Read-Only
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/tealium-ai-read-openapi.yml
+  - type: Overlay
+    url: overlays/tealium-ai-read-overlay.yaml
+  - type: LLMsTxt
+    url: llms/tealium-llms.txt
+  - type: WellKnown
+    url: well-known/tealium-well-known.yml
+  - type: Documentation
+    url: https://tealium.com/.well-known/agents.json
+
 common:
 
   - type: AgenticAccess
@@ -239,6 +294,90 @@ common:
   - type: FinOps
     url: finops/tealium-finops.yml
 
+  - type: MCPServer
+    url: mcp/tealium-mcp.yml
+
+  - type: Packages
+    url: packages/tealium-packages.yml
+
+  - type: SDKs
+    url: packages/tealium-packages.yml
+
+  - type: WellKnown
+    url: well-known/tealium-well-known.yml
+
+  - type: LLMsTxt
+    url: llms/tealium-llms.txt
+
+  - type: Conventions
+    url: conventions/tealium-conventions.yml
+
+  - type: ErrorCatalog
+    url: errors/tealium-problem-types.yml
+
+  - type: Lifecycle
+    url: lifecycle/tealium-lifecycle.yml
+
+  - type: ChangeLog
+    url: changelog/tealium-changelog.yml
+
+  - type: Conformance
+    url: conformance/tealium-conformance.yml
+
+  - type: Compliance
+    url: https://tealium.com/security/
+
+  - type: Sandbox
+    url: sandbox/tealium-sandbox.yml
+
+  - type: DataModel
+    url: data-model/tealium-data-model.yml
+
+  - type: Webhooks
+    url: asyncapi/tealium-webhooks.yml
+
+  - type: AgentSkill
+    url: skills/_index.yml
+
+  - type: Vocabulary
+    url: vocabulary/tealium-vocabulary.yml
+
+  - type: Rules
+    url: rules/tealium-jsonschema-spectral-rules.yml
+
+  - type: JSONLD
+    url: json-ld/tealium-context.jsonld
+
+  - type: Examples
+    url: examples/_index.yml
+
+  - type: DeveloperPortal
+    url: https://tealium.com/developer-center/
+
+  - type: APIReference
+    url: https://docs.tealium.com/api/
+
+  - type: GettingStarted
+    url: https://docs.tealium.com/api/v3/getting-started/request-format/
+
+  - type: Support
+    url: https://tealium.com/customer-support-packages/
+
+  - type: Login
+    url: https://my.tealiumiq.com/login/
+
+  - type: TermsOfService
+    url: https://tealium.com/terms-of-use/
+
+  - type: PrivacyPolicy
+    url: https://tealium.com/privacy/
+
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v1
