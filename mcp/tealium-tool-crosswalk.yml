@@ -1,0 +1,109 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/tealium-mcp.yml, openapi/*.yml
+description: >-
+  Binds every tool exposed by Tealium's managed Moments API MCP server to the OpenAPI operation
+  that backs it, so each tool inherits a real input contract instead of a guessed one. Tealium's
+  MCP surface is a deliberate narrow slice of the REST surface: two read-only personalization
+  tools out of eighteen published operations. Everything Tealium's REST APIs can do that changes
+  state — sending events, deleting visitor records, minting tokens — is absent from MCP by design.
+
+surfaces:
+  openapi:
+    files:
+      - openapi/tealium-auth-api-openapi.yml
+      - openapi/tealium-collect-api-openapi.yml
+      - openapi/tealium-customer-api-openapi.yml
+      - openapi/tealium-personalization-api-openapi.yml
+      - openapi/tealium-privacy-api-openapi.yml
+      - openapi/tealium-ai-read-openapi.yml
+    gated: false
+    note: >-
+      The five platform specs are API Evangelist reconstructions from Tealium's own published
+      endpoint reference (Tealium publishes no OpenAPI for the V3 platform APIs). The sixth,
+      openapi/tealium-ai-read-openapi.yml, is Tealium's own spec, served verbatim from
+      https://tealium.com/.well-known/openapi.yaml.
+  graphql:
+    endpoint: null
+    note: Tealium publishes no GraphQL surface.
+  mcp:
+    url: https://us-west-2.prod.developer.tealiumapis.com/v1/personalization/mcp
+    transport: streamable-http
+    gated: true
+    gate_note: >-
+      tools/list returns HTTP 401 without X-Tealium-Api-Key, so tool inputSchemas could not be
+      captured live. The mapping below is by documented tool name + documented parameter list,
+      which matches the REST operations one-to-one, hence confidence high.
+
+crosswalk:
+  - tool: getPersonalizationContentByAnonymousId
+    category: personalization
+    rest:
+      - getMomentsByVisitorId
+    binding: rest
+    confidence: high
+    note: >-
+      Same path shape and same identifier. REST:
+      GET /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}/visitors/{visitorId}.
+      The tool's account/profile/engineId/visitorId parameters map exactly onto the REST path
+      parameters, and suppressNotFound onto the REST query parameter of the same name.
+  - tool: getPersonalizationContentByVisitorId
+    category: personalization
+    rest:
+      - getMomentsByAttributeValue
+    binding: rest
+    confidence: high
+    note: >-
+      REST: GET /personalization/accounts/{account}/profiles/{profile}/engines/{engineId} with
+      attributeId + attributeValue query parameters. Tool parameter names are identical.
+
+mcp_only: []
+
+rest_only:
+  - capability: authentication
+    operations:
+      - generateBearerToken
+    reason: >-
+      Token minting is a credential operation. The MCP server uses a separate static
+      X-Tealium-Api-Key and never exchanges the V3 username/key pair for a JWT.
+  - capability: event-collection
+    operations:
+      - collectEventGet
+      - collectEventPost
+      - collectBulkEvent
+      - collectRegionalEvent
+      - collectRegionalBulkEvent
+      - collectIntegrationEvent
+    reason: Write path into the Customer Data Hub. The managed MCP server is read-only.
+  - capability: visitor-profile
+    operations:
+      - getVisitorProfile
+      - getHistoricalVisitorProfile
+    reason: >-
+      Full visitor-profile reads. MCP deliberately exposes only the engine-scoped Moments slice,
+      which is the mechanism by which an account limits what an LLM can see.
+  - capability: privacy
+    operations:
+      - getPrivacyVisitor
+      - deletePrivacyVisitor
+      - getDeleteTransactionStatus
+      - getVisitorIdAttributes
+    reason: GDPR/CCPA subject-access and erasure. Not exposed to agents.
+  - capability: ai-read
+    operations:
+      - getStatus
+      - getFAQ
+      - getDocsPointer
+    reason: >-
+      Tealium's own unauthenticated agent-read endpoints on tealium.com. Public marketing/FAQ
+      content, published as OpenAPI rather than as MCP tools.
+
+coverage:
+  tools_named: 2
+  tools_bound: 2
+  tools_unbound: 0
+  mcp_only: 0
+  rest_operations_total: 18
+  rest_operations_with_tool: 2
+  rest_operations_without_tool: 16
+  mcp_share_of_rest_surface: '11%'

@@ -1,14 +1,20 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: searched
 probe: true
-source: https://trust.tealium.com/
+source: https://trust.tealium.com/, https://tealium.com/security/
 url: https://trust.tealium.com/
+compliance_page: https://tealium.com/security/
 certifications:
-- SOC 2
-- ISO 27001
-- ISO 27018
-- HIPAA
+- SSAE18 SOC 2 Type II
+- ISO/IEC 27001
+- ISO/IEC 27018
+- ISO/IEC 27701:2019
+- HIPAA & HITECH
+- TISAX
+- TX-RAMP
+- Cloud Security Alliance (CSA)
 - GDPR
+- CCPA
 evidence:
 - source: https://trust.tealium.com/
   keywords:
@@ -17,3 +23,57 @@ evidence:
   - hipaa
   - trust center
   - gdpr
+- source: https://tealium.com/security/
+  http_status: 200
+  certifications_named:
+  - HIPAA & HITECH
+  - ISO/IEC 27001
+  - ISO/IEC 27701:2019
+  - ISO/IEC 27018
+  - SSAE18 SOC2 Type II
+  - TISAX
+  - TX-RAMP
+  - Cloud Security Alliance (CSA)
+  note: >-
+    The public Security & Compliance page names four certifications the trust center capture
+    missed — ISO/IEC 27701:2019 (privacy information management), TISAX (automotive sector
+    assessment), TX-RAMP (Texas state cloud authorization) and CSA membership. Added here on the
+    2026-08-13 pass.
+
+vulnerability_disclosure:
+  program: false
+  policy_url: null
+  security_contact: null
+  bug_bounty: false
+  security_txt: false
+  probed:
+    - url: https://tealium.com/security/
+      status: 200
+      finding: >-
+        Names certifications but publishes no disclosure policy, no security contact address and no
+        reporting instructions. The only related sentence is "Tealium strives to keep ahead of
+        attackers by working with security researchers, industry experts, and our customers" —
+        an assertion of intent with no channel attached.
+    - url: https://tealium.com/vulnerability-disclosure/
+      status: 404
+    - url: https://tealium.com/responsible-disclosure/
+      status: 404
+    - url: https://hackerone.com/tealium
+      status: 404
+    - url: https://bugcrowd.com/tealium
+      status: 404
+    - url: https://tealium.com/.well-known/security.txt
+      status: 404
+    - url: https://docs.tealium.com/.well-known/security.txt
+      status: 404
+    - url: https://platform.tealiumapis.com/.well-known/security.txt
+      status: 404
+  finding: >-
+    NO published vulnerability disclosure route. A researcher who finds a flaw in Tealium has no
+    documented address to send it to — no security.txt, no policy page, no bug bounty platform
+    listing. This is the clearest single remediation available to Tealium: an RFC 9116
+    /.well-known/security.txt naming a contact would close it in an afternoon. Because there is no
+    program, no VulnerabilityDisclosure artifact and no `Security` pointer are emitted.
+
+x-evidence:
+  checked: '2026-08-13'

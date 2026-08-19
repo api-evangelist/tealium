@@ -1,0 +1,1132 @@
+{
+  "item": [
+    {
+      "id": "fc67a9b8-fa1d-410a-ab73-38a161cebfc8",
+      "name": "Privacy",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6842e97c-b7ae-454d-b251-f175ceed33aa",
+          "name": "Retrieve visitor data (GDPR/CCPA lookup)",
+          "request": {
+            "name": "Retrieve visitor data (GDPR/CCPA lookup)",
+            "description": {
+              "content": "Retrieves all known data about a specific visitor for GDPR/CCPA compliance purposes. Returns the full visitor profile record including all attributes, audience memberships, and badges.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "privacy",
+                "visitor",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "attributeId",
+                  "value": "<integer>",
+                  "description": "(Required) Numeric ID of a Visitor ID attribute"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeValue",
+                  "value": "<string>",
+                  "description": "(Required) Value to look up (URL-encode special characters)"
+                },
+                {
+                  "disabled": false,
+                  "key": "prettyName",
+                  "value": "false",
+                  "description": "When true, returns user-friendly attribute names; false returns numeric IDs"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3294b1c-90b8-4c5e-92b2-564011d43d05",
+              "name": "Visitor data returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audiences\": {\n    \"key_0\": true,\n    \"key_1\": true,\n    \"key_2\": false\n  },\n  \"badges\": {\n    \"key_0\": true\n  },\n  \"attributes\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3dbd574-d4c3-4999-9c2c-acaa74520972",
+              "name": "Bad request — missing attributeId or attributeValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08a27ace-5164-491e-9b9f-f1afe113911c",
+              "name": "Unauthorized — invalid or expired bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d9ebdcc-e51f-4596-8923-a2a2ff8bd345",
+              "name": "Visitor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0d7c76e9-48c3-4953-b8f0-e55fe2ce5b57",
+          "name": "Delete visitor data (GDPR/CCPA erasure)",
+          "request": {
+            "name": "Delete visitor data (GDPR/CCPA erasure)",
+            "description": {
+              "content": "Submits a deletion request for a visitor's profile data from the Customer Data Hub. Deletion is asynchronous and completes within 30 days. Returns a transactionId for tracking request status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "privacy",
+                "visitor",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "attributeId",
+                  "value": "<integer>",
+                  "description": "(Required) Numeric ID of the Visitor ID attribute"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeValue",
+                  "value": "<string>",
+                  "description": "(Required) Value identifying the visitor to delete"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a864f520-9ca3-476d-ad7f-f14f92b8c3e4",
+              "name": "Deletion request submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Numeric ID of the Visitor ID attribute",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Value identifying the visitor to delete",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionId\": \"txn_abc123xyz\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9309315a-02dc-4a7b-bb27-39fc8685ae3c",
+              "name": "Bad request — missing attributeId or attributeValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Numeric ID of the Visitor ID attribute",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Value identifying the visitor to delete",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2287c8b1-4061-425a-8a24-54c8c2aeb635",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Numeric ID of the Visitor ID attribute",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Value identifying the visitor to delete",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0e3ca371-fd0d-44f3-ab3c-0598e0fb675b",
+              "name": "Too many requests — rate limit exceeded (50 req/s)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Numeric ID of the Visitor ID attribute",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Value identifying the visitor to delete",
+                        "type": "text/plain"
+                      },
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c2dc081-05d3-4823-9ae2-105c412b85ed",
+          "name": "Check deletion transaction status",
+          "request": {
+            "name": "Check deletion transaction status",
+            "description": {
+              "content": "Retrieves the status of a previously submitted visitor deletion request. Returns PENDING, SUCCESS, or FAILED for the given transaction ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "privacy",
+                "visitor",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile",
+                "transactions",
+                ":transaction_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transaction_id",
+                  "description": "(Required) Transaction ID returned from the DELETE visitor request"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55a54984-e793-4148-9d90-9399bd60417a",
+              "name": "Transaction status returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "transactions",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Transaction ID returned from the DELETE visitor request"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"txn_abc123xyz\": \"PENDING\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "613bab19-de9e-4703-ae85-e31a4e794840",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "transactions",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Transaction ID returned from the DELETE visitor request"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a0f9e5f-302c-4646-bd8a-a8c9f2545e88",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "transactions",
+                    ":transaction_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transaction_id",
+                      "description": "(Required) Transaction ID returned from the DELETE visitor request"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49a3e0ce-462c-42f7-ad0d-8d4c846f304d",
+          "name": "List visitor ID attributes",
+          "request": {
+            "name": "List visitor ID attributes",
+            "description": {
+              "content": "Returns all Visitor ID attributes configured for the specified account and profile, mapping numeric attribute IDs to their names. Used to discover valid attributeId values for privacy lookups.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "privacy",
+                "visitor",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile",
+                "ids"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ca06c284-a3c7-44f0-921a-b7e301f24975",
+              "name": "Visitor ID attributes returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"101\": \"email_address\",\n  \"102\": \"customer_id\",\n  \"103\": \"phone_number\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "228ce150-f804-40da-b102-191226dc085c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "privacy",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "ids"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.tealiumapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9692881e-c156-481a-a9b7-a450f5fbec36",
+    "name": "Tealium Authentication Auth Privacy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.\n\nContact Support:\n Name: Tealium Support",
+      "type": "text/plain"
+    }
+  }
+}

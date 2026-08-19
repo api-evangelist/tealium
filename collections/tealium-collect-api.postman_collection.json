@@ -1,0 +1,1449 @@
+{
+  "item": [
+    {
+      "id": "782c8120-c6ab-453f-897c-0d39b7568bfd",
+      "name": "Collect",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c7876cbf-adce-4a96-8fd9-ef32135b0f8a",
+          "name": "Send single event (GET)",
+          "request": {
+            "name": "Send single event (GET)",
+            "description": {
+              "content": "Sends a single event via HTTP GET. Returns a 1x1 transparent GIF image. Useful for pixel-based tracking scenarios.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tealium_account",
+                  "value": "<string>",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "key": "tealium_profile",
+                  "value": "<string>",
+                  "description": "(Required) Tealium profile name"
+                },
+                {
+                  "disabled": false,
+                  "key": "tealium_event",
+                  "value": "<string>",
+                  "description": "(Required) Event type identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "tealium_visitor_id",
+                  "value": "<string>",
+                  "description": "Visitor identifier (GUID or formatted known-visitor ID)"
+                },
+                {
+                  "disabled": false,
+                  "key": "tealium_datasource",
+                  "value": "<string>",
+                  "description": "Data source key"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "image/gif"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "309b714f-0924-404a-bb30-1cd53ee7e77f",
+              "name": "Event accepted; returns 1x1 transparent GIF",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tealium_account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_profile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_visitor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_datasource",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "image/gif"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "image/gif"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bc45ae10-23b5-4072-aa0d-94f9bef2dad7",
+              "name": "Bad request — missing required parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tealium_account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_profile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_visitor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_datasource",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8fe495b-5ae0-4f9e-8010-6ad9687e4945",
+              "name": "Unauthorized — invalid or expired bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tealium_account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_profile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_visitor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_datasource",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a31f5431-e0a6-465d-b1b6-8709a376399e",
+              "name": "Too many requests — rate limit exceeded (100 events/second)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tealium_account",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_profile",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_visitor_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tealium_datasource",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a0e7c0b-4b3e-4b10-a2c7-5dd6934ec155",
+          "name": "Send single event (POST)",
+          "request": {
+            "name": "Send single event (POST)",
+            "description": {
+              "content": "Sends a single event via HTTP POST with a JSON body. Returns an empty JSON response with content-length 0.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "29fbf35d-cc55-4f59-a55c-7fe9d4b58244",
+              "name": "Event accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"my-account\",\n  \"tealium_profile\": \"main\",\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"testName\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3b4998c-829b-43ec-b6d4-1ddf65cdd599",
+              "name": "Bad request — missing required fields, invalid JSON keys, or empty body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"my-account\",\n  \"tealium_profile\": \"main\",\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"testName\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6966b366-325d-42ac-919c-e98131a7459b",
+              "name": "Unauthorized — invalid or expired bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"my-account\",\n  \"tealium_profile\": \"main\",\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"testName\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51ddac29-1a4f-4b3c-b300-21d918540fea",
+              "name": "Too many requests — rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"my-account\",\n  \"tealium_profile\": \"main\",\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"testName\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d096343-204e-42c8-ab11-c8fe65795e4e",
+          "name": "Send bulk events (up to 10)",
+          "request": {
+            "name": "Send bulk events (up to 10)",
+            "description": {
+              "content": "Sends up to 10 events in a single POST request. The shared object provides common fields applied to all events; individual event objects can override or extend them.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "bulk-event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc096d9c-577b-4659-8683-b4bea3b84cab",
+              "name": "Bulk events accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"my-account\",\n    \"tealium_profile\": \"main\",\n    \"tealium_environment\": \"prod\",\n    \"tealium_datasource\": \"abc123\",\n    \"tealium_visitor_id\": \"abc123_071222_1\"\n  },\n  \"events\": [\n    {\n      \"page_name\": \"home\",\n      \"tealium_event\": \"page_view\"\n    },\n    {\n      \"page_name\": \"checkout\",\n      \"tealium_event\": \"page_view\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcc85460-cec1-4abe-b47c-a5cac31b36e9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"my-account\",\n    \"tealium_profile\": \"main\",\n    \"tealium_environment\": \"prod\",\n    \"tealium_datasource\": \"abc123\",\n    \"tealium_visitor_id\": \"abc123_071222_1\"\n  },\n  \"events\": [\n    {\n      \"page_name\": \"home\",\n      \"tealium_event\": \"page_view\"\n    },\n    {\n      \"page_name\": \"checkout\",\n      \"tealium_event\": \"page_view\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "595e3aef-550a-4034-8857-43321b769672",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"my-account\",\n    \"tealium_profile\": \"main\",\n    \"tealium_environment\": \"prod\",\n    \"tealium_datasource\": \"abc123\",\n    \"tealium_visitor_id\": \"abc123_071222_1\"\n  },\n  \"events\": [\n    {\n      \"page_name\": \"home\",\n      \"tealium_event\": \"page_view\"\n    },\n    {\n      \"page_name\": \"checkout\",\n      \"tealium_event\": \"page_view\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe0dae93-9960-4bb7-be67-9c7a7a9719d5",
+              "name": "Too many requests — rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"my-account\",\n    \"tealium_profile\": \"main\",\n    \"tealium_environment\": \"prod\",\n    \"tealium_datasource\": \"abc123\",\n    \"tealium_visitor_id\": \"abc123_071222_1\"\n  },\n  \"events\": [\n    {\n      \"page_name\": \"home\",\n      \"tealium_event\": \"page_view\"\n    },\n    {\n      \"page_name\": \"checkout\",\n      \"tealium_event\": \"page_view\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bc6c646-1635-4b0c-a4d8-903cf8c0b234",
+          "name": "Send single event to regional endpoint",
+          "request": {
+            "name": "Send single event to regional endpoint",
+            "description": {
+              "content": "Sends a single event to a region-specific endpoint. Use the regional host returned from the authentication API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "regional",
+                "event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "38eacf7b-be06-4c7b-961a-20dd3869b189",
+              "name": "Event accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c930e38e-77dc-48ac-96f0-143270473dbb",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c253105c-bad9-41d5-8332-f4297b329126",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "340457a9-81d5-4763-b559-fcacfea3a270",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_account\": \"<string>\",\n  \"tealium_profile\": \"<string>\",\n  \"tealium_event\": \"<string>\",\n  \"tealium_visitor_id\": \"<string>\",\n  \"tealium_datasource\": \"<string>\",\n  \"tealium_environment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fa4476e-f893-4620-93d0-3c9812635263",
+          "name": "Send bulk events to regional endpoint",
+          "request": {
+            "name": "Send bulk events to regional endpoint",
+            "description": {
+              "content": "Sends up to 10 events to a region-specific endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "regional",
+                "bulk-event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1080aa7-991f-4689-8a81-a6744031a00d",
+              "name": "Bulk events accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cf700b2b-6c55-4976-bf5a-e01c447e4e99",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c786cf8-d63c-46d4-aed5-c4951a826220",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb0a815d-f966-46be-9b6d-f82e7ecfffb7",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "regional",
+                    "bulk-event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shared\": {\n    \"tealium_account\": \"<string>\",\n    \"tealium_profile\": \"<string>\",\n    \"tealium_environment\": \"<string>\",\n    \"tealium_datasource\": \"<string>\",\n    \"tealium_visitor_id\": \"<string>\"\n  },\n  \"events\": [\n    {\n      \"tealium_event\": \"<string>\"\n    },\n    {\n      \"tealium_event\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c193214-b698-49e8-a198-92c74b0b34d4",
+          "name": "Send event via webhook/integration datasource",
+          "request": {
+            "name": "Send event via webhook/integration datasource",
+            "description": {
+              "content": "Sends a single event via a dedicated datasource integration endpoint. Returns 204 No Content on success. Suitable for webhook and connector-based integrations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collect",
+                "integration",
+                "event",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile",
+                "datasources",
+                ":datasourceId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "datasourceId",
+                  "description": "(Required) Data source key for the integration"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tealium_event\": \"<string>\",\n  \"tealium_datasource\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e38819e2-b796-44b4-9be1-00c1c1090ab8",
+              "name": "Event accepted — no content returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "integration",
+                    "event",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "datasources",
+                    ":datasourceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "datasourceId",
+                      "description": "(Required) Data source key for the integration"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"homepage\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68405ef6-77fe-40a3-b5c7-d8e7d92b6a8d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "integration",
+                    "event",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "datasources",
+                    ":datasourceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "datasourceId",
+                      "description": "(Required) Data source key for the integration"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"homepage\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9e9527e-f6ec-4269-8f91-498a0203177c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "integration",
+                    "event",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "datasources",
+                    ":datasourceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "datasourceId",
+                      "description": "(Required) Data source key for the integration"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"homepage\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "834ed67f-53c6-444a-9abf-be0f2be7a02a",
+              "name": "Too many requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collect",
+                    "integration",
+                    "event",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "datasources",
+                    ":datasourceId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "datasourceId",
+                      "description": "(Required) Data source key for the integration"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tealium_event\": \"page_view\",\n  \"tealium_datasource\": \"abc123\",\n  \"page_type\": \"123\",\n  \"page_name\": \"homepage\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.tealiumapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e443a49d-b93c-4562-bbee-5c235e0b7025",
+    "name": "Tealium Authentication Auth Collect API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.\n\nContact Support:\n Name: Tealium Support",
+      "type": "text/plain"
+    }
+  }
+}

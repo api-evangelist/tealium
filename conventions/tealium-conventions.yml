@@ -1,0 +1,186 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/api/v3/getting-started/request-format/,
+  https://docs.tealium.com/api/v3/getting-started/authentication/,
+  https://docs.tealium.com/api/v3/getting-started/status-codes/,
+  https://docs.tealium.com/api/v3/scim-api/about/,
+  https://docs.tealium.com/server-side/moments-api/about/,
+  and openapi/*.yml
+description: >-
+  Cross-cutting runtime semantics for the Tealium V3 platform APIs. Tealium documents its request
+  format, authentication and status codes in a short "Getting started" set and pushes everything
+  else — rate limits in particular — down to the individual endpoint pages. Two conventions are
+  load-bearing for any client: the region-specific host handshake, and token reuse.
+
+authentication:
+  style: bearer-jwt-from-key-exchange
+  summary: >-
+    POST username + API key (form-encoded) to the auth endpoint; receive a JWT bearer token and a
+    region-specific host. Use the token as Authorization: Bearer for subsequent calls.
+  endpoint: POST https://platform.tealiumapis.com/v3/auth/accounts/{account}/profiles/{profile}
+  request_content_type: application/x-www-form-urlencoded
+  token_ttl_seconds: 1800
+  token_reuse_required: true
+  token_reuse_note: >-
+    Tealium explicitly warns: "Do not generate a new bearer token for every call. Use the token
+    until it expires... Failure to use the token in this manner will result in authentication call
+    throttling at Tealium's discretion." Token churn is therefore a throttling trigger, not just
+    waste — this is the single most important client convention on the platform.
+  long_lived_tokens:
+    endpoint: POST https://developer.tealiumapis.com/v2/auth-long-lived/token
+    revoke_endpoint: POST https://developer.tealiumapis.com/v2/auth-long-lived/revoke
+    ttl_seconds: 7776000
+    ttl_human: 90 days
+    scope_string: 'profile email'
+    used_by: SCIM API
+    rate_limit_mint: 10 requests per minute per IP address
+    rate_limit_revoke: 20 requests per minute per IP address
+    revocation: >-
+      Immediate and permanent, effective within seconds. Returns 200 whether or not the token was
+      already expired or revoked (revoking an invalid token is not an error); 401 means the
+      credentials do not match those used to mint the token.
+  moments_api_exception:
+    scheme: none
+    control: domain allowlist
+    required_headers: [Origin, Referer]
+    note: >-
+      The Moments API takes no bearer token. Access is governed by an allowlist of domains plus
+      required Origin and Referer headers. The managed MCP server in front of it uses a separate
+      static X-Tealium-Api-Key header.
+  cross_ref: authentication/tealium-authentication.yml
+
+regional_routing:
+  convention: host-from-auth-response
+  summary: >-
+    The authentication response body contains both a token and a host, e.g.
+    {"token":"eyJ0[...]","host":"us-east-1-platform.tealiumapis.com"}. All region-specific
+    subsequent calls MUST be made against that returned host, not against the
+    platform.tealiumapis.com bootstrap host.
+  bootstrap_host: https://platform.tealiumapis.com/v3
+  example_regional_host: https://us-east-1-platform.tealiumapis.com/v3
+  moments_api_hosts: https://personalization-api.{region}.prod.tealiumapis.com
+  moments_api_regions: [us-east-1, us-west-2, eu-central-1, ap-southeast-2]
+  implication: >-
+    A client that hardcodes platform.tealiumapis.com for data calls works by luck of routing, not
+    by contract. Any OpenAPI servers[] block for these APIs is correctly templated
+    (https://{host}/v3) rather than concrete.
+
+request_format:
+  root_url: https://platform.tealiumapis.com/v3
+  content_type: application/json
+  content_type_exception: 'application/x-www-form-urlencoded on the auth and long-lived-token endpoints'
+  path_convention: >-
+    Most endpoints carry the Tealium account and profile in the path, e.g.
+    /customer/visitor/accounts/{account}/profiles/{profile}.
+  placeholder_style: '{variable}'
+
+versioning:
+  scheme: uri-path
+  current: v3
+  concurrent:
+    - version: v3
+      base: https://platform.tealiumapis.com/v3
+      status: current
+      apis: [Auth, Collect HTTP, Visitor Profile, Visitor Privacy, iQ Profiles, SCIM]
+    - version: v2
+      base: https://api.tealiumiq.com/v2
+      status: supported
+      apis: [Hosted Data Layer, iQ Revisions, Omnichannel File Status]
+    - version: v1
+      status: legacy
+      note: >-
+        Tealium's V2 auth doc states "The previous v1 API is still available, but will eventually
+        be deprecated." No sunset date is published.
+  cross_ref: lifecycle/tealium-lifecycle.yml
+
+pagination:
+  documented: false
+  note: >-
+    Tealium publishes no cursor, offset or link-header pagination convention for the V3 read APIs.
+    Visitor and Moments reads return a single record; there is no list endpoint that pages. The
+    only size controls are batch caps on the write path (see batching).
+
+batching:
+  - api: Collect HTTP API
+    endpoint: /collect/bulk-event
+    max_items: 10
+    note: A bulk call with 10 events counts as 10 against the 100 events/second limit.
+  - api: Data Connect API
+    max_request_bytes: 2621440
+    max_request_human: 2.5 MB
+    auto_batch_size: 500
+    note: Large files are auto-batched at 500 records per batch.
+
+field_expansion:
+  documented: false
+  note: >-
+    No ?expand / ?fields / sparse-fieldset convention. The Moments API achieves the same effect
+    through configuration rather than query parameters — an "engine" is a server-side selection of
+    which audiences, badges and attributes are returned, so the response shape is fixed per engine.
+
+error_envelope:
+  format: plain-http-status
+  rfc9457: false
+  content_type: application/json
+  documented_codes: [200, 400, 401, 404, 429, '50X']
+  docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+  note: >-
+    Tealium documents a five-row status-code table and no machine-readable error type registry —
+    no problem+json, no error code enum, no error identifier field. Observed bodies are terse,
+    e.g. {"message":"Resource not found"} from the gateway and
+    {"message":"Unauthorized","http_status_code":401} from the MCP host. There is no stable
+    programmatic discriminator beyond the HTTP status.
+  cross_ref: errors/tealium-problem-types.yml
+
+not_found_semantics:
+  parameter: suppressNotFound
+  applies_to: [Moments API, managed MCP server tools]
+  values:
+    'false': 'default — returns HTTP 404 Not Found when no visitor record exists'
+    'true': 'returns HTTP 200 OK with an empty response body'
+  note: >-
+    A rare and useful convention: the caller chooses whether a missing visitor is an error or an
+    empty success. Agents should set it true so a cold visitor does not surface as a tool failure.
+
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key header, no idempotent-retry guidance, and no deduplication key documented
+    on any write endpoint. The Collect HTTP API is fire-and-forget: a retried POST /collect/event
+    produces a second event in the Customer Data Hub. Visitor deletion via the Visitor Privacy API
+    is naturally idempotent by outcome (a transaction ID is returned and can be polled), but that
+    is a property of the operation, not a published idempotency contract. No Idempotency pointer
+    is emitted in apis.yml, because Tealium does not implement one.
+
+request_tracing:
+  request_id_header: null
+  note: >-
+    No X-Request-Id / correlation-ID convention is documented for API responses. Tealium's
+    equivalent debugging surface is Trace (see sandbox/tealium-sandbox.yml) — a session-scoped
+    trace ID attached to incoming events and inspected in the UI, not a per-response header.
+  observed_response_headers: [X-NodeId, X-Version]
+  observed_note: >-
+    The documented example auth response shows X-NodeId and X-Version headers; both are internal
+    build/instance markers, not documented contract.
+
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers_published: false
+  headers_note: >-
+    This is the notable gap. Tealium publishes numeric limits per endpoint but documents NO
+    rate-limit response headers — no X-RateLimit-Limit/Remaining/Reset, no RFC 9331 RateLimit-*,
+    and no Retry-After. A client cannot discover its remaining budget; it can only observe the 429.
+    For an agent this means blind backoff.
+  escalation: 'Higher limits are negotiated with a Tealium account manager, not self-served.'
+  cross_ref: rate-limits/tealium-rate-limits.yml
+
+standards:
+  scim:
+    version: '2.0'
+    note: The SCIM API implements SCIM 2.0 /Users and /Groups with POST/GET/PUT/PATCH/DELETE.
+  saml:
+    version: '2.0'
+    note: SSO via SAML 2.0 with ADFS, Azure and Okta IdPs.
+  cross_ref: conformance/tealium-conformance.yml

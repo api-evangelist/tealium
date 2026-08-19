@@ -1,0 +1,120 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/api/v3/getting-started/request-format/,
+  https://docs.tealium.com/api/v2/getting-started/auth/,
+  https://docs.tealium.com/administration/resources/tealium-status-page/,
+  https://docs.tealium.com/release-notes/, and openapi/*.yml
+description: >-
+  Tealium runs three concurrent API generations and a weekly-cadence release-notes stream, and
+  operates a detailed public status page with six declared service states. What it does NOT publish
+  is a deprecation policy: there is no versioning policy page, no sunset schedule, no RFC 8594
+  Deprecation/Sunset header support, and no public SLA document. Deprecations surface as one-line
+  notices inside dated release notes.
+
+versioning:
+  scheme: uri-path
+  current: v3
+  policy_url: null
+  policy_note: >-
+    No published versioning or API-lifecycle policy page. The version generations below were
+    assembled from the individual "Getting started" pages of each generation.
+  generations:
+    - version: v3
+      base: https://platform.tealiumapis.com/v3
+      status: current
+      apis:
+        - Auth
+        - Collect HTTP API
+        - Visitor Profile API
+        - Visitor Privacy API
+        - iQ Profiles API
+        - SCIM API
+      docs: https://docs.tealium.com/api/v3/
+    - version: v2
+      base: https://api.tealiumiq.com/v2
+      status: supported
+      apis:
+        - Hosted Data Layer API
+        - iQ Revisions API
+        - Omnichannel File Status API
+      docs: https://docs.tealium.com/api/v2/getting-started/auth/
+    - version: v1
+      status: legacy-announced
+      docs: https://docs.tealium.com/authentication-v1/
+      note: >-
+        Tealium's V2 authentication page states "The previous v1 API is still available, but will
+        eventually be deprecated." That sentence is the entirety of the published intent — no
+        sunset date, no migration deadline, no notice window. An unauthenticated Collect HTTP API
+        v1 is still advertised in Tealium's own /.well-known/agents.json manifest as
+        "collect-http-v1 — Unauthenticated HTTP API v1 (legacy)".
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notice_window: null
+  channel: https://docs.tealium.com/release-notes/
+  channel_note: >-
+    Deprecations are announced as individual lines inside dated release-note entries — for example
+    the 2026-08-12 entry carrying a deprecation notice for a legacy Amazon Ads Conversions
+    connector action, and the standing "Webhook Krux (Deprecated)" connector page. There is no
+    aggregated deprecation index and no machine-readable signal on the wire.
+  deprecated_operations: []
+  deprecated_operations_note: >-
+    No operation in any OpenAPI definition in this repo carries deprecated: true.
+
+sla:
+  url: null
+  uptime_target: null
+  published: false
+  note: >-
+    No public SLA or uptime commitment. Tealium is enterprise-contracted (see
+    plans/tealium-plans-pricing.yml) and availability terms are negotiated per agreement.
+  latency_commitment:
+    api: Moments API
+    value: 'average 60ms for payloads under 1 kB'
+    source: https://docs.tealium.com/server-side/moments-api/about/
+    note: A published performance characteristic, not a contractual SLA.
+
+status_page:
+  url: https://status.tealium.com/
+  http_status: 200
+  docs: https://docs.tealium.com/administration/resources/tealium-status-page/
+  subscribable: true
+  granularity: per-service and per-sub-service
+  states:
+    - Operational
+    - Maintenance
+    - Degraded Performance
+    - Partial Service Disruption
+    - Service Disruption
+    - Security Event
+  history: 'Status history page lists recent issues in reverse chronological order, timestamped in UTC.'
+  planned_maintenance: true
+
+data_retention:
+  - subject: Moments API visitor data
+    value: 'retained 30 days without new events; 1 kB storage limit per visitor per engine'
+    source: https://docs.tealium.com/server-side/moments-api/about/
+  - subject: Visitor Privacy API deletion requests
+    value: 'complete within 30 days'
+    source: https://docs.tealium.com/api/v3/visitor-privacy/about/
+  - subject: Long-lived SCIM bearer token
+    value: 'expires after 90 days (7776000 seconds); revocable immediately and permanently'
+    source: https://docs.tealium.com/api/v3/scim-api/about/
+
+sdk_lifecycle:
+  note: >-
+    The client-library line has its own decay pattern worth recording here: the CocoaPods
+    distribution of tealium-swift is stalled at 2.9.2 (April 2023) while the Swift Package Manager
+    line is at 2.18.4 (July 2026). See packages/tealium-packages.yml.
+
+gaps:
+  - No deprecation policy page.
+  - No Sunset or Deprecation response headers (RFC 8594).
+  - No published notice window for breaking changes.
+  - No public SLA.
+  - v1 announced as "will eventually be deprecated" with no date, for years.

@@ -1,0 +1,197 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of every apis.yml baseURL host, every OpenAPI servers[] host, and the docs/marketing hosts
+note: >-
+  Tealium serves a real agent-discovery surface at the marketing root (tealium.com) — an agent
+  manifest, a data taxonomy, and a small read-only OpenAPI — but serves nothing under
+  /.well-known/ on any API host. The RFC 8615 standard paths (security.txt, openid-configuration,
+  oauth-authorization-server, api-catalog, ai-plugin.json) return 404 everywhere. The documents
+  Tealium does publish sit at non-standard well-known names discovered from https://tealium.com/llms.txt.
+  Note that /.well-known/agents.json is NOT an A2A Agent Card — it declares its own
+  $schema (agent-manifest.schema.json) and carries none of the A2A AgentCard shape — so no
+  AgentCard pointer is emitted from it.
+
+hosts:
+  - host: https://tealium.com
+    documents:
+      - path: /.well-known/agents.json
+        status: 200
+        content_type: application/json
+        file: tealium-agents.json
+        kind: vendor-agent-manifest
+        note: >-
+          Tealium's own agent manifest, version 1.1. Declares organization + contact, three
+          capabilities (faq_answering, docs_search, site_search), a taxonomy URL, consent policy
+          URLs with gdpr/ccpa signals, four APIs (tealium-docs, collect-http-v3, collect-http-v1,
+          ai-read), three read endpoints, sitemaps, locales, and usage rules
+          (attribution_required: true, disallowed_uses: model_training_without_consent).
+          Not an A2A Agent Card.
+      - path: /.well-known/data-taxonomy.json
+        status: 200
+        content_type: application/json
+        file: tealium-data-taxonomy.json
+        kind: vendor-data-taxonomy
+        note: Entity/field taxonomy (organization, website, solution, ...) mapped to schema.org types.
+      - path: /.well-known/openapi.yaml
+        status: 200
+        content_type: text/yaml
+        file: ../openapi/tealium-ai-read-openapi.yml
+        kind: openapi
+        note: >-
+          OpenAPI 3.0.3 "Tealium AI Read API" — three unauthenticated read operations
+          (getStatus, getFAQ, getDocsPointer). Saved verbatim to openapi/.
+      - path: /.well-known/ai.txt
+        status: 404
+        note: Referenced as "(Optional) ai.txt" in https://tealium.com/llms.txt but not served.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /llms.txt
+        status: 200
+        content_type: text/plain
+        file: ../llms/tealium-llms.txt
+        kind: llms-txt
+
+  - host: https://docs.tealium.com
+    documents:
+      - path: /llms.txt
+        status: 200
+        content_type: text/plain
+        file: ../llms/tealium-docs-llms.txt
+        kind: llms-txt
+        note: >-
+          Area index. Twelve per-area llms.txt files hang off it; every docs page is also
+          served as clean markdown at <page-url>/index.md.
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+
+  - host: https://platform.tealiumapis.com
+    note: 'All paths return the API gateway JSON 404: {"message":"Resource not found"}'
+    documents:
+      - path: /openapi.json
+        status: 404
+      - path: /openapi.yaml
+        status: 404
+      - path: /swagger.json
+        status: 404
+      - path: /v3/openapi.json
+        status: 404
+      - path: /api-docs
+        status: 404
+      - path: /redoc
+        status: 404
+      - path: /llms.txt
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+
+  - host: https://personalization-api.us-east-1.prod.tealiumapis.com
+    documents:
+      - path: /openapi.json
+        status: 404
+      - path: /llms.txt
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agents.json
+        status: 404
+
+  - host: https://us-west-2.prod.developer.tealiumapis.com
+    note: >-
+      Host of the managed MCP server. Returns "No context-path matches the request URI." for
+      every /.well-known/ path, so the MCP server publishes no RFC 9728 protected-resource
+      metadata and no OAuth authorization-server metadata — it authenticates with a static
+      X-Tealium-Api-Key header instead.
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+
+  - host: https://my.tealiumiq.com
+    documents:
+      - path: /openapi.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /llms.txt
+        status: 404
+
+  - host: https://collect.tealiumiq.com
+    documents:
+      - path: /openapi.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /llms.txt
+        status: 404
+
+summary:
+  hosts_probed: 7
+  documents_found: 5
+  security_txt: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  api_catalog: false
+  agent_card: false

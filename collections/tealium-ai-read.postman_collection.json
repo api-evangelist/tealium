@@ -1,0 +1,297 @@
+{
+  "item": [
+    {
+      "id": "48cb4e5f-b74a-4fee-ab50-33a52a11b52c",
+      "name": "Health / heartbeat",
+      "request": {
+        "name": "Health / heartbeat",
+        "description": {
+          "content": "Returns a simple health object and metadata.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "wp-json",
+            "ai",
+            "v1",
+            "status"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "86f92414-5d81-488e-b074-eab4b204758e",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "wp-json",
+                "ai",
+                "v1",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Cache policy (no-store expected)",
+              "key": "Cache-Control",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "Logical source marker",
+              "key": "X-Provenance",
+              "value": "string"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"ok\",\n  \"version\": \"1.0\",\n  \"organization\": \"Tealium\",\n  \"updated_at\": \"1991-03-09T01:42:21.970Z\",\n  \"source\": \"wp\",\n  \"inLanguage\": \"en\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "ea4693f9-7142-4e74-bed2-5cd0d5ab6fc4",
+      "name": "Global FAQ",
+      "request": {
+        "name": "Global FAQ",
+        "description": {
+          "content": "Returns an array of question/answer pairs (multi-lingual via `inLanguage`).",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "wp-json",
+            "ai",
+            "v1",
+            "faq"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "key": "lang",
+              "value": "<string>",
+              "description": "Optional filter; if provided, only items with matching `inLanguage` SHOULD be returned (server may ignore)."
+            }
+          ],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "52db5fc6-cd31-47cc-9f53-a1fd63b6099d",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "wp-json",
+                "ai",
+                "v1",
+                "faq"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Cache policy",
+              "key": "Cache-Control",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "Logical source marker",
+              "key": "X-Provenance",
+              "value": "string"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"source\": \"wp\",\n  \"results\": [\n    {\n      \"question\": \"string\",\n      \"answer\": \"string\",\n      \"inLanguage\": \"en\"\n    },\n    {\n      \"question\": \"string\",\n      \"answer\": \"string\",\n      \"inLanguage\": \"en\"\n    }\n  ],\n  \"retrieved_at\": \"1982-12-18T18:04:33.268Z\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "b0351c7d-7cab-4f55-be7a-029c4de97837",
+      "name": "Docs portal pointer",
+      "request": {
+        "name": "Docs portal pointer",
+        "description": {
+          "content": "Returns the canonical URL for the public documentation portal plus metadata.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "wp-json",
+            "ai",
+            "v1",
+            "docs"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "572c4347-ab4d-43c3-b9e5-f49205d6edf2",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "wp-json",
+                "ai",
+                "v1",
+                "docs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "disabled": false,
+              "description": "Cache policy",
+              "key": "Cache-Control",
+              "value": "string"
+            },
+            {
+              "disabled": false,
+              "description": "Logical source marker",
+              "key": "X-Provenance",
+              "value": "string"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"source\": \"wp\",\n  \"docs_portal\": \"https://docs.tealium.com/\",\n  \"updated_at\": \"1990-06-22T16:11:15.669Z\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://tealium.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2d078053-992f-4280-aa2f-70545d9274be",
+    "name": "Tealium AI Read API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Minimal, read-only endpoints designed for agents. All responses are cache-friendly and include\nprovenance headers. No authentication required.\n",
+      "type": "text/plain"
+    }
+  }
+}

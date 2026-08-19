@@ -1,0 +1,106 @@
+{
+  "version": "1.1",
+  "entities": {
+    "organization": {
+      "id": "domain",
+      "required": ["name", "domain"],
+      "mappings": { "schema.org": "Organization", "jsonld_context": "https://schema.org" }
+    },
+    "website": {
+      "id": "url",
+      "required": ["url", "name", "inLanguage"],
+      "mappings": { "schema.org": "WebSite" }
+    },
+    "solution": {
+      "id": "slug",
+      "required": ["slug", "name", "description", "inLanguage", "url"],
+      "mappings": { "schema.org": ["Service", "SoftwareApplication"] }
+    },
+    "integration": {
+      "id": "slug",
+      "required": ["slug", "name", "category", "inLanguage", "url"],
+      "mappings": { "schema.org": "SoftwareApplication" }
+    },
+    "doc": {
+      "id": "doc_id",
+      "required": ["doc_id", "title", "url", "updated_at", "inLanguage"],
+      "mappings": { "schema.org": ["TechArticle", "Article"] }
+    },
+    "faq": {
+      "id": "url",
+      "required": ["url", "questions", "inLanguage"],
+      "mappings": { "schema.org": "FAQPage" }
+    }
+  },
+  "attributes": {
+    "name": { "type": "string" },
+    "domain": { "type": "string" },
+    "url": { "type": "string", "format": "uri" },
+    "slug": { "type": "string" },
+    "description": { "type": "string" },
+    "category": { "type": "string" },
+    "inLanguage": { "type": "string", "enum": ["en", "es", "fr", "de", "ja"] },
+    "doc_id": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "answer"],
+        "properties": {
+          "question": { "type": "string" },
+          "answer": { "type": "string" }
+        },
+        "mappings": { "schema.org": ["Question", "Answer"] }
+      }
+    },
+    "alternates": {
+      "type": "array",
+      "description": "Alternate-language equivalents of this resource.",
+      "items": {
+        "type": "object",
+        "required": ["inLanguage", "url"],
+        "properties": {
+          "inLanguage": { "type": "string", "enum": ["en", "es", "fr", "de", "ja"] },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "consent_status": { "enum": ["consented", "denied", "unknown"] }
+  },
+  "locales": [
+    {
+      "inLanguage": "en",
+      "prefix": "/",
+      "sitemap": "https://tealium.com/sitemap.xml"
+    },
+    {
+      "inLanguage": "es",
+      "prefix": "/es/",
+      "sitemap": "https://tealium.com/es/sitemap.xml"
+    },
+    {
+      "inLanguage": "fr",
+      "prefix": "/fr/",
+      "sitemap": "https://tealium.com/fr/sitemap.xml"
+    },
+    {
+      "inLanguage": "de",
+      "prefix": "/de/",
+      "sitemap": "https://tealium.com/de/sitemap.xml"
+    },
+    {
+      "inLanguage": "ja",
+      "prefix": "/ja/",
+      "sitemap": "https://tealium.com/ja/sitemap.xml"
+    }
+  ],
+  "defaults": {
+    "organization": { "name": "Tealium", "domain": "tealium.com" },
+    "website": { "url": "https://tealium.com/", "name": "Tealium", "inLanguage": "en" }
+  },
+  "notes": [
+    "For any translatable entity (solution, integration, doc, faq), include `inLanguage` and an `alternates` array with hreflang-equivalent URLs for other locales.",
+    "Agents can prioritize the user's locale; if absent, default to 'en'."
+  ]
+}

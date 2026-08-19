@@ -1,0 +1,156 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium Authentication Auth Collect API",
+    "version": "3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Collect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send single event (GET)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/collect/event",
+            "params": [
+              {
+                "name": "tealium_account",
+                "value": "",
+                "type": "query",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "tealium_profile",
+                "value": "",
+                "type": "query",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "tealium_event",
+                "value": "",
+                "type": "query",
+                "description": "Event type identifier"
+              },
+              {
+                "name": "tealium_visitor_id",
+                "value": "",
+                "type": "query",
+                "description": "Visitor identifier (GUID or formatted known-visitor ID)"
+              },
+              {
+                "name": "tealium_datasource",
+                "value": "",
+                "type": "query",
+                "description": "Data source key"
+              }
+            ]
+          },
+          "docs": "Sends a single event via HTTP GET. Returns a 1x1 transparent GIF image. Useful for pixel-based tracking scenarios."
+        },
+        {
+          "info": {
+            "name": "Send single event (POST)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/collect/event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a single event via HTTP POST with a JSON body. Returns an empty JSON response with content-length 0."
+        },
+        {
+          "info": {
+            "name": "Send bulk events (up to 10)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/collect/bulk-event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends up to 10 events in a single POST request. The shared object provides common fields applied to all events; individual event objects can override or extend them."
+        },
+        {
+          "info": {
+            "name": "Send single event to regional endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/collect/regional/event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a single event to a region-specific endpoint. Use the regional host returned from the authentication API."
+        },
+        {
+          "info": {
+            "name": "Send bulk events to regional endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/collect/regional/bulk-event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends up to 10 events to a region-specific endpoint."
+        },
+        {
+          "info": {
+            "name": "Send event via webhook/integration datasource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/collect/integration/event/accounts/:account/profiles/:profile/datasources/:datasourceId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "datasourceId",
+                "value": "",
+                "type": "path",
+                "description": "Data source key for the integration"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a single event via a dedicated datasource integration endpoint. Returns 204 No Content on success. Suitable for webhook and connector-based integrations."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,182 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/api/v3/scim-api/about/,
+  https://docs.tealium.com/administration/security-access/single-sign-on/sso/,
+  https://docs.tealium.com/api/v3/getting-started/authentication/,
+  https://trust.tealium.com/, https://tealium.com/.well-known/agents.json,
+  and openapi/*.yml
+description: >-
+  Which cross-cutting and industry standards Tealium's API surface actually conforms to. Tealium is
+  strong on identity and provisioning standards (SCIM 2.0, SAML 2.0, MCP) and on privacy regimes
+  (GDPR, CCPA), and weak on HTTP-level API standards — no OAuth 2.0, no OpenID Connect, no RFC 9457
+  problem details, no RFC 8594 sunset signalling, no rate-limit headers.
+
+standards:
+  - id: scim2
+    name: SCIM 2.0 (RFC 7643 / 7644)
+    conforms: true
+    evidence: >-
+      Tealium ships a SCIM API implementing /Users and /Groups with POST, GET, PUT, PATCH and
+      DELETE, plus SCIM sync logs. Reached general availability 2026-07-15.
+    docs: https://docs.tealium.com/api/v3/scim-api/about/
+
+  - id: saml2
+    name: SAML 2.0
+    conforms: true
+    evidence: >-
+      SSO with SAML 2.0 signing certificates; documented configuration for ADFS (Active Directory),
+      Azure and Okta identity providers, with certificate status monitoring.
+    docs: https://docs.tealium.com/administration/security-access/single-sign-on/sso/
+
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      First-party managed remote MCP server over Streamable HTTP in front of the Moments API,
+      exposing two tools. Endpoint probed 2026-08-13 and returned an authenticated-only 401.
+    docs: https://docs.tealium.com/server-side/moments-api/managed-mcp-server/
+    caveat: >-
+      Authenticates with a static X-Tealium-Api-Key header rather than the MCP OAuth flow; serves
+      neither /.well-known/oauth-protected-resource (RFC 9728) nor
+      /.well-known/oauth-authorization-server (RFC 8414).
+
+  - id: a2a
+    name: A2A (Agent-to-Agent) protocol
+    conforms: unverified
+    evidence: >-
+      Tealium's MCP documentation states its managed AI protocol support "currently includes
+      Agent-to-Agent (A2A) protocol support", but no A2A Agent Card is served on any Tealium host.
+      /.well-known/agent-card.json and /.well-known/agent.json both returned 404 on tealium.com,
+      docs.tealium.com, platform.tealiumapis.com, personalization-api.us-east-1.prod.tealiumapis.com,
+      us-west-2.prod.developer.tealiumapis.com, my.tealiumiq.com and collect.tealiumiq.com.
+      Recorded as a claim without a discoverable artifact.
+    docs: https://docs.tealium.com/server-side/moments-api/managed-mcp-server/
+
+  - id: jwt
+    name: JSON Web Token (RFC 7519)
+    conforms: true
+    evidence: >-
+      The V3 auth endpoint exchanges username + API key for a JWT bearer token with a 30-minute
+      lifetime; OpenAPI securitySchemes declare type http, scheme bearer, bearerFormat JWT.
+    docs: https://docs.tealium.com/api/v3/getting-started/authentication/
+
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in any specification and no authorization/token endpoint pair.
+      Tealium's long-lived SCIM token is described as "the OAuth bearer token" and returns a
+      scope string of "profile email", but it is minted from an API key over a form POST with no
+      authorization grant, no client registration and no metadata document — OAuth vocabulary
+      without the OAuth protocol.
+
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on every Tealium host probed.
+
+  - id: rfc9457
+    name: RFC 9457 Problem Details for HTTP APIs
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere. Errors are a bare {"message": "..."} object with no
+      type, code or instance field; the documented status-code table has five rows.
+
+  - id: rfc8594
+    name: RFC 8594 Sunset header / deprecation signalling
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation headers. Deprecations are announced only as prose lines in dated
+      release notes, with no published notice window.
+
+  - id: rate-limit-headers
+    name: RFC 9331-style RateLimit header fields
+    conforms: false
+    evidence: >-
+      Numeric limits are documented per endpoint (100 events/s, 50 req/s, 200 req/s, 500 events/s)
+      and exhaustion returns 429, but no X-RateLimit-*, RateLimit-* or Retry-After header is
+      published or observed.
+
+  - id: gdpr
+    name: GDPR
+    conforms: true
+    evidence: >-
+      Tealium ships a dedicated Visitor Privacy API for data subject access and erasure requests
+      (deletions complete within 30 days), publishes GDPR functions in the JavaScript library, and
+      names GDPR on its trust center and in the gdpr consent signal of
+      https://tealium.com/.well-known/data-taxonomy.json.
+    docs: https://docs.tealium.com/api/v3/visitor-privacy/about/
+
+  - id: ccpa
+    name: CCPA / CPRA
+    conforms: true
+    evidence: >-
+      Same Visitor Privacy API surface; ccpa is declared as a consent signal in Tealium's published
+      agent manifest and data taxonomy.
+
+  - id: soc2
+    name: SOC 2
+    conforms: true
+    evidence: Named on the Tealium Trust Center.
+    docs: https://trust.tealium.com/
+
+  - id: iso27001
+    name: ISO/IEC 27001
+    conforms: true
+    evidence: Named on the Tealium Trust Center.
+    docs: https://trust.tealium.com/
+
+  - id: iso27018
+    name: ISO/IEC 27018
+    conforms: true
+    evidence: Named on the Tealium Trust Center.
+    docs: https://trust.tealium.com/
+
+  - id: hipaa
+    name: HIPAA
+    conforms: true
+    evidence: Named on the Tealium Trust Center.
+    docs: https://trust.tealium.com/
+
+  - id: schema-org
+    name: schema.org
+    conforms: true
+    evidence: >-
+      https://tealium.com/.well-known/data-taxonomy.json maps its entity types onto schema.org
+      Organization, WebSite, FAQPage and Article, and declares structured_data: true in
+      /.well-known/agents.json.
+
+  - id: llms-txt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      Served at both https://tealium.com/llms.txt and https://docs.tealium.com/llms.txt, with
+      twelve per-area indexes and a clean-markdown twin of every docs page at <url>/index.md.
+
+  - id: rfc9116
+    name: RFC 9116 security.txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every Tealium host probed.
+
+  - id: fhir
+    name: FHIR
+    conforms: false
+    evidence: Not a healthcare data API.
+
+  - id: odata
+    name: OData
+    conforms: false
+    evidence: No OData query conventions.
+
+  - id: jsonapi
+    name: JSON:API
+    conforms: false
+    evidence: Plain JSON payloads; no JSON:API document structure.
+
+summary:
+  conforms: 12
+  does_not_conform: 8
+  unverified: 1
+  strongest: 'SCIM 2.0 + SAML 2.0 + MCP — identity, provisioning and agent access'
+  weakest: 'HTTP API standards — no OAuth/OIDC, no problem+json, no sunset or rate-limit headers'

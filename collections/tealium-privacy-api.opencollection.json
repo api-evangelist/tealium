@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium Authentication Auth Privacy API",
+    "version": "3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Privacy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve visitor data (GDPR/CCPA lookup)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/privacy/visitor/accounts/:account/profiles/:profile",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "attributeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric ID of a Visitor ID attribute"
+              },
+              {
+                "name": "attributeValue",
+                "value": "",
+                "type": "query",
+                "description": "Value to look up (URL-encode special characters)"
+              },
+              {
+                "name": "prettyName",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns user-friendly attribute names; false returns numeric IDs"
+              }
+            ]
+          },
+          "docs": "Retrieves all known data about a specific visitor for GDPR/CCPA compliance purposes. Returns the full visitor profile record including all attributes, audience memberships, and badges."
+        },
+        {
+          "info": {
+            "name": "Delete visitor data (GDPR/CCPA erasure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://platform.tealiumapis.com/v3/privacy/visitor/accounts/:account/profiles/:profile",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "attributeId",
+                  "value": ""
+                },
+                {
+                  "name": "attributeValue",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Submits a deletion request for a visitor's profile data from the Customer Data Hub. Deletion is asynchronous and completes within 30 days. Returns a transactionId for tracking request status."
+        },
+        {
+          "info": {
+            "name": "Check deletion transaction status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/privacy/visitor/accounts/:account/profiles/:profile/transactions/:transaction_id",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "transaction_id",
+                "value": "",
+                "type": "path",
+                "description": "Transaction ID returned from the DELETE visitor request"
+              }
+            ]
+          },
+          "docs": "Retrieves the status of a previously submitted visitor deletion request. Returns PENDING, SUCCESS, or FAILED for the given transaction ID."
+        },
+        {
+          "info": {
+            "name": "List visitor ID attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/privacy/visitor/accounts/:account/profiles/:profile/ids",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              }
+            ]
+          },
+          "docs": "Returns all Visitor ID attributes configured for the specified account and profile, mapping numeric attribute IDs to their names. Used to discover valid attributeId values for privacy lookups."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

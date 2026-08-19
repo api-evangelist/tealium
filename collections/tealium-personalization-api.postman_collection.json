@@ -1,0 +1,634 @@
+{
+  "item": [
+    {
+      "id": "bb241c00-5da4-4809-ab7d-e90950cee3d7",
+      "name": "Personalization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "18fd26f0-56aa-4148-b348-080849302c32",
+          "name": "Get visitor moments by anonymous visitor ID",
+          "request": {
+            "name": "Get visitor moments by anonymous visitor ID",
+            "description": {
+              "content": "Retrieves a targeted slice of live visitor context for the specified visitor, as configured in the engine definition. Returns audiences, badges, metrics, properties, flags, and date attributes included in the engine configuration. Does not require authentication; domain allowlist controls access via Referer header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "personalization",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile",
+                "engines",
+                ":engineId",
+                "visitors",
+                ":visitorId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "suppressNotFound",
+                  "value": "false",
+                  "description": "When true, returns HTTP 200 with empty body if visitor not found. When false (default), returns HTTP 404 if visitor not found."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "engineId",
+                  "description": "(Required) Unique identifier for the configured Moments engine"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visitorId",
+                  "description": "(Required) Tealium anonymous visitor ID (GUID format)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0dd26030-d34d-4ea4-86dc-310005a9d63d",
+              "name": "Visitor moments returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId",
+                    "visitors",
+                    ":visitorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visitorId",
+                      "description": "(Required) Tealium anonymous visitor ID (GUID format)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "CORS header",
+                  "key": "Access-Control-Allow-Origin",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audiences\": {\n    \"high_value_customer\": true,\n    \"cart_abandoner\": false\n  },\n  \"badges\": {\n    \"loyalty_gold\": true\n  },\n  \"metrics\": {\n    \"lifetime_value\": 1250.5,\n    \"visit_count\": 42\n  },\n  \"properties\": {\n    \"preferred_category\": \"electronics\",\n    \"last_purchase_date\": \"2026-05-15\"\n  },\n  \"flags\": {\n    \"email_subscriber\": true,\n    \"sms_opted_in\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10bdea44-a6f6-40e9-8734-e4dc37746edb",
+              "name": "Visitor not found (when suppressNotFound is false)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId",
+                    "visitors",
+                    ":visitorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visitorId",
+                      "description": "(Required) Tealium anonymous visitor ID (GUID format)"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f31cfa3a-a016-47fa-9f45-2dfd34b8fabe",
+              "name": "Too many requests — rate limit exceeded (200 req/s per profile)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId",
+                    "visitors",
+                    ":visitorId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visitorId",
+                      "description": "(Required) Tealium anonymous visitor ID (GUID format)"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae10646c-2bf3-4ddf-837c-904a4d3a5833",
+          "name": "Get visitor moments by Visitor ID attribute",
+          "request": {
+            "name": "Get visitor moments by Visitor ID attribute",
+            "description": {
+              "content": "Retrieves a targeted slice of live visitor context identified by a Visitor ID attribute value rather than the anonymous Tealium visitor ID. Useful for server-side lookups using known identifiers such as email address or customer ID. No authentication required; domain allowlist controls access via Referer header.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "personalization",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile",
+                "engines",
+                ":engineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "attributeId",
+                  "value": "<string>",
+                  "description": "(Required) Numeric UID of the Visitor ID attribute"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeValue",
+                  "value": "<string>",
+                  "description": "(Required) Value to look up (URL-encode special characters)"
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressNotFound",
+                  "value": "false",
+                  "description": "When true, returns HTTP 200 with empty body if visitor not found. When false, returns HTTP 404."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "engineId",
+                  "description": "(Required) Unique identifier for the configured Moments engine"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02cb2662-9832-4287-862b-2c099e5cacfb",
+              "name": "Visitor moments returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audiences\": {\n    \"key_0\": false\n  },\n  \"badges\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"metrics\": {\n    \"key_0\": 9241.427525884537,\n    \"key_1\": 8156.555699263161\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"flags\": {\n    \"key_0\": false\n  },\n  \"dates\": {\n    \"key_0\": \"1961-05-03T07:50:03.021Z\",\n    \"key_1\": \"1995-09-14T09:54:47.638Z\",\n    \"key_2\": \"2025-08-23T15:35:24.810Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd5dc88b-4d74-4403-8945-f693f0dc5a33",
+              "name": "Visitor not found (when suppressNotFound is false)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e898f897-4c54-447d-989c-026be6eb97f3",
+              "name": "Too many requests — rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "personalization",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile",
+                    "engines",
+                    ":engineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "suppressNotFound",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "engineId",
+                      "description": "(Required) Unique identifier for the configured Moments engine"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.tealiumapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7ea24821-fb25-467a-9b64-6e428603f2d6",
+    "name": "Tealium Authentication Auth Personalization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.\n\nContact Support:\n Name: Tealium Support",
+      "type": "text/plain"
+    }
+  }
+}

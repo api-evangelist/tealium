@@ -1,0 +1,143 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/server-side/connectors/webhook-connectors/about/,
+  https://docs.tealium.com/server-side/connectors/webhook-connectors/actions-and-parameters/,
+  https://docs.tealium.com/server-side/connectors/webhook-connectors/authentication/,
+  https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/,
+  https://docs.tealium.com/server-side/connectors/webhook-connectors/changelog/
+description: >-
+  Tealium publishes NO AsyncAPI document — neither at /asyncapi.yaml on any host nor in the docs —
+  but it has a substantial, well-documented event surface in both directions, and that surface is
+  unusual: it is CONFIGURED, not fixed. Tealium does not emit a catalogue of named webhook event
+  types the way a SaaS API does. Instead the customer builds the outbound contract themselves —
+  choosing the method, URL, headers, body content type and payload shape via templates — so the
+  "event schema" is whatever that customer's connector action is configured to send. Inbound, a set
+  of ~14 vendor-specific webhook data sources receive third-party events into the Customer Data Hub.
+
+asyncapi_spec:
+  published: false
+  probed:
+    - url: https://tealium.com/asyncapi.yaml
+      note: not served (host 404s all unknown paths)
+    - url: https://platform.tealiumapis.com/asyncapi.json
+      status: 404
+  note: >-
+    Recorded as an honest absence. No AsyncAPI artifact is fabricated — the outbound payload shape
+    is customer-defined, so there is no single provider-side event schema to express.
+
+direction: bidirectional
+
+outbound:
+  name: Webhook connectors
+  summary: >-
+    Server-side connectors that push event or visitor data from EventStream API Hub and
+    AudienceStream CDP to any HTTP endpoint the customer names.
+  docs: https://docs.tealium.com/server-side/connectors/webhook-connectors/about/
+  trigger_model: >-
+    Connector actions fire on EventStream event triggers or AudienceStream visitor triggers
+    (audience join/leave, badge assignment, attribute change).
+  actions:
+    - name: Send Event Data via HTTP Request
+      payload: the full event JSON, or attributes mapped to request fields
+    - name: Send Visitor Data via HTTP Request
+      payload: the visitor record
+      options:
+        - Include Current Visit Data With Visitor Data
+        - Exclude Current Visit Event Data
+        - Print Attribute Names
+    - name: Send Customized Data via HTTP Request (Advanced)
+      payload: >-
+        Fully templated. Supports nested JSON, XML and any custom body via named templates injected
+        with {{TemplateName}} into URL, URL parameters, headers or body.
+  request_controls:
+    methods: [GET, POST, PUT, DELETE, PATCH]
+    get_semantics: >-
+      With GET, event data is delivered as a JSON URL-encoded query-string parameter under the
+      `data` key.
+    headers: 'arbitrary, template-capable'
+    cookies: 'arbitrary, sent as a single Cookie header'
+    body_content_type: 'selectable or custom; UTF-8; required when body data is provided'
+    templates: >-
+      Named templates with dot-notation nested variables (items.name), typically built from data
+      layer list attributes.
+    redirection: 'allowed only when the method is GET'
+  authentication_supported:
+    - none
+    - basic
+    - api-key / custom header
+    - OAuth 2.0 (the token is exposed to templates as {{webhook_access_token}})
+    - OAuth2 2-Legged mTLS
+    - mTLS
+  auth_note: >-
+    Webhook mTLS and Webhook OAuth2 2-Legged mTLS connectors were added in the 2026-08-05 release.
+  validation:
+    tool: Validate webhook action
+    docs: https://docs.tealium.com/server-side/connectors/webhook-connectors/validate-webhook-action/
+  jdbc_variant:
+    name: Webhook JDBC
+    note: Sends data to a JDBC-compatible database rather than an HTTP endpoint.
+  vendor_examples:
+    - Facebook App Events API
+    - Salesforce Predictive Intelligence API
+    - Keen.io API
+    - Kony API
+  changelog: https://docs.tealium.com/server-side/connectors/webhook-connectors/changelog/
+
+inbound:
+  name: Webhook data sources
+  summary: >-
+    Each vendor webhook data source gives Tealium a receiving URL that a third-party product posts
+    its events to; Tealium maps the vendor payload into the data layer as events on a DataSource.
+  docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/
+  anchor_entity: DataSource
+  sources:
+    - vendor: Affirm
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/affirm/
+    - vendor: Airship
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/airship/
+    - vendor: Auth0
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/auth0/
+    - vendor: Braze (Currents)
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/braze-currents/
+    - vendor: Google Ads Leads
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/google-ads-leads/
+    - vendor: HTTP API - Advanced
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/http-api-advanced/
+      note: The generic receiver — any system that can POST JSON.
+    - vendor: HubSpot (Workflow)
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/hubspot/
+    - vendor: Insider
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/insider/
+    - vendor: Intercom
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/intercom/
+    - vendor: Iterable
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/iterable/
+    - vendor: Mailchimp
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/mailchimp/
+    - vendor: PulsePoint HCP365
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/pulsepoint-hcp365/
+    - vendor: SendGrid
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/sendgrid/
+    - vendor: Zapier
+      docs: https://docs.tealium.com/server-side/data-sources/webhooks/setup-guides/zapier/
+  count: 14
+
+streaming:
+  event_feeds:
+    docs: https://docs.tealium.com/server-side/event-health/event-feeds/
+    note: Manage and inspect incoming data streams.
+  event_store:
+    docs: https://docs.tealium.com/server-side/data-storage/audiencestore-eventstore/configure-eventstore/
+    note: EventStore is enabled by configuring an event feed.
+  audience_store:
+    docs: https://docs.tealium.com/server-side/data-storage/audiencestore-eventstore/configure-audiencestore/
+
+gaps:
+  - No AsyncAPI document.
+  - >-
+    No provider-published catalogue of named outbound event types — the outbound schema is whatever
+    the customer's connector action is configured to emit, which means it cannot be modelled
+    provider-side and cannot be validated by a consumer against a published contract.
+  - No documented webhook signing/verification scheme for outbound deliveries (auth is per-connector: basic, API key, OAuth2, mTLS).
+  - No documented retry/redelivery policy or dead-letter behaviour for failed outbound deliveries.

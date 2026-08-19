@@ -1,0 +1,759 @@
+{
+  "item": [
+    {
+      "id": "46603658-7921-405c-8678-182c3148e3dd",
+      "name": "Customer",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ff3d5aae-9350-466f-981d-7347a5719880",
+          "name": "Get visitor profile",
+          "request": {
+            "name": "Get visitor profile",
+            "description": {
+              "content": "Retrieves the full visitor profile for a specific visitor identified by a Visitor ID attribute value. Supports live data, historical data, or both. Returns audience memberships, badges, and all configured attribute values. Maximum of 150 attribute IDs can be filtered per request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "visitor",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "attributeId",
+                  "value": "<integer>",
+                  "description": "(Required) Numeric ID of the Visitor ID attribute"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeValue",
+                  "value": "<string>",
+                  "description": "(Required) Value to look up (URL-encode special characters)"
+                },
+                {
+                  "disabled": false,
+                  "key": "prettyName",
+                  "value": "false",
+                  "description": "When true, returns user-friendly attribute names; when false, returns numeric IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "searchPriority",
+                  "value": "<string>",
+                  "description": "JSON array controlling search order. Defaults to [\"live\",\"historical\"]. Options: [\"live\"], [\"historical\"], or [\"live\",\"historical\"]"
+                },
+                {
+                  "disabled": false,
+                  "key": "responseFilters",
+                  "value": "<string>",
+                  "description": "JSON array of up to 150 attribute IDs to include in response. Omit to return all attributes."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "19342195-73dc-4402-abe9-c84c17544e10",
+              "name": "Visitor profile returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "searchPriority",
+                      "value": "[\"live\",\"historical\"]"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "[101,102,103]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audiences\": {\n    \"key_0\": false\n  },\n  \"badges\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"attributes\": {\n    \"key_0\": {}\n  },\n  \"currentVisit\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"dates\": {\n    \"key_0\": \"2013-08-13T02:58:22.697Z\",\n    \"key_1\": \"1961-11-23T22:22:32.632Z\",\n    \"key_2\": \"2026-02-03T15:16:36.756Z\"\n  },\n  \"metrics\": {\n    \"key_0\": 5524.080476367069,\n    \"key_1\": 3313.5481686069948,\n    \"key_2\": 2924.368133397559,\n    \"key_3\": 8299.793918206411\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"flags\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73937f84-ebdf-41d3-88b6-3a35730861a6",
+              "name": "Bad request — missing attributeId or attributeValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "searchPriority",
+                      "value": "[\"live\",\"historical\"]"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "[101,102,103]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3d79ff03-b879-4bca-8969-2073bd1c3bcc",
+              "name": "Unauthorized — invalid or expired bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "searchPriority",
+                      "value": "[\"live\",\"historical\"]"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "[101,102,103]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2874f59e-b8da-4fce-8c3c-ba6db91f8264",
+              "name": "Visitor not found or invalid searchPriority parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "searchPriority",
+                      "value": "[\"live\",\"historical\"]"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "[101,102,103]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d708824-75fe-4d3d-bb47-e4d75c579b73",
+          "name": "Get historical visitor profile",
+          "request": {
+            "name": "Get historical visitor profile",
+            "description": {
+              "content": "Retrieves the historical visitor profile for a specific visitor. Searches historical data only (no live data). Historical data is available after a 30-minute waiting period. Maximum of 150 attribute IDs can be filtered per request. The searchPriority parameter is not available for this endpoint.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "visitor",
+                "historical",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "attributeId",
+                  "value": "<integer>",
+                  "description": "(Required) Numeric ID of the Visitor ID attribute"
+                },
+                {
+                  "disabled": false,
+                  "key": "attributeValue",
+                  "value": "<string>",
+                  "description": "(Required) Value to look up (URL-encode special characters)"
+                },
+                {
+                  "disabled": false,
+                  "key": "prettyName",
+                  "value": "false",
+                  "description": "When true, returns user-friendly attribute names"
+                },
+                {
+                  "disabled": false,
+                  "key": "responseFilters",
+                  "value": "<string>",
+                  "description": "JSON array of up to 150 attribute IDs to include in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13e7d663-3693-4a03-b52b-1778a8284a9c",
+              "name": "Historical visitor profile returned successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "historical",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"audiences\": {\n    \"key_0\": false\n  },\n  \"badges\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": false\n  },\n  \"attributes\": {\n    \"key_0\": {}\n  },\n  \"currentVisit\": {\n    \"key_0\": {},\n    \"key_1\": {}\n  },\n  \"dates\": {\n    \"key_0\": \"2013-08-13T02:58:22.697Z\",\n    \"key_1\": \"1961-11-23T22:22:32.632Z\",\n    \"key_2\": \"2026-02-03T15:16:36.756Z\"\n  },\n  \"metrics\": {\n    \"key_0\": 5524.080476367069,\n    \"key_1\": 3313.5481686069948,\n    \"key_2\": 2924.368133397559,\n    \"key_3\": 8299.793918206411\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"flags\": {\n    \"key_0\": false,\n    \"key_1\": false,\n    \"key_2\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d521af72-6be3-4aa3-8fbd-1b26249c1142",
+              "name": "Bad request — missing attributeId or attributeValue",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "historical",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fd5130cd-b3bb-45f8-9a59-16f578424af4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "historical",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26c2daaf-9dcb-400e-ac18-09d54b3b1215",
+              "name": "Visitor not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "visitor",
+                    "historical",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "attributeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "attributeValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "prettyName",
+                      "value": "false"
+                    },
+                    {
+                      "key": "responseFilters",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.tealiumapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3b4355ae-ad81-4ba3-818f-b5a9f4c91130",
+    "name": "Tealium Authentication Auth Customer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.\n\nContact Support:\n Name: Tealium Support",
+      "type": "text/plain"
+    }
+  }
+}

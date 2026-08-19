@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium Authentication Auth Customer API",
+    "version": "3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get visitor profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/customer/visitor/accounts/:account/profiles/:profile",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "attributeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric ID of the Visitor ID attribute"
+              },
+              {
+                "name": "attributeValue",
+                "value": "",
+                "type": "query",
+                "description": "Value to look up (URL-encode special characters)"
+              },
+              {
+                "name": "prettyName",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns user-friendly attribute names; when false, returns numeric IDs"
+              },
+              {
+                "name": "searchPriority",
+                "value": "[\"live\",\"historical\"]",
+                "type": "query",
+                "description": "JSON array controlling search order. Defaults to [\"live\",\"historical\"]. Options: [\"live\"], [\"historical\"], or [\"live\",\"historical\"]"
+              },
+              {
+                "name": "responseFilters",
+                "value": "[101,102,103]",
+                "type": "query",
+                "description": "JSON array of up to 150 attribute IDs to include in response. Omit to return all attributes."
+              }
+            ]
+          },
+          "docs": "Retrieves the full visitor profile for a specific visitor identified by a Visitor ID attribute value. Supports live data, historical data, or both. Returns audience memberships, badges, and all configured attribute values. Maximum of 150 attribute IDs can be filtered per request."
+        },
+        {
+          "info": {
+            "name": "Get historical visitor profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/customer/visitor/historical/accounts/:account/profiles/:profile",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "attributeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric ID of the Visitor ID attribute"
+              },
+              {
+                "name": "attributeValue",
+                "value": "",
+                "type": "query",
+                "description": "Value to look up (URL-encode special characters)"
+              },
+              {
+                "name": "prettyName",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns user-friendly attribute names"
+              },
+              {
+                "name": "responseFilters",
+                "value": "",
+                "type": "query",
+                "description": "JSON array of up to 150 attribute IDs to include in response"
+              }
+            ]
+          },
+          "docs": "Retrieves the historical visitor profile for a specific visitor. Searches historical data only (no live data). Historical data is available after a 30-minute waiting period. Maximum of 150 attribute IDs can be filtered per request. The searchPriority parameter is not available for this endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

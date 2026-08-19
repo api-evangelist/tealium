@@ -1,3 +1,12 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/api/v3/getting-started/request-format/,
+  https://docs.tealium.com/api/v3/http-api/about/,
+  https://docs.tealium.com/api/v3/visitor-privacy/about/,
+  https://docs.tealium.com/server-side/moments-api/about/,
+  https://docs.tealium.com/server-side/data-connect/rate-limits/,
+  https://docs.tealium.com/api/v3/scim-api/about/
 name: Tealium API Rate Limits
 description: >-
   Rate limits for Tealium Customer Data Hub APIs vary by product and endpoint.
@@ -138,3 +147,48 @@ generalNotes: >-
   documented limits, contact your Tealium account manager to discuss higher
   quotas. All V3 API requests use base URL https://platform.tealiumapis.com/v3
   and require Content-Type: application/json.
+
+responseHeaders:
+  published: false
+  headers: []
+  statusOnExhaustion: 429
+  retryAfter: false
+  note: >-
+    Added 2026-08-13. Tealium publishes numeric limits per endpoint but documents NO rate-limit
+    response headers of any kind — no X-RateLimit-Limit/Remaining/Reset, no RFC 9331 RateLimit-*,
+    and no Retry-After on 429. A client therefore cannot read its remaining budget or a server-
+    suggested backoff; it can only observe the 429 after the fact and back off blindly. For an
+    agent calling the Moments API or the managed MCP server this is the weakest part of the
+    runtime contract. Verified against
+    https://docs.tealium.com/api/v3/getting-started/status-codes/ and every V3 endpoint page,
+    none of which names a response header.
+
+additionalLimits:
+  - api: Long-lived token endpoint (SCIM)
+    url: https://docs.tealium.com/api/v3/scim-api/about/
+    limits:
+      - scope: IP address
+        metric: Token generation requests per minute
+        limit: 10
+        period: minute
+        endpoint: POST https://developer.tealiumapis.com/v2/auth-long-lived/token
+      - scope: IP address
+        metric: Token revocation requests per minute
+        limit: 20
+        period: minute
+        endpoint: POST https://developer.tealiumapis.com/v2/auth-long-lived/revoke
+    errorCode: 429
+    note: Added 2026-08-13 from the SCIM API documentation.
+  - api: Authentication (V3)
+    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+    limits:
+      - scope: Account
+        metric: Authentication calls
+        limit: null
+        period: N/A
+        notes: >-
+          No numeric limit is published, but Tealium states that minting a new bearer token per
+          call "will result in authentication call throttling at Tealium's discretion." An
+          undisclosed, discretionary limit — recorded because it is a real throttling trigger a
+          client must design around, not because a number exists.
+    errorCode: 429

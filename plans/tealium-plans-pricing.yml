@@ -1,3 +1,14 @@
+generated: '2026-08-13'
+method: searched
+source: https://tealium.com/pricing/
+pricingPublished: false
+pricingPublishedNote: >-
+  Tealium publishes NO list prices. https://tealium.com/pricing/ is a contact/quote page — it
+  redirects to marketing collateral rather than serving a rate card, and every tier below is
+  custom-quoted on data volume (monthly unique visitors, inbound events, records), module
+  selection and contract length. The plan structure and the observed contract-value ranges recorded
+  here are assembled from Tealium's product pages plus reported market pricing, NOT from a
+  published price list, and should be read as indicative rather than quoted.
 name: Tealium Plans and Pricing
 description: >-
   Tealium does not publish fixed public pricing. All contracts are custom-quoted

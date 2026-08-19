@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium Authentication Auth Personalization API",
+    "version": "3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Personalization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get visitor moments by anonymous visitor ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/personalization/accounts/:account/profiles/:profile/engines/:engineId/visitors/:visitorId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "engineId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the configured Moments engine"
+              },
+              {
+                "name": "visitorId",
+                "value": "",
+                "type": "path",
+                "description": "Tealium anonymous visitor ID (GUID format)"
+              },
+              {
+                "name": "suppressNotFound",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns HTTP 200 with empty body if visitor not found. When false (default), returns HTTP 404 if visitor not found."
+              }
+            ]
+          },
+          "docs": "Retrieves a targeted slice of live visitor context for the specified visitor, as configured in the engine definition. Returns audiences, badges, metrics, properties, flags, and date attributes included in the engine configuration. Does not require authentication; domain allowlist controls access via Referer header."
+        },
+        {
+          "info": {
+            "name": "Get visitor moments by Visitor ID attribute",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://platform.tealiumapis.com/v3/personalization/accounts/:account/profiles/:profile/engines/:engineId",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              },
+              {
+                "name": "engineId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the configured Moments engine"
+              },
+              {
+                "name": "attributeId",
+                "value": "",
+                "type": "query",
+                "description": "Numeric UID of the Visitor ID attribute"
+              },
+              {
+                "name": "attributeValue",
+                "value": "",
+                "type": "query",
+                "description": "Value to look up (URL-encode special characters)"
+              },
+              {
+                "name": "suppressNotFound",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns HTTP 200 with empty body if visitor not found. When false, returns HTTP 404."
+              }
+            ]
+          },
+          "docs": "Retrieves a targeted slice of live visitor context identified by a Visitor ID attribute value rather than the anonymous Tealium visitor ID. Useful for server-side lookups using known identifiers such as email address or customer ID. No authentication required; domain allowlist controls access via Referer header."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

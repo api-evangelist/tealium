@@ -1,0 +1,142 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/*.yml (4xx/5xx responses), enriched from
+  https://docs.tealium.com/api/v3/getting-started/status-codes/
+format: http-status
+rfc9457: false
+description: >-
+  Tealium publishes a five-row status-code table for the V3 APIs and no machine-readable error
+  registry — no application/problem+json, no error-code enum, no stable error identifier in the
+  body. The catalogue below is the union of the documented table and every 4xx/5xx response
+  declared across the OpenAPI definitions in this repo, with the operations each one can come from.
+  Response bodies observed in the wild are a bare {"message": "..."} object; the HTTP status is the
+  only reliable discriminator.
+
+envelope:
+  content_type: application/json
+  shape: '{"message": "<human string>"}'
+  observed_variants:
+    - '{"message":"Resource not found"}  # platform.tealiumapis.com gateway, HTTP 404'
+    - '{"message":"Unauthorized","http_status_code":401}  # managed MCP host, HTTP 401'
+    - '{"message":"No context-path matches the request URI."}  # developer.tealiumapis.com, HTTP 404'
+  code_field: null
+  type_field: null
+  trace_field: null
+  note: >-
+    The envelope is not consistent across Tealium hosts — the MCP host echoes the status into the
+    body as http_status_code, the platform gateway does not. Clients must not parse for a code field.
+
+problems:
+  - status: 400
+    title: Bad request
+    docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+    causes:
+      - Missing username or key on the authentication call
+      - Missing required fields, invalid JSON keys, or an empty body on event collection
+      - Missing attributeId or attributeValue on a visitor lookup by attribute
+      - Missing required parameters
+    remediation: >-
+      Validate the payload before sending. Event collection requires Content-Type: application/json
+      and a non-empty body; attribute lookups require both attributeId and attributeValue.
+    retryable: false
+    source_operations:
+      - openapi/tealium-auth-api-openapi.yml#generateBearerToken
+      - openapi/tealium-collect-api-openapi.yml#collectEventPost
+      - openapi/tealium-collect-api-openapi.yml#collectBulkEvent
+      - openapi/tealium-collect-api-openapi.yml#collectRegionalEvent
+      - openapi/tealium-collect-api-openapi.yml#collectRegionalBulkEvent
+      - openapi/tealium-customer-api-openapi.yml#getVisitorProfile
+      - openapi/tealium-privacy-api-openapi.yml#getPrivacyVisitor
+
+  - status: 401
+    title: Unauthorized
+    docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+    causes:
+      - Invalid credentials on the authentication call (wrong username or API key)
+      - Invalid or expired bearer token — V3 tokens expire after 30 minutes
+      - Missing or wrong X-Tealium-Api-Key on the managed MCP server
+      - Long-lived token revoked, or revoke called with credentials that do not match the minting credentials
+    remediation: >-
+      Re-exchange username + API key for a fresh JWT, then reuse that token until it expires. Do
+      NOT mint a token per call — Tealium throttles authentication churn at its discretion.
+    retryable: conditional
+    retryable_note: Retry once after refreshing the token; a second 401 is a credential problem, not a transient one.
+    source_operations:
+      - openapi/tealium-auth-api-openapi.yml#generateBearerToken
+      - openapi/tealium-collect-api-openapi.yml#collectEventPost
+      - openapi/tealium-collect-api-openapi.yml#collectBulkEvent
+      - openapi/tealium-customer-api-openapi.yml#getVisitorProfile
+      - openapi/tealium-customer-api-openapi.yml#getHistoricalVisitorProfile
+      - openapi/tealium-privacy-api-openapi.yml#getPrivacyVisitor
+      - openapi/tealium-privacy-api-openapi.yml#deletePrivacyVisitor
+      - openapi/tealium-privacy-api-openapi.yml#getDeleteTransactionStatus
+
+  - status: 404
+    title: Not found
+    docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+    causes:
+      - Visitor not found
+      - Visitor not found or invalid searchPriority parameter
+      - Delete transaction ID not found
+      - Moments API visitor record does not exist and suppressNotFound is false
+      - Unknown route on the API gateway
+    remediation: >-
+      For visitor lookups, a 404 usually means the visitor has not been seen rather than that the
+      request is malformed. On the Moments API and the managed MCP server, set suppressNotFound=true
+      to receive 200 with an empty body instead, so a cold visitor does not read as a failure.
+    retryable: false
+    source_operations:
+      - openapi/tealium-customer-api-openapi.yml#getVisitorProfile
+      - openapi/tealium-customer-api-openapi.yml#getHistoricalVisitorProfile
+      - openapi/tealium-personalization-api-openapi.yml#getMomentsByVisitorId
+      - openapi/tealium-personalization-api-openapi.yml#getMomentsByAttributeValue
+      - openapi/tealium-privacy-api-openapi.yml#getPrivacyVisitor
+      - openapi/tealium-privacy-api-openapi.yml#getDeleteTransactionStatus
+
+  - status: 429
+    title: Too many requests
+    docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+    causes:
+      - Collect HTTP API — more than 100 events per second (bulk calls count per event)
+      - Visitor Privacy API — more than 50 requests per second
+      - Moments API — more than 200 requests per second per profile across all engines
+      - Data Connect API — more than 500 events/second or 500 records/second
+      - Long-lived token endpoint — more than 10 requests per minute per IP
+      - Long-lived token revoke endpoint — more than 20 requests per minute per IP
+      - Authentication call churn (minting a token per request rather than reusing it)
+    remediation: >-
+      Back off and retry. No rate-limit headers are published — not X-RateLimit-*, not RateLimit-*,
+      not Retry-After — so a client cannot read its remaining budget and must use blind exponential
+      backoff. Higher limits are negotiated with a Tealium account manager.
+    retryable: true
+    headers_returned: []
+    source_operations:
+      - openapi/tealium-collect-api-openapi.yml#collectEventPost
+      - openapi/tealium-collect-api-openapi.yml#collectBulkEvent
+      - openapi/tealium-collect-api-openapi.yml#collectRegionalEvent
+      - openapi/tealium-collect-api-openapi.yml#collectRegionalBulkEvent
+      - openapi/tealium-personalization-api-openapi.yml#getMomentsByVisitorId
+      - openapi/tealium-personalization-api-openapi.yml#getMomentsByAttributeValue
+      - openapi/tealium-privacy-api-openapi.yml#getPrivacyVisitor
+    cross_ref: rate-limits/tealium-rate-limits.yml
+
+  - status: '50X'
+    title: Internal server error
+    docs: https://docs.tealium.com/api/v3/getting-started/status-codes/
+    causes:
+      - Unspecified. Tealium documents the class as "50X" without enumerating individual codes.
+    remediation: >-
+      Retry with exponential backoff and check https://status.tealium.com/ for a declared incident.
+    retryable: true
+    source_operations: []
+    note: >-
+      No 5xx responses are declared in any OpenAPI definition in this repo — the class is
+      documented in prose only, which is why it has no source operations.
+
+gaps:
+  - No RFC 9457 application/problem+json.
+  - No error-code registry or enum; the message string is free text and not a stable contract.
+  - No correlation or request ID in error responses.
+  - No 5xx responses modelled in any spec.
+  - No rate-limit or Retry-After headers on 429.

@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/*.yml, https://docs.tealium.com/api/v3/
+description: >-
+  Index of the request and response examples captured for the Tealium Customer Data Hub APIs.
+  Each example is grounded in a real documented endpoint payload shape; none are invented values.
+
+examples:
+  - file: tealium-collect-single-event-example.json
+    api: Tealium Collect HTTP API
+    operation: collectEventPost
+    kind: request
+    endpoint: POST /collect/event
+    schema: json-schema/tealium-event-payload.json
+    spec: openapi/tealium-collect-api-openapi.yml
+
+  - file: tealium-collect-bulk-event-example.json
+    api: Tealium Collect HTTP API
+    operation: collectBulkEvent
+    kind: request
+    endpoint: POST /collect/bulk-event
+    schema: json-schema/tealium-bulk-event-payload.json
+    spec: openapi/tealium-collect-api-openapi.yml
+    note: Bulk payloads carry a shared block plus up to 10 events.
+
+  - file: tealium-moments-response-example.json
+    api: Tealium Moments API
+    operation: getMomentsByVisitorId
+    kind: response
+    endpoint: GET /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}/visitors/{visitorId}
+    schema: json-schema/tealium-moments-response.json
+    spec: openapi/tealium-personalization-api-openapi.yml
+    note: >-
+      Same payload the managed MCP server's getPersonalizationContentByAnonymousId tool returns.
+      See mcp/tealium-tool-crosswalk.yml.
+
+  - file: tealium-visitor-privacy-delete-example.json
+    api: Tealium Visitor Privacy API
+    operation: deletePrivacyVisitor
+    kind: response
+    endpoint: DELETE /privacy/visitor/accounts/{account}/profiles/{profile}
+    spec: openapi/tealium-privacy-api-openapi.yml
+    note: Returns a transactionId; deletion is asynchronous and completes within 30 days.
+
+live_examples:
+  note: >-
+    Tealium's own AI Read API is unauthenticated and returns live example payloads directly.
+    Recorded here rather than snapshotted, so the values never go stale.
+  endpoints:
+    - url: https://tealium.com/wp-json/ai/v1/status
+      returns: StatusResponse
+    - url: https://tealium.com/wp-json/ai/v1/faq
+      returns: FAQResponse
+    - url: https://tealium.com/wp-json/ai/v1/docs
+      returns: DocsResponse
+  spec: openapi/tealium-ai-read-openapi.yml
+
+count: 4

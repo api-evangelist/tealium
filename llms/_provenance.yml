@@ -1,0 +1,55 @@
+generated: '2026-08-13'
+method: searched
+description: >-
+  Tealium publishes llms.txt in two places and in a layered form. Files in this directory are saved
+  VERBATIM as fetched — no provenance frontmatter was added to them so they stay byte-faithful to
+  what Tealium serves. This file records where each came from.
+
+files:
+  - file: tealium-llms.txt
+    source: https://tealium.com/llms.txt
+    http_status: 200
+    content_type: text/plain
+    bytes: 1010
+    fetched: '2026-08-13'
+    role: >-
+      Marketing-root pointer file. Names the agent manifest (/.well-known/agents.json), the data
+      taxonomy, an OpenAPI for AI read endpoints, robots.txt, privacy and cookie policies, three
+      read-only wp-json endpoints, the docs portal and five localized sitemaps. This file is how
+      the rest of Tealium's agent surface was discovered.
+
+  - file: tealium-docs-llms.txt
+    source: https://docs.tealium.com/llms.txt
+    http_status: 200
+    content_type: text/plain
+    bytes: 2464
+    fetched: '2026-08-13'
+    role: >-
+      Documentation area index. Points at twelve per-area llms.txt files (Tag Management,
+      Server-Side, APIs, Web Install, Mobile Install, Client-Side Tags, Server-Side Connectors,
+      Administration, Consent, Guides, Predict, Partners and Industries) and documents that every
+      docs page has a clean-markdown twin at <page-url>/index.md.
+
+  - file: tealium-api-llms.txt
+    source: https://docs.tealium.com/api/llms.txt
+    http_status: 200
+    content_type: text/plain
+    bytes: 8697
+    fetched: '2026-08-13'
+    role: >-
+      The API area index — a titled, described link list of every developer documentation page
+      across the V3 APIs (Collect HTTP, Visitor Profile, Visitor Privacy, iQ Profiles, SCIM) and
+      the V2 APIs (Hosted Data Layer, iQ Revisions, Omnichannel File Status). This is the closest
+      thing Tealium publishes to a machine-readable API index.
+
+not_committed:
+  - pattern: '*-llms-full.txt'
+    reason: >-
+      Gitignored per pipeline policy — large verbatim docs dumps routinely embed vendor example
+      tokens that trip GitHub push protection. None was saved for this provider.
+
+notes:
+  - >-
+    Tealium's llms.txt is genuinely layered rather than a single flat file, and it is the layer that
+    made contract discovery succeed here: the root llms.txt named /.well-known/openapi.yaml, which
+    is a real OpenAPI 3.0.3 document, on a host whose standard spec paths all return 404.

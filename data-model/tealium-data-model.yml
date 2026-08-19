@@ -1,0 +1,262 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/*.yml (components.schemas + path parameters), json-schema/*.json,
+  enriched from https://docs.tealium.com/api/v3/visitor-profile/objects/ and
+  https://docs.tealium.com/api/v3/iq-profiles/iq-profiles-api-objects/
+description: >-
+  Tealium's data model is not a resource graph with foreign keys — it is a two-level tenancy
+  (account → profile) containing one central denormalized entity, the visitor, that every read API
+  returns a differently-shaped projection of. There are no numeric or prefixed entity IDs to join
+  on; identity is the composite (account, profile, visitorId) or (account, profile, attributeId,
+  attributeValue). Events flow in and mutate the visitor; nothing is ever fetched by an event ID.
+
+identity_model:
+  tenancy:
+    - level: account
+      description: The Tealium customer account name. Appears in every path as {account}.
+    - level: profile
+      description: >-
+        A configuration namespace inside the account, holding its own tags, load rules, extensions,
+        variables, attributes and audiences. Appears in every path as {profile}. The default profile
+        is conventionally named "main".
+  id_prefixes: none
+  id_style: >-
+    Opaque strings and numeric UIDs, never prefixed. There is no Stripe-style typed identifier —
+    an attribute ID is a bare numeric UID, a visitor ID is an opaque string, an engine ID is an
+    opaque string. Nothing in a payload tells you what kind of thing an ID refers to.
+
+entities:
+  - name: Account
+    key: '{account}'
+    described_by: path parameter (every API)
+    relationships:
+      - has_many: Profile
+
+  - name: Profile
+    key: '{account}/{profile}'
+    described_by: path parameter (every API); openapi/tealium-collect-api-openapi.yml#EventPayload
+    relationships:
+      - belongs_to: Account
+      - has_many: Visitor
+      - has_many: DataSource
+      - has_many: MomentsEngine
+      - has_many: Attribute
+      - has_many: Audience
+      - has_many: Badge
+      - has_many: Tag
+      - has_many: LoadRule
+      - has_many: Extension
+      - has_many: Variable
+
+  - name: Visitor
+    key: 'visitorId (anonymous), or (attributeId, attributeValue) for a known visitor'
+    schemas:
+      - openapi/tealium-customer-api-openapi.yml#VisitorProfile
+      - openapi/tealium-personalization-api-openapi.yml#MomentsResponse
+      - openapi/tealium-privacy-api-openapi.yml#VisitorPrivacyProfile
+      - json-schema/tealium-visitor-profile.json
+      - json-schema/tealium-moments-response.json
+    fields:
+      full_profile: [audiences, badges, attributes, currentVisit, dates, metrics, properties, flags]
+      moments_slice: [audiences, badges, metrics, properties, flags, dates]
+      privacy_slice: [audiences, badges, attributes]
+    relationships:
+      - belongs_to: Profile
+      - has_many: Audience
+        via: audiences
+      - has_many: Badge
+        via: badges
+      - has_many: Attribute
+        via: 'attributes / properties / metrics / dates / flags (typed attribute buckets)'
+      - has_one: CurrentVisit
+        via: currentVisit
+    note: >-
+      THE central entity, and the clearest thing in the model: three APIs return three different
+      projections of the same record. Visitor Profile returns everything including currentVisit;
+      Moments returns an engine-scoped slice with no raw attributes bucket; Visitor Privacy returns
+      the compliance-relevant subset. An agent must not assume the shapes are interchangeable.
+
+  - name: CurrentVisit
+    key: 'embedded in Visitor'
+    described_by: openapi/tealium-customer-api-openapi.yml#VisitorProfile.currentVisit
+    relationships:
+      - belongs_to: Visitor
+    note: Present in the full Visitor Profile response and absent from the Moments slice.
+
+  - name: Attribute
+    key: 'attributeId (numeric UID)'
+    described_by: >-
+      path/query parameter attributeId + attributeValue; the typed buckets on Visitor
+      (properties = strings, metrics = numbers, dates, flags = booleans)
+    relationships:
+      - belongs_to: Profile
+      - referenced_by: Visitor
+        via: 'attributes, properties, metrics, dates, flags'
+    subtypes:
+      - visitor-id attribute (the join key for known-visitor lookups)
+      - property (string)
+      - metric (number)
+      - date
+      - flag (boolean)
+    note: >-
+      Attributes are the schema of the visitor. A Moments engine can be configured to return
+      attribute NAMES instead of numeric IDs, which Tealium calls the only viable configuration for
+      LLM consumption — the numeric UID carries no meaning to a model.
+
+  - name: Audience
+    key: 'audience name/id'
+    relationships:
+      - belongs_to: Profile
+      - referenced_by: Visitor
+        via: audiences
+    note: A computed segment membership evaluated in real time by AudienceStream.
+
+  - name: Badge
+    key: 'badge name/id'
+    relationships:
+      - belongs_to: Profile
+      - referenced_by: Visitor
+        via: badges
+    note: A boolean marker assigned to a visitor by an enrichment rule.
+
+  - name: Event
+    key: none
+    described_by:
+      - openapi/tealium-collect-api-openapi.yml#EventPayload
+      - openapi/tealium-collect-api-openapi.yml#BulkEventPayload
+      - openapi/tealium-collect-api-openapi.yml#IntegrationEventPayload
+      - json-schema/tealium-event-payload.json
+      - json-schema/tealium-bulk-event-payload.json
+    fields:
+      - tealium_account
+      - tealium_profile
+      - tealium_event
+      - tealium_visitor_id
+      - tealium_datasource
+      - tealium_environment
+    relationships:
+      - belongs_to: Profile
+        via: 'tealium_account + tealium_profile'
+      - belongs_to: DataSource
+        via: tealium_datasource
+      - mutates: Visitor
+        via: tealium_visitor_id
+    write_only: true
+    note: >-
+      Events are write-only. There is no GET for an event and no event ID returned — the Collect
+      HTTP API accepts a payload and the platform folds it into the visitor. BulkEventPayload wraps
+      up to 10 events with a `shared` object carrying the fields common to all of them.
+
+  - name: DataSource
+    key: '{datasourceId}'
+    described_by: >-
+      path parameter on
+      /collect/integration/event/accounts/{account}/profiles/{profile}/datasources/{datasourceId}
+    relationships:
+      - belongs_to: Profile
+      - has_many: Event
+    note: >-
+      Also the anchor for incoming webhooks — each webhook data source (Braze Currents, Auth0,
+      Intercom, SendGrid, Zapier and ~15 others) is a DataSource that accepts vendor event payloads.
+      See asyncapi/tealium-webhooks.yml.
+
+  - name: MomentsEngine
+    key: '{engineId}'
+    described_by: >-
+      path parameter on
+      /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}
+    relationships:
+      - belongs_to: Profile
+      - projects: Visitor
+    limits:
+      max_per_profile: 10
+      storage_per_visitor: 1 kB
+      retention_without_events: 30 days
+    note: >-
+      An engine is a server-side projection definition: which audiences, badges and attributes the
+      Moments API (and therefore the managed MCP server) will return. It is the access-control and
+      payload-shaping unit for agent access — the mechanism by which an account decides what an LLM
+      is allowed to see about a visitor.
+
+  - name: DeleteTransaction
+    key: '{transaction_id}'
+    described_by:
+      - openapi/tealium-privacy-api-openapi.yml#DeletionResponse
+      - openapi/tealium-privacy-api-openapi.yml#TransactionStatusResponse
+    relationships:
+      - belongs_to: Profile
+      - targets: Visitor
+    note: >-
+      The one asynchronous job object in the model. DELETE returns a transactionId; the caller polls
+      GET .../transactions/{transaction_id} for status. Deletion completes within 30 days.
+
+  - name: AuthToken
+    key: none
+    described_by: openapi/tealium-auth-api-openapi.yml#AuthResponse
+    fields: [token, host]
+    relationships:
+      - scoped_to: Profile
+    note: >-
+      Carries the region-specific host alongside the JWT — the token and the routing decision are
+      the same object. Ignoring `host` is the most common client mistake on this platform.
+
+  - name: IQProfileConfiguration
+    key: '{account}/{profile}'
+    described_by: https://docs.tealium.com/api/v3/iq-profiles/iq-profiles-api-objects/
+    relationships:
+      - belongs_to: Profile
+      - has_many: Tag
+      - has_many: LoadRule
+      - has_many: Extension
+      - has_many: Variable
+      - has_many: TagTemplate
+    note: >-
+      The iQ Profiles API treats the whole tag-management configuration as one document, read with
+      GET and mutated with PATCH — there are no per-tag REST resources. No OpenAPI for this API is
+      captured in this repo; the object model is documented in prose only.
+
+  - name: User
+    key: SCIM id
+    described_by: https://docs.tealium.com/api/v3/scim-api/about/
+    relationships:
+      - belongs_to: Account
+      - has_many: Group
+    note: SCIM 2.0 /Users resource. GA 2026-07-15.
+
+  - name: Group
+    key: SCIM id
+    described_by: https://docs.tealium.com/api/v3/scim-api/about/
+    relationships:
+      - belongs_to: Account
+      - has_many: User
+    subtypes:
+      - built-in groups (mirror Tealium admin roles; cannot be created, renamed or deleted via SCIM)
+      - custom groups (creatable and manageable via SCIM)
+    note: >-
+      SCIM can manage membership but not permissions — group permissions are configurable only in
+      the Tealium UI.
+
+relationships_summary:
+  - Account has_many Profile
+  - Profile has_many Visitor, DataSource, MomentsEngine, Attribute, Audience, Badge
+  - Visitor has_many Audience (via audiences), Badge (via badges), Attribute (via typed buckets)
+  - Visitor has_one CurrentVisit (via currentVisit)
+  - Event belongs_to DataSource (via tealium_datasource) and mutates Visitor (via tealium_visitor_id)
+  - MomentsEngine projects Visitor
+  - DeleteTransaction targets Visitor
+  - Group has_many User (SCIM)
+
+render:
+  subway: null
+  note: No subway/ diagram exists in this repo yet.
+
+observations:
+  - >-
+    There is exactly one queryable entity — the visitor. Every other object is either tenancy
+    (account, profile), configuration (engine, attribute, audience, badge, tag), or write-only
+    (event). A client that models Tealium as a CRUD resource graph will be wrong.
+  - >-
+    No typed or prefixed IDs anywhere, so payloads are not self-describing. An attributeId of
+    "5023" is meaningless without the profile's attribute definitions, which is precisely why
+    Tealium tells MCP users to configure engines to return names instead.

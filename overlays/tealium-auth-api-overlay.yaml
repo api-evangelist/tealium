@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Tealium Authentication Auth API
+  version: 1.0.0
+extends: openapi/tealium-auth-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/tealium-auth-api-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: tealium
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-conventions: conventions/tealium-conventions.yml
+    x-apievangelist-errors: errors/tealium-problem-types.yml
+    x-apievangelist-rate-limits: rate-limits/tealium-rate-limits.yml
+    x-apievangelist-lifecycle: lifecycle/tealium-lifecycle.yml
+    x-apievangelist-data-model: data-model/tealium-data-model.yml
+    x-apievangelist-skills: skills/_index.yml
+    x-apievangelist-idempotency: not-supported — no Idempotency-Key header is published on any Tealium endpoint
+    x-apievangelist-rate-limit-headers: none-published — 429 is returned with no RateLimit-*, X-RateLimit-* or Retry-After
+    x-apievangelist-error-format: 'plain HTTP status with a {"message": "..."} body; not RFC 9457'
+- target: $.paths['/auth/accounts/{account}/profiles/{profile}'].post
+  update:
+    x-apievangelist-skill: skills/tealium-authenticate.md

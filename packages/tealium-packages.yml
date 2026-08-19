@@ -1,0 +1,171 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org, pub.dev, trunk.cocoapods.org, api.nuget.org, search.maven.org,
+  github.com/Tealium releases API, and the Tealium install docs at docs.tealium.com/platforms/
+description: >-
+  Tealium's client libraries are mobile-and-web SDKs for the Universal Tag / Customer Data Hub,
+  not REST clients for the V3 platform APIs. There is no first-party Python, Go, Ruby, PHP or Rust
+  client for the Collect, Visitor Profile, Visitor Privacy, Moments or iQ Profiles APIs — those are
+  called with plain HTTP. Every SDK below is first-party (published from the github.com/Tealium
+  organization) and all but one are actively released.
+
+packages:
+  - language: swift
+    platform: iOS / tvOS / watchOS / macOS
+    registry: swiftpm
+    name: tealium-swift
+    url: https://github.com/tealium/tealium-swift
+    install: 'Swift Package Manager — add package https://github.com/tealium/tealium-swift'
+    official: true
+    version: 2.18.4
+    published: '2026-07-28'
+    source: github releases (Tealium/tealium-swift)
+    note: >-
+      Recommended install path per Tealium docs. Also distributed via CocoaPods and Carthage.
+    docs: https://docs.tealium.com/platforms/ios-swift/install/
+
+  - language: swift
+    platform: iOS
+    registry: cocoapods
+    name: tealium-swift
+    url: https://cocoapods.org/pods/tealium-swift
+    install: "pod 'tealium-swift'"
+    official: true
+    version: 2.9.2
+    published: '2023-04-26'
+    source: https://trunk.cocoapods.org/api/v1/pods/tealium-swift
+    note: >-
+      DECAY SIGNAL. The CocoaPods trunk holds 77 versions but the newest is 2.9.2 from April 2023,
+      while the Swift Package Manager / GitHub release line is at 2.18.4 (July 2026). A consumer
+      installing via CocoaPods is more than three years and nine minor versions behind the
+      supported library. Tealium's docs now name Swift Package Manager as "recommended and
+      simplest" but still list CocoaPods as an install option without flagging the gap.
+
+  - language: kotlin
+    platform: Android
+    registry: maven
+    name: com.tealium (Tealium Kotlin library)
+    url: https://github.com/Tealium/tealium-kotlin
+    install: 'Add the Tealium Maven repository to build.gradle, then the com.tealium module dependencies'
+    official: true
+    version: 1.9.2
+    published: '2025-12-22'
+    source: github releases (Tealium/tealium-kotlin)
+    note: >-
+      Not on Maven Central — a search for g:"com.tealium" on search.maven.org returns 0 artifacts.
+      Tealium's install doc instructs adding a Tealium-hosted Maven repository URL to the project's
+      top-level build.gradle, so there is no public registry metadata endpoint to read a version
+      from; the version and date above come from the GitHub release, which is the authoritative
+      published artifact for this library.
+    docs: https://docs.tealium.com/platforms/android-kotlin/install/
+
+  - language: dart
+    platform: Flutter
+    registry: pub.dev
+    name: tealium
+    url: https://pub.dev/packages/tealium
+    install: 'flutter pub add tealium'
+    official: true
+    version: 4.0.0
+    published: '2026-06-29'
+    source: https://pub.dev/api/packages/tealium
+    note: Wraps the native Swift and Kotlin libraries. Repo is Tealium/tealium-flutter.
+
+  - language: javascript
+    platform: React Native
+    registry: npm
+    name: tealium-react-native
+    url: https://www.npmjs.com/package/tealium-react-native
+    install: 'npm install tealium-react-native'
+    official: true
+    version: 2.7.0
+    published: '2026-07-23'
+    source: https://registry.npmjs.org/tealium-react-native
+
+  - language: javascript
+    platform: Cordova
+    registry: npm
+    name: tealium-cordova-plugin
+    url: https://www.npmjs.com/package/tealium-cordova-plugin
+    install: 'cordova plugin add tealium-cordova-plugin'
+    official: true
+    version: 2.5.0
+    published: '2026-05-18'
+    source: https://registry.npmjs.org/tealium-cordova-plugin
+
+  - language: csharp
+    platform: .NET MAUI
+    registry: nuget
+    name: Tealium.Maui
+    url: https://www.nuget.org/packages/Tealium.Maui
+    install: 'dotnet add package Tealium.Maui'
+    official: true
+    version: 1.2.4
+    published: '2026-02-09'
+    source: https://api.nuget.org/v3/registration5-gz-semver2/tealium.maui/index.json
+
+  - language: csharp
+    platform: Xamarin
+    registry: nuget
+    name: Tealium.Xamarin
+    url: https://www.nuget.org/packages/Tealium.Xamarin
+    install: 'dotnet add package Tealium.Xamarin'
+    official: true
+    version: 2.1.0
+    published: null
+    source: https://azuresearch-usnc.nuget.org/query?q=tealium
+    note: >-
+      Version read from the NuGet search index; the publish date was not retrieved. Xamarin is
+      superseded by .NET MAUI (Tealium.Maui) and this package is effectively legacy.
+
+  - language: javascript
+    platform: Web
+    registry: cdn
+    name: utag.js (Tealium Universal Tag)
+    url: https://tags.tiqcdn.com/utag/{account}/{profile}/{environment}/utag.js
+    install: >-
+      <script src="//tags.tiqcdn.com/utag/{account}/{profile}/{environment}/utag.js"></script>
+    official: true
+    version: null
+    published: null
+    note: >-
+      CDN-distributed and UNPINNED. The URL carries account, profile and environment (dev/qa/prod)
+      but no version, so it always floats to whatever iQ last published for that profile — a
+      consumer cannot tell from the URL which build they are loading. There is no registry metadata
+      endpoint. The build identifier is only visible inside the file itself: fetching
+      https://tags.tiqcdn.com/utag/tealium/docs/prod/utag.js on 2026-08-13 returned HTTP 200 with
+      the header comment "utag.loader ut4.0.202504230113". Recorded as version null because that
+      string is a per-profile publish artifact, not a package version a consumer can request.
+    docs: https://docs.tealium.com/iq-tag-management/save-publish/manage-environments/
+
+third_party_noted:
+  - registry: npm
+    name: tealium
+    url: https://www.npmjs.com/package/tealium
+    version: 5.0.7
+    published: '2024-04-10'
+    official: false
+    note: >-
+      Squats the obvious name but is NOT published by Tealium — no repository field and no link
+      to github.com/Tealium. Recorded so a later pass does not mistake it for first-party.
+  - registry: maven
+    name: com.networknt:tealium-token
+    version: 1.1.6
+    published: '2025-04-09'
+    official: false
+    note: Third-party (light-4j / networknt) token helper, not a Tealium artifact.
+
+not_found:
+  - python
+  - go
+  - ruby
+  - php
+  - rust
+  - java (server-side REST client)
+
+summary:
+  official_count: 9
+  registries: [swiftpm, cocoapods, maven, pub.dev, npm, nuget, cdn]
+  freshest: 'tealium-swift 2.18.4 (2026-07-28)'
+  stalest: 'cocoapods tealium-swift 2.9.2 (2023-04-26)'

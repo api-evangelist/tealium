@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.tealium.com/iq-tag-management/save-publish/manage-environments/,
+  https://docs.tealium.com/server-side/trace/about/,
+  https://docs.tealium.com/server-side/trace/mobile-qr-trace/,
+  https://docs.tealium.com/iq-tag-management/tealium-tools/environment-switcher/,
+  https://docs.tealium.com/iq-tag-management/save-publish/publishing-best-practices/
+description: >-
+  Tealium does not offer a sandbox account, test API keys or synthetic test fixtures. What it offers
+  instead is environment separation inside a live account — three built-in publishing environments
+  plus custom ones — and Trace, a live event-inspection tool that follows a single tagged session
+  through the whole server-side pipeline. Testing on Tealium means publishing to a non-production
+  environment and watching a real event travel, not calling a mock endpoint.
+
+test_credentials:
+  test_mode_keys: false
+  key_prefixes: null
+  note: >-
+    There is no test-vs-live key distinction. API keys are generated per user in Tealium iQ and
+    scoped by account/profile and permissions, not by mode. The managed MCP server uses a
+    separate dedicated key issued by Tealium Support — also not a test key.
+
+environments:
+  model: publish-environments
+  built_in:
+    - name: Dev
+      alias_editable: true
+      deletable: false
+    - name: QA
+      alias_editable: true
+      deletable: false
+    - name: Prod
+      alias_editable: true
+      deletable: false
+  custom_environments: true
+  permissions:
+    - Publish to Dev
+    - Publish to QA
+    - Publish to Prod
+  note: >-
+    Environment is a path segment in the delivered Universal Tag URL —
+    //tags.tiqcdn.com/utag/{account}/{profile}/{environment}/utag.js — so switching a page from
+    prod to qa is a URL change, not a credential change. Default environment names cannot be
+    renamed or deleted; only their display aliases change.
+  docs: https://docs.tealium.com/iq-tag-management/save-publish/manage-environments/
+  switching:
+    tool: Tealium Tools Environment Switcher (browser extension)
+    docs: https://docs.tealium.com/iq-tag-management/tealium-tools/environment-switcher/
+    also: https://docs.tealium.com/iq-tag-management/troubleshooting/switch-environoment/
+
+trace:
+  name: Trace
+  purpose: >-
+    Testing and inspection tool for server-side configuration. Tracks a workflow to show how events
+    and customer data are processed in real time — which enrichments fired, which audiences the
+    visitor joined, which connector actions triggered.
+  mechanism: >-
+    Start a trace to obtain a trace ID, attach that ID to the application (or use the Tealium Tools
+    browser extension), perform the test interaction, then inspect the trace log.
+  applies_to: [AudienceStream CDP, EventStream API Hub]
+  docs: https://docs.tealium.com/server-side/trace/about/
+  manage: https://docs.tealium.com/server-side/trace/manage/
+  view: https://docs.tealium.com/server-side/trace/view/
+  joinable: 'Multiple people can join an active trace.'
+  mobile:
+    name: Mobile QR Trace
+    docs: https://docs.tealium.com/server-side/trace/mobile-qr-trace/
+    note: >-
+      Renders the trace ID as a QR code the device scans, so events from the Tealium mobile SDKs
+      can be traced without hand-entering an ID.
+
+validation_tooling:
+  - name: Validate webhook action
+    docs: https://docs.tealium.com/server-side/connectors/webhook-connectors/validate-webhook-action/
+    note: Sends a test request through a configured webhook connector action.
+  - name: Event feeds
+    docs: https://docs.tealium.com/server-side/event-health/event-feeds/
+    note: Manage and inspect incoming data.
+  - name: Tealium Tools
+    type: Google Chrome extension
+    note: >-
+      Collection of debugging utilities (Environment Switcher, Trace helper, Optimizely Helper and
+      others) rather than a single tool.
+  - name: MCP Inspector
+    docs: https://docs.tealium.com/server-side/moments-api/managed-mcp-server/
+    note: >-
+      Tealium recommends the open-source MCP Inspector (npx @modelcontextprotocol/inspector) with
+      Transport Type "Streamable HTTP" to verify connectivity, list tools and troubleshoot auth
+      against the managed MCP server. Still requires a real API key.
+
+test_data:
+  test_visitors: false
+  magic_identifiers: false
+  fixtures: false
+  note: >-
+    No published magic visitor IDs, test attribute values or seeded profiles. Test data is whatever
+    the tester sends into a dev/qa profile.
+
+publishing_workflow:
+  docs: https://docs.tealium.com/iq-tag-management/save-publish/publishing-best-practices/
+  features:
+    - Save without publish (versions, and overwritten versions)
+    - Version history with per-version restore
+    - Draft mode in the Advanced JavaScript Code extension, with code diffs and GitHub integration
+  note: >-
+    The safeguarded path is save → publish to Dev → verify with Trace → publish to QA → publish to
+    Prod, with version history as the rollback mechanism.
+
+gaps:
+  - No sandbox account or free developer tier — an account is required to call anything.
+  - No test-mode API keys.
+  - No mock server or hosted request-bin equivalent for the REST APIs.
+  - No published synthetic identifiers for repeatable tests.

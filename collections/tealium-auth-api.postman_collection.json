@@ -1,0 +1,323 @@
+{
+  "item": [
+    {
+      "id": "a329d871-bba9-4bdd-b1ab-135a8cf5a376",
+      "name": "Auth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04157f07-70c7-42b4-93d6-17663904e9a6",
+          "name": "Generate bearer token",
+          "request": {
+            "name": "Generate bearer token",
+            "description": {
+              "content": "Exchanges a username (email address) and API key for a JWT bearer token and a region-specific host. The returned token is valid for 30 minutes and should be reused across API calls rather than regenerated on each request. Use the returned host value for all subsequent API calls to ensure regional routing.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "accounts",
+                ":account",
+                "profiles",
+                ":profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account",
+                  "description": "(Required) Tealium account name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "profile",
+                  "description": "(Required) Tealium profile name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "username",
+                  "value": "<email>",
+                  "description": "(Required) User email address associated with the Tealium account"
+                },
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key from Tealium iQ Tag Management"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "68ab7f86-c86f-4f42-9ab7-a86b08743c65",
+              "name": "Bearer token generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) User email address associated with the Tealium account",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "user@example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key from Tealium iQ Tag Management",
+                        "type": "text/plain"
+                      },
+                      "key": "key",
+                      "value": "abc123apikey"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyQGV4YW1wbGUuY29tIn0.kqkpj8vE\",\n  \"host\": \"us-east-1-platform.tealiumapis.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd030ae8-fac1-4ae8-8462-fad092a053b5",
+              "name": "Bad request — missing username or key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) User email address associated with the Tealium account",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "user@example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key from Tealium iQ Tag Management",
+                        "type": "text/plain"
+                      },
+                      "key": "key",
+                      "value": "abc123apikey"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bb5e2a48-c04f-474d-ad54-9e80b2b712f7",
+              "name": "Unauthorized — invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "accounts",
+                    ":account",
+                    "profiles",
+                    ":profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account",
+                      "description": "(Required) Tealium account name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "profile",
+                      "description": "(Required) Tealium profile name"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) User email address associated with the Tealium account",
+                        "type": "text/plain"
+                      },
+                      "key": "username",
+                      "value": "user@example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) API key from Tealium iQ Tag Management",
+                        "type": "text/plain"
+                      },
+                      "key": "key",
+                      "value": "abc123apikey"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://platform.tealiumapis.com/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "214071e7-3941-4500-a4c3-6cf9a3ba53df",
+    "name": "Tealium Authentication Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.\n\nContact Support:\n Name: Tealium Support",
+      "type": "text/plain"
+    }
+  }
+}

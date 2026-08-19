@@ -1,0 +1,80 @@
+{
+	"$schema": "https://example.org/schemas/agent-manifest.schema.json",
+	"version": "1.1",
+	"organization": {
+		"name": "Tealium",
+		"website": "https://tealium.com/",
+		"contact": "mailto:corpcomms@tealium.com"
+	},
+	"capabilities": [
+		"faq_answering",
+		"docs_search",
+		"site_search"
+	],
+	"data": {
+		"taxonomy_url": "https://tealium.com/.well-known/data-taxonomy.json",
+		"schemas": [
+			"https://schema.org/Organization",
+			"https://schema.org/WebSite",
+			"https://schema.org/FAQPage",
+			"https://schema.org/Article"
+		],
+		"freshness": { "max_age_seconds": 300 },
+		"consent": {
+			"policy_url": "https://tealium.com/privacy/",
+			"additional_policies": ["https://tealium.com/cookie-policy/"],
+			"signals": ["gdpr", "ccpa"]
+		}
+	},
+	"apis": [
+		{
+			"name": "tealium-docs",
+			"docs": "https://docs.tealium.com/api/",
+			"description": "Tealium API hub: overviews, auth, endpoints."
+		},
+		{
+			"name": "collect-http-v3",
+			"docs": "https://docs.tealium.com/api/v3/http-api/about/",
+			"description": "Authenticated HTTP API for sending events."
+		},
+		{
+			"name": "collect-http-v1",
+			"docs": "https://docs.tealium.com/platforms/http-api/",
+			"description": "Unauthenticated HTTP API v1 (legacy)."
+		},
+		{
+			"name": "ai-read",
+			"openapi": "https://tealium.com/.well-known/openapi.yaml",
+			"description": "OpenAPI for read-only AI endpoints (status, faq, docs)."
+		}
+	],
+	"endpoints": {
+		"status": "https://tealium.com/wp-json/ai/v1/status",
+		"faq": "https://tealium.com/wp-json/ai/v1/faq",
+		"docs": "https://tealium.com/wp-json/ai/v1/docs",
+		"docs_portal": "https://docs.tealium.com/"
+	},
+	"indexing": {
+		"structured_data": true,
+		"sitemaps": [
+			{ "inLanguage": "en", "url": "https://tealium.com/sitemap.xml" },
+			{ "inLanguage": "es", "url": "https://tealium.com/es/sitemap.xml" },
+			{ "inLanguage": "fr", "url": "https://tealium.com/fr/sitemap.xml" },
+			{ "inLanguage": "de", "url": "https://tealium.com/de/sitemap.xml" },
+			{ "inLanguage": "ja", "url": "https://tealium.com/ja/sitemap.xml" }
+		]
+	},
+	"locales": [
+		{ "inLanguage": "en", "prefix": "/" },
+		{ "inLanguage": "es", "prefix": "/es/" },
+		{ "inLanguage": "fr", "prefix": "/fr/" },
+		{ "inLanguage": "de", "prefix": "/de/" },
+		{ "inLanguage": "ja", "prefix": "/ja/" }
+	],
+	"rules": {
+		"cache": "must-revalidate",
+		"attribution_required": true,
+		"allowed_uses": ["answering", "comparison"],
+		"disallowed_uses": ["model_training_without_consent"]
+	}
+}

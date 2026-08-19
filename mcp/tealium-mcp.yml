@@ -1,0 +1,168 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.tealium.com/server-side/moments-api/managed-mcp-server/
+status: published
+description: >-
+  Tealium operates a first-party, fully managed remote MCP server in front of the Moments API.
+  AI systems connect over Streamable HTTP to retrieve a targeted slice of live visitor context —
+  audiences, badges and attributes — from the AudienceStream Customer Data Hub. Tealium hosts and
+  operates the server; there is no package to install and no infrastructure to run. Access requires
+  a dedicated MCP API key requested from Tealium Support, and at least one active Moments API engine.
+
+deployment:
+  mode: remote
+  endpoint: https://us-west-2.prod.developer.tealiumapis.com/v1/personalization/mcp
+  auth: api-key
+  verified: probed
+  note: >-
+    Endpoint published verbatim in Tealium's own docs (OpenAI Agents SDK sample, MCP Inspector
+    instructions). Probed unauthenticated on 2026-08-13 with a JSON-RPC tools/list — the live
+    server answered HTTP 401 {"message":"Unauthorized","http_status_code":401}, which confirms a
+    real MCP endpoint behind an API-key wall rather than a marketing claim. The tool list below is
+    therefore transcribed from the provider's published tool reference, not from a live tools/list
+    response; input schemas would need authenticated introspection to capture verbatim.
+
+server:
+  name: tealium_personalization_mcp
+  transport: streamable-http
+  url: https://us-west-2.prod.developer.tealiumapis.com/v1/personalization/mcp
+  regional: true
+  region_note: >-
+    The MCP endpoint host is region-scoped and must match the region of the Moments API engine.
+    Only us-west-2 is published in the documentation; Moments API engines run in us-east-1,
+    us-west-2, eu-central-1 and ap-southeast-2, so sibling MCP hosts are implied but NOT documented
+    and are not recorded here.
+  backing_api: Tealium Moments API
+  backing_openapi: openapi/tealium-personalization-api-openapi.yml
+
+authentication:
+  scheme: api-key
+  header: X-Tealium-Api-Key
+  provisioning: >-
+    Dedicated MCP-only API key. Not the standard Tealium iQ API key and not the V3 JWT bearer
+    token — it must be requested from Tealium Support.
+  additional_required_headers:
+    - name: Origin
+      note: Required. The Moments API is governed by domain allowlists rather than bearer auth.
+    - name: Referer
+      note: Required. Absolute or partial address that initiated the request.
+  oauth: false
+  oauth_metadata: >-
+    No /.well-known/oauth-authorization-server or /.well-known/oauth-protected-resource is served
+    on the MCP host (both 404) — this server does not implement the MCP OAuth authorization flow.
+
+requirements:
+  - At least one active Moments API engine (docs.tealium.com/about-moments-api/#engines)
+  - A dedicated managed-MCP API key issued by Tealium Support
+  - Engine configured to return attribute NAMES rather than numeric attribute IDs
+    (Tealium states this is "the only viable approach" for LLM use)
+
+tools:
+  - name: getPersonalizationContentByAnonymousId
+    description: >-
+      Retrieve visitor data using the Tealium anonymous ID — a unique anonymous value assigned to a
+      visitor per browser or app, tracked across visits but not across devices.
+    source_operation: openapi/tealium-personalization-api-openapi.yml#getMomentsByVisitorId
+    parameters:
+      - name: account
+        required: true
+        description: The name of your Tealium account.
+      - name: profile
+        required: true
+        description: The name of the profile within your Tealium account.
+      - name: engineId
+        required: true
+        description: The engine ID of the Moments API endpoint.
+      - name: Origin
+        required: true
+        description: The origin that initiated the request.
+      - name: Referer
+        required: true
+        description: The absolute or partial address that initiated the request.
+      - name: visitorId
+        required: true
+        description: Anonymous visitor ID to look up.
+      - name: suppressNotFound
+        required: false
+        description: >-
+          false (default) returns 404 Not Found when no visitor record exists; true returns
+          200 OK with an empty body.
+  - name: getPersonalizationContentByVisitorId
+    description: >-
+      Retrieve visitor data using a visitor ID attribute, by specifying the attribute ID and the
+      attribute lookup value.
+    source_operation: openapi/tealium-personalization-api-openapi.yml#getMomentsByAttributeValue
+    parameters:
+      - name: account
+        required: true
+        description: The name of your Tealium account.
+      - name: profile
+        required: true
+        description: The name of the profile within your Tealium account.
+      - name: engineId
+        required: true
+        description: The engine ID of the Moments API endpoint.
+      - name: Origin
+        required: true
+        description: The origin that initiated the request.
+      - name: Referer
+        required: true
+        description: The absolute or partial address that initiated the request.
+      - name: attributeId
+        required: true
+        description: The numeric UID representing a visitor ID attribute.
+      - name: attributeValue
+        required: true
+        description: The value of the attribute to look up.
+      - name: suppressNotFound
+        required: false
+        description: >-
+          false (default) returns 404 Not Found when no visitor record exists; true returns
+          200 OK with an empty body.
+
+response_shape:
+  note: >-
+    Tools return the Moments API visitor payload — audiences, badges, attributes, and current-visit
+    properties. See openapi/tealium-personalization-api-openapi.yml and
+    json-schema/tealium-moments-response.json for the full response contract.
+  properties:
+    - audiences
+    - badges
+    - attributes
+
+client_guidance:
+  published_clients:
+    - name: OpenAI Agents SDK (Python) — HostedMCPTool
+      server_label: tealium_personalization_mcp
+    - name: OpenAI Agents SDK (Python) — MCPServerStreamableHttp
+    - name: MCP Inspector (npx @modelcontextprotocol/inspector), Transport Type Streamable HTTP
+  prompting:
+    instructions: Carry the static parameters (account, profile, engineId) in the system instructions.
+    prompt: Carry the dynamic parameters (visitorId, or attributeId + attributeValue) in the user prompt.
+    response: Reference the specific response properties (audiences, attributes, badges) to constrain output.
+
+best_practices:
+  - Configure the engine to return attribute names, not numeric attribute IDs.
+  - Use a dedicated Moments API engine per MCP use case; do not reuse engines built for other purposes.
+  - Expose only the attributes, badges and audiences the use case needs — oversized payloads degrade LLM accuracy.
+
+related:
+  a2a: >-
+    Tealium states the managed MCP server is "part of our managed native AI protocol support, which
+    currently includes Agent-to-Agent (A2A) protocol support." No A2A Agent Card was served on any
+    Tealium host (/.well-known/agent-card.json and /.well-known/agent.json both 404 on tealium.com,
+    docs.tealium.com, platform.tealiumapis.com, personalization-api.*.prod.tealiumapis.com,
+    us-west-2.prod.developer.tealiumapis.com, my.tealiumiq.com, collect.tealiumiq.com), so no
+    a2a/ artifact is written.
+  press: https://tealium.com/press-releases/tealium-achieves-mcp-integration-to-fuel-agentic-ai-initiatives/
+  developer_center: https://tealium.com/developer-center/bridging-ai-and-customer-data-platforms-with-mcp/
+
+x-evidence:
+  fetched: '2026-08-13'
+  docs_url: https://docs.tealium.com/server-side/moments-api/managed-mcp-server/
+  probe:
+    url: https://us-west-2.prod.developer.tealiumapis.com/v1/personalization/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    response: '{"message":"Unauthorized","http_status_code":401}'

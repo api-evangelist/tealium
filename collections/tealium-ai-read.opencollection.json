@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium AI Read API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health / heartbeat",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://tealium.com/wp-json/ai/v1/status"
+      },
+      "docs": "Returns a simple health object and metadata."
+    },
+    {
+      "info": {
+        "name": "Global FAQ",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://tealium.com/wp-json/ai/v1/faq",
+        "params": [
+          {
+            "name": "lang",
+            "value": "",
+            "type": "query",
+            "description": "Optional filter; if provided, only items with matching `inLanguage` SHOULD be returned (server may ignore)."
+          }
+        ]
+      },
+      "docs": "Returns an array of question/answer pairs (multi-lingual via `inLanguage`)."
+    },
+    {
+      "info": {
+        "name": "Docs portal pointer",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://tealium.com/wp-json/ai/v1/docs"
+      },
+      "docs": "Returns the canonical URL for the public documentation portal plus metadata."
+    }
+  ],
+  "bundled": true
+}

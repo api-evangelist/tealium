@@ -1,0 +1,28 @@
+# Tealium
+
+> Canonical pointers for AI agents: docs, endpoints, and policies for Tealium public content.
+
+## Manifests & Policies
+- Agent Manifest: https://tealium.com/.well-known/agents.json
+- Data Taxonomy: https://tealium.com/.well-known/data-taxonomy.json
+- OpenAPI (AI read endpoints): https://tealium.com/.well-known/openapi.yaml
+- robots.txt: https://tealium.com/robots.txt
+- Privacy: https://tealium.com/privacy/
+- Cookies: https://tealium.com/cookie-policy/
+- (Optional) ai.txt: https://tealium.com/.well-known/ai.txt
+
+## Endpoints (read-only)
+- Status: https://tealium.com/wp-json/ai/v1/status
+- FAQ: https://tealium.com/wp-json/ai/v1/faq
+- Docs pointer: https://tealium.com/wp-json/ai/v1/docs
+
+## Docs Portal
+- Root: https://docs.tealium.com/
+- API Hub: https://docs.tealium.com/api/
+
+## Sitemaps
+- en: https://tealium.com/sitemap.xml
+- es: https://tealium.com/es/sitemap.xml
+- fr: https://tealium.com/fr/sitemap.xml
+- de: https://tealium.com/de/sitemap.xml
+- ja: https://tealium.com/ja/sitemap.xml

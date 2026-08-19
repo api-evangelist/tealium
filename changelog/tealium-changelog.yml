@@ -1,0 +1,78 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.tealium.com/release-notes/
+description: >-
+  Tealium publishes a single consolidated, dated release-notes stream covering the whole Customer
+  Data Hub. Entries are grouped by date, newest first, and subdivided by product area (Server-side,
+  Client-side tags, Platforms, Administration). The overwhelming majority of every entry is
+  connector and tag maintenance — third-party vendor API version bumps — with platform and API
+  changes appearing less often. There is no separate API-only changelog, no RSS/Atom feed, and no
+  machine-readable version history.
+
+scheme:
+  type: dated-entries
+  cadence: weekly
+  grouping: by date, then by product area
+  ordering: reverse-chronological
+  scope: whole platform (connectors, tags, platforms, administration, APIs)
+  api_only_channel: false
+  feed: null
+  breaking_change_labelling: >-
+    Not labelled. Entries do not distinguish breaking from additive; deprecations appear as prose
+    notices inside a product-area bullet.
+
+current:
+  api_version: v3
+  newest_entry: '2026-08-12'
+  checked: '2026-08-13'
+
+related_changelogs:
+  - name: Webhook connectors changelog
+    url: https://docs.tealium.com/server-side/connectors/webhook-connectors/changelog/
+    scope: HTTP-based webhook connector actions
+  - name: utag.js (Tealium for JavaScript) version notes
+    url: https://docs.tealium.com/platforms/javascript/version-4-52/
+    scope: Universal Tag library, per-version notes pages
+  - name: tealium-swift releases
+    url: https://github.com/Tealium/tealium-swift/releases
+  - name: tealium-kotlin CHANGELOG
+    url: https://github.com/Tealium/tealium-kotlin/blob/main/CHANGELOG.md
+
+entries:
+  - date: '2026-08-12'
+    highlights:
+      - New connector categories added for "Connected TV & Video" and "Podcast & Audio".
+      - Stitching merge rules now available to determine final attribute values when profiles merge.
+      - Amazon Ads Conversions connector updated, carrying a deprecation notice for a legacy action.
+    deprecations:
+      - Legacy Amazon Ads Conversions connector action.
+    breaking: unlabelled
+  - date: '2026-08-05'
+    highlights:
+      - New connector metadata attributes made mappable in connector actions.
+      - Added Webhook mTLS and Webhook OAuth2 2-Legged mTLS connectors.
+      - Facebook Conversions connector gained per-field SHA256 hashing controls.
+    breaking: unlabelled
+  - date: '2026-07-29'
+    highlights:
+      - Reddit Conversions connector updated to apply full normalization rules.
+      - New RTB House Audiences connector released.
+      - Emarsys, StackAdapt and Cordial connector updates.
+    breaking: unlabelled
+  - date: '2026-07-15'
+    highlights:
+      - SCIM API reached general availability for user provisioning.
+      - Audience fill (historical backfill) reached general availability.
+    breaking: unlabelled
+    note: >-
+      The most API-relevant recent entry — SCIM 2.0 going GA is what puts a standards-conformant
+      provisioning surface into the platform. See conformance/tealium-conformance.yml.
+
+observations:
+  - >-
+    Connector/tag maintenance dominates. Across the sampled window the changes that touch a
+    Tealium-published API contract (SCIM GA, stitching merge rules) are a small minority; most
+    entries track third-party vendor API versions (Criteo 2026-10, Facebook v25, Klaviyo 2026-01-15).
+  - >-
+    No breaking/additive classification and no machine-readable feed means a consumer cannot
+    programmatically watch for changes that affect them — they must read the page.

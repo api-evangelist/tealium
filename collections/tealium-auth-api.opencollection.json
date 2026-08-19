@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tealium Authentication Auth API",
+    "version": "3.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate bearer token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://platform.tealiumapis.com/v3/auth/accounts/:account/profiles/:profile",
+            "params": [
+              {
+                "name": "account",
+                "value": "",
+                "type": "path",
+                "description": "Tealium account name"
+              },
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path",
+                "description": "Tealium profile name"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "username",
+                  "value": ""
+                },
+                {
+                  "name": "key",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Exchanges a username (email address) and API key for a JWT bearer token and a region-specific host. The returned token is valid for 30 minutes and should be reused across API calls rather than regenerated on each request. Use the returned host value for all subsequent API calls to ensure regional routing."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
