@@ -50,6 +50,10 @@ apis:
   humanURL: https://docs.tealium.com/api/v3/http-api/about/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
+  - Event
+  - Data Collection
+  - HTTP API
+  tags_raw:
   - Events
   - Data Collection
   - HTTP API
@@ -121,6 +125,12 @@ apis:
   - Personalization
   - Real-Time
   - Visitor Context
+  - Artificial Intelligence
+  - Moments
+  tags_raw:
+  - Personalization
+  - Real-Time
+  - Visitor Context
   - AI
   - Moments
   properties:
@@ -139,6 +149,11 @@ apis:
   - Data Connect
   - Bulk Import
   - Bulk Export
+  - Event
+  tags_raw:
+  - Data Connect
+  - Bulk Import
+  - Bulk Export
   - Events
   properties:
   - type: Documentation
@@ -149,6 +164,8 @@ apis:
   humanURL: https://docs.tealium.com/api/v3/getting-started/authentication/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -177,6 +194,8 @@ apis:
   humanURL: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
   baseURL: https://platform.tealiumapis.com/v3
   tags:
+  - Customers
+  tags_raw:
   - Customer
   properties:
   - type: OpenAPI
@@ -231,6 +250,12 @@ apis:
   humanURL: https://tealium.com/llms.txt
   baseURL: https://tealium.com
   tags:
+  - Artificial Intelligence
+  - Agents
+  - FAQ
+  - Read Only
+  - Discovery
+  tags_raw:
   - AI
   - Agents
   - FAQ
