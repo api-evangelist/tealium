@@ -236,44 +236,25 @@ apis:
     url: overlays/tealium-privacy-api-overlay.yaml
   - type: Documentation
     url: https://docs.tealium.com/api/v3/visitor-privacy/endpoints/
-- aid: tealium:tealium-ai-read-api
-  name: Tealium AI Read API
-  description: >-
-    Tealium's own minimal, read-only API for AI agents, published as OpenAPI 3.0.3 at
-    https://tealium.com/.well-known/openapi.yaml and discovered from https://tealium.com/llms.txt.
-    Three unauthenticated GET operations — a status/heartbeat object, a global multilingual FAQ
-    (question/answer pairs), and a pointer to the canonical documentation portal. Responses are
-    cache-friendly and carry provenance headers (Cache-Control, X-Provenance). Governed by the
-    usage rules in Tealium's agent manifest: attribution required, model training without consent
-    disallowed.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://tealium.com/llms.txt
-  baseURL: https://tealium.com
+- aid: tealium:tealium-wp-json-api
+  name: Tealium Wp Json API
+  description: The Wp Json API from Tealium — 3 operation(s) for wp json.
+  humanURL: https://docs.tealium.com/api/v3/http-api/about/
+  baseURL: https://platform.tealiumapis.com/v3
   tags:
-  - Artificial Intelligence
-  - Agents
-  - FAQ
-  - Read Only
-  - Discovery
-  tags_raw:
-  - AI
-  - Agents
-  - FAQ
-  - Read-Only
-  - Discovery
+  - Wp Json
   properties:
   - type: OpenAPI
-    url: openapi/tealium-ai-read-openapi.yml
-  - type: Overlay
-    url: overlays/tealium-ai-read-overlay.yaml
+    url: openapi/tealium-wp-json-api-openapi.yml
   - type: LLMsTxt
     url: llms/tealium-llms.txt
   - type: WellKnown
     url: well-known/tealium-well-known.yml
   - type: Documentation
     url: https://tealium.com/.well-known/agents.json
-
 common:
+  - type: Overlay
+    url: overlays/tealium-ai-read-overlay.yaml
 
   - type: AgenticAccess
     url: agentic-access/tealium-agentic-access.yml
