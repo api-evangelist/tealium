@@ -1,14 +1,23 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Tealium Authentication Auth Personalization API
-  description: Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.
-  version: '3.0'
+  title: Tealium Moments Personalization API
+  description: A high-performance, configurable endpoint that retrieves a targeted slice of live visitor context for real-time personalization, AI systems, and cross-channel experiences. Operates through customizable "engines" that select specific audiences, badges, and attributes. Rate limit is 200 requests per second per profile across all engines. No authentication required; governed by domain allowlists via HTTP Referer header validation. Average response time is 60ms for payloads under 1 kB.
+  version: '1.0'
   contact:
     name: Tealium Support
-    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+    url: https://docs.tealium.com/server-side/moments-api/about/
 servers:
-- url: https://platform.tealiumapis.com/v3
-  description: Tealium platform API base URL
+- url: https://personalization-api.{region}.prod.tealiumapis.com
+  description: Region-specific Moments API host
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region identifier for the Tealium deployment
+      enum:
+      - us-east-1
+      - us-west-2
+      - eu-central-1
+      - ap-southeast-2
 tags:
 - name: Personalization
 paths:

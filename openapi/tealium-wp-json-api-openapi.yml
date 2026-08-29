@@ -1,0 +1,166 @@
+openapi: 3.2.0
+info:
+  title: Tealium AI Read Wp Json API
+  version: 1.0.0
+  description: 'Minimal, read-only endpoints designed for agents. All responses are cache-friendly and include
+
+    provenance headers. No authentication required.
+
+    '
+servers:
+- url: https://tealium.com
+tags:
+- name: Wp Json
+paths:
+  /wp-json/ai/v1/status:
+    get:
+      summary: Health / heartbeat
+      description: Returns a simple health object and metadata.
+      operationId: getStatus
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              description: Cache policy (no-store expected)
+            X-Provenance:
+              schema:
+                type: string
+              description: Logical source marker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusResponse'
+      tags:
+      - Wp Json
+  /wp-json/ai/v1/faq:
+    get:
+      summary: Global FAQ
+      description: Returns an array of question/answer pairs (multi-lingual via `inLanguage`).
+      operationId: getFAQ
+      parameters:
+      - in: query
+        name: lang
+        required: false
+        schema:
+          type: string
+          example: en
+        description: Optional filter; if provided, only items with matching `inLanguage` SHOULD be returned (server may ignore).
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              description: Cache policy
+            X-Provenance:
+              schema:
+                type: string
+              description: Logical source marker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FAQResponse'
+      tags:
+      - Wp Json
+  /wp-json/ai/v1/docs:
+    get:
+      summary: Docs portal pointer
+      description: Returns the canonical URL for the public documentation portal plus metadata.
+      operationId: getDocsPointer
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+              description: Cache policy
+            X-Provenance:
+              schema:
+                type: string
+              description: Logical source marker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
+      tags:
+      - Wp Json
+components:
+  schemas:
+    StatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        version:
+          type: string
+          example: '1.0'
+        organization:
+          type: string
+          example: Tealium
+        updated_at:
+          type: string
+          format: date-time
+        source:
+          type: string
+          example: wp
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - status
+      - version
+      - organization
+      - updated_at
+      - source
+    FAQItem:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+          description: Plain-text answer (sanitized)
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - question
+      - answer
+    DocsResponse:
+      type: object
+      properties:
+        source:
+          type: string
+          example: wp
+        docs_portal:
+          type: string
+          format: uri
+          example: https://docs.tealium.com/
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - source
+      - docs_portal
+    FAQResponse:
+      type: object
+      properties:
+        source:
+          type: string
+          example: wp
+        retrieved_at:
+          type: string
+          format: date-time
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FAQItem'
+      required:
+      - source
+      - results

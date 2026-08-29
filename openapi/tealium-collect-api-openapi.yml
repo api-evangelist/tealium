@@ -1,14 +1,20 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Tealium Authentication Auth Collect API
-  description: Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.
+  title: Tealium HTTP Collect API
+  description: Sends authenticated events from any application via HTTP requests into the Tealium Customer Data Hub. Supports single-event and bulk-event endpoints (up to 10 events per request) with regional routing. Rate limit is 100 events per second; exceeding this returns HTTP 429. Authenticates via JWT bearer token obtained by exchanging a username and API key.
   version: '3.0'
   contact:
     name: Tealium Support
-    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+    url: https://docs.tealium.com/api/v3/http-api/about/
 servers:
-- url: https://platform.tealiumapis.com/v3
-  description: Tealium platform API base URL
+- url: https://{host}/v3
+  description: Region-specific host returned by authentication API
+  variables:
+    host:
+      default: platform.tealiumapis.com
+      description: Region-specific host from auth response (e.g., us-east-1-platform.tealiumapis.com)
+security:
+- BearerAuth: []
 tags:
 - name: Collect
 paths:
@@ -232,38 +238,6 @@ components:
       additionalProperties:
         type: string
         description: Custom event attributes
-    EventPayload:
-      type: object
-      required:
-      - tealium_account
-      - tealium_profile
-      - tealium_event
-      properties:
-        tealium_account:
-          type: string
-          description: Tealium account name
-        tealium_profile:
-          type: string
-          description: Tealium profile name
-        tealium_event:
-          type: string
-          description: Event type identifier
-        tealium_visitor_id:
-          type: string
-          description: Visitor identifier (GUID or formatted known-visitor ID)
-        tealium_datasource:
-          type: string
-          description: Data source key
-        tealium_environment:
-          type: string
-          enum:
-          - dev
-          - qa
-          - prod
-          description: Deployment environment
-      additionalProperties:
-        type: string
-        description: Custom event attributes as additional key-value pairs
     BulkEventPayload:
       type: object
       required:
@@ -303,3 +277,41 @@ components:
                 type: string
             additionalProperties:
               type: string
+    EventPayload:
+      type: object
+      required:
+      - tealium_account
+      - tealium_profile
+      - tealium_event
+      properties:
+        tealium_account:
+          type: string
+          description: Tealium account name
+        tealium_profile:
+          type: string
+          description: Tealium profile name
+        tealium_event:
+          type: string
+          description: Event type identifier
+        tealium_visitor_id:
+          type: string
+          description: Visitor identifier (GUID or formatted known-visitor ID)
+        tealium_datasource:
+          type: string
+          description: Data source key
+        tealium_environment:
+          type: string
+          enum:
+          - dev
+          - qa
+          - prod
+          description: Deployment environment
+      additionalProperties:
+        type: string
+        description: Custom event attributes as additional key-value pairs
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT bearer token obtained from the Authentication API (/v3/auth/accounts/{account}/profiles/{profile}). Tokens are valid for 30 minutes. Do not generate a new token for every call — reuse until expiration.

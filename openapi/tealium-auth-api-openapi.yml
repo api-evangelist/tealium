@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Tealium Authentication Auth API
   description: Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.

@@ -1,14 +1,20 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Tealium Authentication Auth Customer API
-  description: Provides JWT bearer token generation for Tealium v3 APIs. Exchange a username (email address) and API key for a time-limited JWT bearer token used to authenticate all other Tealium v3 API calls. Tokens are valid for 30 minutes. The response also includes a region-specific host for subsequent API calls. API keys are obtained from Tealium iQ Tag Management and are not used directly in API calls — only for token generation.
+  title: Tealium Visitor Profile Customer API
+  description: Queries full visitor profile records from the AudienceStream Customer Data Hub, returning audience memberships, badges, and attribute values for a given visitor. Used to retrieve the complete live or historical profile of a known or anonymous visitor identified by account, profile, and visitor ID attribute. Authenticates via JWT bearer token.
   version: '3.0'
   contact:
     name: Tealium Support
-    url: https://docs.tealium.com/api/v3/getting-started/authentication/
+    url: https://docs.tealium.com/api/v3/visitor-profile/endpoints/
 servers:
-- url: https://platform.tealiumapis.com/v3
-  description: Tealium platform API base URL
+- url: https://{host}/v3
+  description: Region-specific host returned by authentication API
+  variables:
+    host:
+      default: platform.tealiumapis.com
+      description: Region-specific host from auth response
+security:
+- BearerAuth: []
 tags:
 - name: Customer
 paths:
@@ -181,3 +187,9 @@ components:
           description: Boolean flag attribute values
           additionalProperties:
             type: boolean
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT bearer token obtained from the Authentication API. Valid for 30 minutes. Reuse tokens rather than generating new ones per request.

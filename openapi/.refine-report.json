@@ -1,22 +1,63 @@
 {
   "provider": "tealium",
   "sources": [
-    "tealium-auth-api-openapi.yml",
-    "tealium-collect-api-openapi.yml",
-    "tealium-customer-api-openapi.yml",
-    "tealium-personalization-api-openapi.yml",
-    "tealium-privacy-api-openapi.yml"
+    "_original/tealium-ai-read-openapi.yml",
+    "_original/tealium-authentication-openapi.yml",
+    "_original/tealium-collect-http-openapi.yml",
+    "_original/tealium-moments-openapi.yml",
+    "_original/tealium-visitor-privacy-openapi.yml",
+    "_original/tealium-visitor-profile-openapi.yml"
   ],
   "outputs": [
+    "tealium-wp-json-api-openapi.yml",
     "tealium-auth-api-openapi.yml",
     "tealium-collect-api-openapi.yml",
-    "tealium-customer-api-openapi.yml",
     "tealium-personalization-api-openapi.yml",
-    "tealium-privacy-api-openapi.yml"
+    "tealium-privacy-api-openapi.yml",
+    "tealium-customer-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (6 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tealium-ai-read-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-ai-read-openapi.yml: tagged paths GET /wp-json/ai/v1/status -> Wp Json",
+    "tealium-ai-read-openapi.yml: tagged paths GET /wp-json/ai/v1/faq -> Wp Json",
+    "tealium-ai-read-openapi.yml: tagged paths GET /wp-json/ai/v1/docs -> Wp Json",
+    "tealium-ai-read-openapi.yml: declared missing tag: Wp Json",
+    "tealium-authentication-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-authentication-openapi.yml: tagged paths POST /auth/accounts/{account}/profiles/{profile} -> Auth",
+    "tealium-authentication-openapi.yml: declared missing tag: Auth",
+    "tealium-collect-http-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-collect-http-openapi.yml: tagged paths GET /collect/event -> Collect",
+    "tealium-collect-http-openapi.yml: tagged paths POST /collect/event -> Collect",
+    "tealium-collect-http-openapi.yml: tagged paths POST /collect/bulk-event -> Collect",
+    "tealium-collect-http-openapi.yml: tagged paths POST /collect/regional/event -> Collect",
+    "tealium-collect-http-openapi.yml: tagged paths POST /collect/regional/bulk-event -> Collect",
+    "tealium-collect-http-openapi.yml: tagged paths POST /collect/integration/event/accounts/{account}/profiles/{profile}/datasources/{datasourceId} -> Collect",
+    "tealium-collect-http-openapi.yml: declared missing tag: Collect",
+    "tealium-moments-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-moments-openapi.yml: tagged paths GET /personalization/accounts/{account}/profiles/{profile}/engines/{engineId}/visitors/{visitorId} -> Personalization",
+    "tealium-moments-openapi.yml: tagged paths GET /personalization/accounts/{account}/profiles/{profile}/engines/{engineId} -> Personalization",
+    "tealium-moments-openapi.yml: declared missing tag: Personalization",
+    "tealium-visitor-privacy-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-visitor-privacy-openapi.yml: tagged paths GET /privacy/visitor/accounts/{account}/profiles/{profile} -> Privacy",
+    "tealium-visitor-privacy-openapi.yml: tagged paths DELETE /privacy/visitor/accounts/{account}/profiles/{profile} -> Privacy",
+    "tealium-visitor-privacy-openapi.yml: tagged paths GET /privacy/visitor/accounts/{account}/profiles/{profile}/transactions/{transaction_id} -> Privacy",
+    "tealium-visitor-privacy-openapi.yml: tagged paths GET /privacy/visitor/accounts/{account}/profiles/{profile}/ids -> Privacy",
+    "tealium-visitor-privacy-openapi.yml: declared missing tag: Privacy",
+    "tealium-visitor-profile-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/accounts/{account}/profiles/{profile} -> Customer",
+    "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/historical/accounts/{account}/profiles/{profile} -> Customer",
+    "tealium-visitor-profile-openapi.yml: declared missing tag: Customer"
+  ],
+  "skipped": [
+    "tealium-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tealium-collect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tealium-customer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tealium-personalization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tealium-privacy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tealium-wp-json-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
