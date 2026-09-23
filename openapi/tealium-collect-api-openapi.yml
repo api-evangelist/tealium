@@ -224,20 +224,6 @@ paths:
       - Collect
 components:
   schemas:
-    IntegrationEventPayload:
-      type: object
-      required:
-      - tealium_event
-      properties:
-        tealium_event:
-          type: string
-          description: Event type identifier
-        tealium_datasource:
-          type: string
-          description: Data source key
-      additionalProperties:
-        type: string
-        description: Custom event attributes
     BulkEventPayload:
       type: object
       required:
@@ -309,6 +295,20 @@ components:
       additionalProperties:
         type: string
         description: Custom event attributes as additional key-value pairs
+    IntegrationEventPayload:
+      type: object
+      required:
+      - tealium_event
+      properties:
+        tealium_event:
+          type: string
+          description: Event type identifier
+        tealium_datasource:
+          type: string
+          description: Data source key
+      additionalProperties:
+        type: string
+        description: Custom event attributes
   securitySchemes:
     BearerAuth:
       type: http

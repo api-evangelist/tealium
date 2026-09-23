@@ -50,7 +50,8 @@
     "tealium-visitor-profile-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
     "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/accounts/{account}/profiles/{profile} -> Customer",
     "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/historical/accounts/{account}/profiles/{profile} -> Customer",
-    "tealium-visitor-profile-openapi.yml: declared missing tag: Customer"
+    "tealium-visitor-profile-openapi.yml: declared missing tag: Customer",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "tealium-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",

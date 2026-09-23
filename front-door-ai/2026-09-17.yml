@@ -1,0 +1,32 @@
+# Front Door AI Index — tealium — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: tealium
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: tealium.com
+  final_host: tealium.com
+  ownership: own
+  owner: tealium
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 19
+  host_score: 19
+  density: 19.51
+  words: 974
+  tiers:
+    agentic: 1
+    core: 15
+    model: 3
+  ambiguous: 4
+  top_terms:
+    AI: 15
+    agent: 2
+    Bedrock: 1
+    OpenAI: 1
+    Vertex AI: 1
+    inference: 1
+    intelligence: 1
+    predictive: 1

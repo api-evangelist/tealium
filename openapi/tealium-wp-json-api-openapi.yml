@@ -4,9 +4,7 @@ info:
   version: 1.0.0
   description: 'Minimal, read-only endpoints designed for agents. All responses are cache-friendly and include
 
-    provenance headers. No authentication required.
-
-    '
+    provenance headers. No authentication required.'
 servers:
 - url: https://tealium.com
 tags:
@@ -91,33 +89,6 @@ paths:
       - Wp Json
 components:
   schemas:
-    StatusResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          example: ok
-        version:
-          type: string
-          example: '1.0'
-        organization:
-          type: string
-          example: Tealium
-        updated_at:
-          type: string
-          format: date-time
-        source:
-          type: string
-          example: wp
-        inLanguage:
-          type: string
-          example: en
-      required:
-      - status
-      - version
-      - organization
-      - updated_at
-      - source
     FAQItem:
       type: object
       properties:
@@ -164,3 +135,30 @@ components:
       required:
       - source
       - results
+    StatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        version:
+          type: string
+          example: '1.0'
+        organization:
+          type: string
+          example: Tealium
+        updated_at:
+          type: string
+          format: date-time
+        source:
+          type: string
+          example: wp
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - status
+      - version
+      - organization
+      - updated_at
+      - source
