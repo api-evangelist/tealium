@@ -89,36 +89,6 @@ paths:
       - Wp Json
 components:
   schemas:
-    FAQItem:
-      type: object
-      properties:
-        question:
-          type: string
-        answer:
-          type: string
-          description: Plain-text answer (sanitized)
-        inLanguage:
-          type: string
-          example: en
-      required:
-      - question
-      - answer
-    DocsResponse:
-      type: object
-      properties:
-        source:
-          type: string
-          example: wp
-        docs_portal:
-          type: string
-          format: uri
-          example: https://docs.tealium.com/
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - source
-      - docs_portal
     FAQResponse:
       type: object
       properties:
@@ -162,3 +132,33 @@ components:
       - organization
       - updated_at
       - source
+    DocsResponse:
+      type: object
+      properties:
+        source:
+          type: string
+          example: wp
+        docs_portal:
+          type: string
+          format: uri
+          example: https://docs.tealium.com/
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - source
+      - docs_portal
+    FAQItem:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+          description: Plain-text answer (sanitized)
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - question
+      - answer

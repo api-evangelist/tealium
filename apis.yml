@@ -251,22 +251,20 @@ apis:
     url: overlays/tealium-privacy-api-overlay.yaml
   - type: Documentation
     url: https://docs.tealium.com/api/v3/visitor-privacy/endpoints/
-- aid: tealium:tealium-wp-json-api
-  name: Tealium Wp Json API
-  description: The Wp Json API from Tealium — 3 operation(s) for wp json.
-  humanURL: https://docs.tealium.com/api/v3/http-api/about/
-  baseURL: https://platform.tealiumapis.com/v3
+- aid: tealium:tealium-com-website-wordpress-rest
+  name: Tealium Website (WordPress REST)
+  description: >-
+    The public WordPress REST API (wp-json) of the Tealium website at tealium.com: the route index of
+    the site's content management system, catalogued as one site surface rather than as separate APIs.
+  baseURL: https://tealium.com/wp-json
   tags:
-  - Wp Json
+  - WordPress
+  x-surface: platform-generated
+  x-platform: wordpress
+  x-platform-surface: rest
   properties:
-  - type: OpenAPI
-    url: openapi/tealium-wp-json-api-openapi.yml
-  - type: LLMsTxt
-    url: llms/tealium-llms.txt
-  - type: WellKnown
-    url: well-known/tealium-well-known.yml
   - type: Documentation
-    url: https://tealium.com/.well-known/agents.json
+    url: https://tealium.com/wp-json
 common:
   - type: Overlay
     url: overlays/tealium-ai-read-overlay.yaml
