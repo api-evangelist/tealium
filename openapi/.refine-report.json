@@ -49,7 +49,7 @@
     "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/accounts/{account}/profiles/{profile} -> Customer",
     "tealium-visitor-profile-openapi.yml: tagged paths GET /customer/visitor/historical/accounts/{account}/profiles/{profile} -> Customer",
     "tealium-visitor-profile-openapi.yml: declared missing tag: Customer",
-    "apis.yml register: written (+1 apis, 12 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "tealium-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",

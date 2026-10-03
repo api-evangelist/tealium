@@ -132,6 +132,20 @@ components:
       - organization
       - updated_at
       - source
+    FAQItem:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+          description: Plain-text answer (sanitized)
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - question
+      - answer
     DocsResponse:
       type: object
       properties:
@@ -148,17 +162,3 @@ components:
       required:
       - source
       - docs_portal
-    FAQItem:
-      type: object
-      properties:
-        question:
-          type: string
-        answer:
-          type: string
-          description: Plain-text answer (sanitized)
-        inLanguage:
-          type: string
-          example: en
-      required:
-      - question
-      - answer
