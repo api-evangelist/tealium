@@ -89,22 +89,20 @@ paths:
       - Wp Json
 components:
   schemas:
-    FAQResponse:
+    FAQItem:
       type: object
       properties:
-        source:
+        question:
           type: string
-          example: wp
-        retrieved_at:
+        answer:
           type: string
-          format: date-time
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/FAQItem'
+          description: Plain-text answer (sanitized)
+        inLanguage:
+          type: string
+          example: en
       required:
-      - source
-      - results
+      - question
+      - answer
     StatusResponse:
       type: object
       properties:
@@ -132,20 +130,22 @@ components:
       - organization
       - updated_at
       - source
-    FAQItem:
+    FAQResponse:
       type: object
       properties:
-        question:
+        source:
           type: string
-        answer:
+          example: wp
+        retrieved_at:
           type: string
-          description: Plain-text answer (sanitized)
-        inLanguage:
-          type: string
-          example: en
+          format: date-time
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/FAQItem'
       required:
-      - question
-      - answer
+      - source
+      - results
     DocsResponse:
       type: object
       properties:
