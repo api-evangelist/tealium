@@ -1,0 +1,12 @@
+{
+ "url": "https://tealium.com/.well-known/openapi.yaml",
+ "requested_url": "https://tealium.com/.well-known/openapi.yaml",
+ "status": 200,
+ "content_type": "text/yaml; charset=utf-8",
+ "bytes": 3860,
+ "sha256": "ad17aa564382af6abe40b72f5fa3a5ddc193c29f7411ef0cd22a6994a50d8be7",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
