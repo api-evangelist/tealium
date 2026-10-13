@@ -1,0 +1,24 @@
+generated: '2026-10-13'
+method: searched
+checked:
+- https://aws.amazon.com/marketplace/
+marketplace_apps: []
+edges:
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=eb47db83-29ca-4930-a9b6-b2788e1df4f9
+  listing_count: 4
+  apps:
+  - Tealium Event and Audience Data Hub
+  - Tealium CDP + Amazon Connect
+  - Tealium CDP + Amazon Marketing Cloud
+  - Tealium CDP + AWS Unified Profiles for Travelers and Guests (UPT)
+  seller_name: Tealium
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
