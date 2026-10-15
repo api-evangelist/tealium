@@ -38,3 +38,16 @@
     detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
+- slug: tealium-wordpress-own
+  label: WordPress (own)
+  partner: wordpress
+  partner_name: WordPress (own)
+  category: WordPress plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://wordpress.org/plugins/tealium/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
