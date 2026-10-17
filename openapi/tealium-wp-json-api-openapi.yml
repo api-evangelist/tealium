@@ -103,33 +103,6 @@ components:
       required:
       - question
       - answer
-    StatusResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          example: ok
-        version:
-          type: string
-          example: '1.0'
-        organization:
-          type: string
-          example: Tealium
-        updated_at:
-          type: string
-          format: date-time
-        source:
-          type: string
-          example: wp
-        inLanguage:
-          type: string
-          example: en
-      required:
-      - status
-      - version
-      - organization
-      - updated_at
-      - source
     FAQResponse:
       type: object
       properties:
@@ -162,3 +135,30 @@ components:
       required:
       - source
       - docs_portal
+    StatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: ok
+        version:
+          type: string
+          example: '1.0'
+        organization:
+          type: string
+          example: Tealium
+        updated_at:
+          type: string
+          format: date-time
+        source:
+          type: string
+          example: wp
+        inLanguage:
+          type: string
+          example: en
+      required:
+      - status
+      - version
+      - organization
+      - updated_at
+      - source

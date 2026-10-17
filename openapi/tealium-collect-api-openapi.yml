@@ -224,45 +224,6 @@ paths:
       - Collect
 components:
   schemas:
-    BulkEventPayload:
-      type: object
-      required:
-      - shared
-      - events
-      properties:
-        shared:
-          type: object
-          description: Common fields applied to all events in this batch
-          properties:
-            tealium_account:
-              type: string
-            tealium_profile:
-              type: string
-            tealium_environment:
-              type: string
-              enum:
-              - dev
-              - qa
-              - prod
-            tealium_datasource:
-              type: string
-            tealium_visitor_id:
-              type: string
-          additionalProperties:
-            type: string
-        events:
-          type: array
-          description: Array of event objects (max 10 per request)
-          maxItems: 10
-          items:
-            type: object
-            required:
-            - tealium_event
-            properties:
-              tealium_event:
-                type: string
-            additionalProperties:
-              type: string
     IntegrationEventPayload:
       type: object
       required:
@@ -309,6 +270,45 @@ components:
       additionalProperties:
         type: string
         description: Custom event attributes as additional key-value pairs
+    BulkEventPayload:
+      type: object
+      required:
+      - shared
+      - events
+      properties:
+        shared:
+          type: object
+          description: Common fields applied to all events in this batch
+          properties:
+            tealium_account:
+              type: string
+            tealium_profile:
+              type: string
+            tealium_environment:
+              type: string
+              enum:
+              - dev
+              - qa
+              - prod
+            tealium_datasource:
+              type: string
+            tealium_visitor_id:
+              type: string
+          additionalProperties:
+            type: string
+        events:
+          type: array
+          description: Array of event objects (max 10 per request)
+          maxItems: 10
+          items:
+            type: object
+            required:
+            - tealium_event
+            properties:
+              tealium_event:
+                type: string
+            additionalProperties:
+              type: string
   securitySchemes:
     BearerAuth:
       type: http
