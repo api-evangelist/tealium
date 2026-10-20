@@ -1,9 +1,20 @@
-generated: '2026-10-13'
+generated: '2026-10-20'
 method: searched
+source:
+- wordpress/integrations/wordpress-integration-edges.yml
+- https://zapier.com/apps/tealium/integrations
+- https://n8n.io/integrations/tealium/
+- https://composio.dev/toolkits/tealium
+- https://monid.ai/tools/tealium
 checked:
 - https://aws.amazon.com/marketplace/
 - https://storage.googleapis.com/tcfac/additional-consent-providers.csv
 - wordpress/integrations/wordpress-integration-edges.yml
+- https://composio.dev/toolkits/tealium
+- https://monid.ai/tools/tealium
+- https://n8n.io/integrations/tealium/
+- https://zapier.com/apps/tealium/integrations
+summary: null
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -64,5 +75,4 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: WordPress plugin
-source:
-- wordpress/integrations/wordpress-integration-edges.yml
+templates: []
