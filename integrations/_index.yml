@@ -38,19 +38,6 @@
     detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
-- slug: tealium-wordpress-own
-  label: WordPress (own)
-  partner: wordpress
-  partner_name: WordPress (own)
-  category: WordPress plugin
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://wordpress.org/plugins/tealium/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: tealium-battery-ventures
   label: Battery Ventures
   partner: battery-ventures
@@ -77,5 +64,31 @@
     detected_by: sweep-vc-portfolios.py
     detected: '2026-10-21'
     status: Active
+  status: not-a-workflow
+  arazzo: null
+- slug: tealium-wordpress-own
+  label: WordPress (own)
+  partner: wordpress
+  partner_name: WordPress (own)
+  category: WordPress plugin
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://wordpress.org/plugins/tealium/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: tealium-google-play-developer-google-play-sdk-index
+  label: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_name: Google Play Developer (Google Play SDK Index)
+  category: mobile SDK (analytics, data-management, location, marketing-and-engagement)
+  type: marketplace
+  marketplace: Google Play SDK Index
+  channel: partner-built
+  evidence: https://play.google.com/sdks/details/com-tealium-library
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
