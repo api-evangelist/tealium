@@ -22,6 +22,7 @@ checked:
 - https://www.sequoiacap.com/sitemap.xml
 - google-play/integrations/google-play-integration-edges.yml
 - https://dir.texas.gov/resource-library-item/tx-ramp-certified-cloud-products
+- adobe-experience-cloud/integrations/adobe-experience-cloud-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -93,42 +94,6 @@ edges:
     status: Active
   detected_by: sweep-vc-portfolios.py
   first_seen: '2026-10-21'
-- partner_name: WordPress (own)
-  partner: wordpress
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://wordpress.org/plugins/tealium/
-  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
-  apps:
-  - Tealium
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: WordPress plugin
-- partner_name: Google Play Developer (Google Play SDK Index)
-  partner: google-play
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: Google Play SDK Index
-  evidence: https://play.google.com/sdks/details/com-tealium-library
-  mirror_of: google-play/integrations/google-play-integration-edges.yml
-  apps:
-  - Tealium Android Java SDK
-  listing_count: 1
-  detected: '2026-10-21'
-  detected_by: mirror-platform-listings.py
-  category: mobile SDK (analytics, data-management, location, marketing-and-engagement)
-  publisher_verified:
-  - Registered in Google Play SDK Console
 - partner_name: TX-RAMP
   partner: null
   partner_match: register
@@ -173,4 +138,57 @@ edges:
     detected: '2026-10-22'
   detected_by: sweep-tx-ramp-certified-cloud.py
   first_seen: '2026-10-22'
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/tealium/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - Tealium
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
+- partner_name: Google Play Developer (Google Play SDK Index)
+  partner: google-play
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: Google Play SDK Index
+  evidence: https://play.google.com/sdks/details/com-tealium-library
+  mirror_of: google-play/integrations/google-play-integration-edges.yml
+  apps:
+  - Tealium Android Java SDK
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  category: mobile SDK (analytics, data-management, location, marketing-and-engagement)
+  publisher_verified:
+  - Registered in Google Play SDK Console
+- partner_name: Adobe Experience Cloud (own)
+  partner: adobe-experience-cloud
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://exchange.adobe.com/apps/ec/105623
+  mirror_of: adobe-experience-cloud/integrations/adobe-experience-cloud-integration-edges.yml
+  apps:
+  - Tealium Data Enrichment
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Adobe Exchange Experience Cloud listing (Experience Platform)
 templates: []
